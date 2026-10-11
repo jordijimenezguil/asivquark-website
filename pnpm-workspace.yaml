@@ -1,0 +1,12 @@
+allowBuilds:
+  unrs-resolver: true
+  esbuild: true
+  sharp: true
+  prisma: true
+  "@prisma/engines": true
+
+# Better Auth bundles adapters for every ORM. This project uses Prisma only.
+overrides:
+  "better-auth@1.7.7>@better-auth/drizzle-adapter": "-"
+  "better-auth@1.7.7>drizzle-orm": "-"
+  "better-auth@1.7.7>drizzle-kit": "-"

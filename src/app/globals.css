@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-night: #0b0f17;
+  --color-surface: #151b29;
+  --color-violet: #7c3aed;
+  --color-violet-soft: #a78bfa;
+  --color-secondary: #aeb6c7;
+  --color-mist: #f8f9fc;
+  --color-ink: #111827;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: #f8f9fc;
+  color: #111827;
+  font-family: var(--font-geist-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+section[id],
+div[id] {
+  scroll-margin-top: 2rem;
+}
+::selection {
+  background: #7c3aed;
+  color: white;
+}
+:focus-visible {
+  outline: 3px solid #a78bfa;
+  outline-offset: 5px;
+}
+.eyebrow {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  line-height: 1.8;
+}
+.section-title {
+  font-size: clamp(1.9rem, 3.3vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 1rem;
+  left: 1rem;
+  transform: translateY(-200%);
+  border-radius: 0.5rem;
+  background: white;
+  color: #111827;
+  padding: 0.75rem 1rem;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

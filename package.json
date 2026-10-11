@@ -2,25 +2,49 @@
   "name": "asivquark-website",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "next typegen && tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "postinstall": "prisma generate",
+    "test:config": "node --experimental-strip-types --test tests/site.test.ts",
+    "test:db": "node --experimental-strip-types --test tests/prisma-schema.test.ts"
   },
   "dependencies": {
+    "@better-auth/prisma-adapter": "1.7.7",
+    "@neondatabase/serverless": "^1.2.0",
+    "@prisma/adapter-neon": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "better-auth": "1.7.7",
+    "lucide-react": "^1.55.0",
     "next": "16.4.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "resend": "^6.32.1",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@next/env": "16.4.0",
     "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
+    "@types/node": "^22.20.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^9",
+    "eslint": "9.39.5",
     "eslint-config-next": "16.4.0",
+    "prisma": "7.10.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
