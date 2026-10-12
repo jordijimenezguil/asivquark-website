@@ -84,3 +84,94 @@ El historial `drizzle/` permanece archivado sin herramientas activas. Se elimina
 Pendiente: configurar URLs reales Neon, verificar/introspectar la base existente, confirmar equivalencia y autorizar el baselining si corresponde, probar consultas y sesiones reales. Seguir [Prisma y transición segura](prisma.md). No afirmar que la migración se ha aplicado: únicamente está preparada.
 
 Verificación final adicional: `pnpm install --frozen-lockfile` correcto y cliente generado de nuevo. El servidor de desarrollo existente de este repositorio continúa en localhost:3000: home 200 y auth 503 sin credenciales. Una segunda ejecución de `pnpm dev` se detuvo por el bloqueo de servidor ya activo; no fue un fallo de compilación y no se interrumpió ese proceso. El servidor temporal de prueba del build en 3001 se cerró al terminar.
+
+## Iteración 2 — 11–12 de octubre de 2026
+
+Estado inicial de Git limpio. Se conservaron Next.js 16.4, TypeScript estricto, Tailwind, Geist, Lucide, Prisma 7.10.0, Neon, Better Auth y Resend. No se modificaron package.json, lockfile, esquema ni migraciones. `pnpm why drizzle-orm drizzle-kit @better-auth/drizzle-adapter` no muestra dependencias activas; el historial inactivo se conserva.
+
+Se consultaron las guías instaladas de páginas App Router, metadata, sitemap, robots, trailingSlash, JSON-LD y useSearchParams. Se reutilizaron las primitivas y marca originales. Las cinco secciones provisionales de home, ya sin consumidores, se sustituyeron por las composiciones comerciales de esta iteración.
+
+| Comprobación | Resultado real |
+| --- | --- |
+| `pnpm install --frozen-lockfile` | Correcto; cliente Prisma generado, sin modificar lockfile |
+| `pnpm prisma validate` | Esquema válido |
+| `pnpm db:generate` | Cliente 7.10.0 generado sin conexión DB |
+| `pnpm lint` | Correcto, sin warnings |
+| `pnpm typecheck` | Correcto |
+| `pnpm test:config` | 6 pruebas aprobadas; incluye selección de servicio y contrato futuro de contacto |
+| `pnpm test:db` | 2 pruebas offline aprobadas; esquema y línea base conservados |
+| `pnpm build` local sin credenciales | Correcto; ocho páginas comerciales estáticas |
+| Build con `VERCEL_ENV=production` y origen oficial | Correcto; verificación de HTML/XML/manifiesto |
+| Build preview con variables públicas heredadas de producción | Correcto; verificación de aislamiento |
+| `git diff --check` | Correcto |
+
+La instalación inicial aislada encontró restricciones DNS y se completó con acceso autorizado. El primer build aislado dejó errores de apertura de puertos internos en las cachés de Turbopack. Se movieron las cachés generadas a `/tmp`, se reconstruyeron con permisos autorizados y el build pasó. No se cambió el bundler ni la configuración de React Compiler/Tailwind para eludir el problema. Prettier se utilizó como herramienta temporal, sin añadir dependencias al proyecto.
+
+### HTTP y HTML inicial
+
+Sobre `pnpm dev --port 3000`, las ocho rutas devolvieron 200. Un script temporal con parser HTML verificó títulos y descripciones únicos, un H1 por página, enlaces internos y fragmentos hacia destinos existentes, meta y cabecera noindex locales y ausencia de canonical público. Robots local bloquea rastreo, sitemap vacío, ruta inexistente 404 y variante sin barra redirigida a barra final. Se repitió la comprobación tras los cambios finales.
+
+Los artefactos de build confirman contenido SEO principal en HTML sin ejecutar JavaScript cliente. Las ocho páginas se prerenderizan; únicamente la API de auth sigue siendo dinámica. El formulario de contacto usa un fallback con los mismos campos deshabilitados para conservar estructura y contenido al hidratar la selección desde URL.
+
+Producción: canonicals exactos `https://asivquark.com/` y las siete rutas interiores con barra, sin parámetros; index/follow; sitemap con las ocho URLs y sin lastmod inventado; robots permite contenido público y anuncia sitemap; manifiesto conserva redirección www y no introduce header de exclusión.
+
+JSON-LD de producción parseado como JSON: grafo Organization/WebSite en home y BreadcrumbList en siete páginas interiores. Se verificaron contexto, tipos, número de niveles y URL del último elemento. No hay ratings, contactos ni dirección postal. No se ejecutó el validador remoto Schema.org/Google.
+
+Preview: sin canonicals ni JSON-LD público, noindex/follow desactivado en metadata y `X-Robots-Tag: noindex, nofollow`; robots bloquea y sitemap vacío. Se verificó con VERCEL_URL temporal de prueba y variables de sitio/auth heredadas del dominio oficial. No fue un despliegue.
+
+### Accesibilidad, diseño y límites
+
+Revisión de código: HTML semántico, labels asociados, enlaces para navegación, skip link, foco visible diferenciado para superficies claras/oscuras, FAQ nativas details/summary, controles táctiles de al menos 44 px, respeto a movimiento reducido, menú móvil desplazable y oculto fuera de su estado abierto. Escape cierra menú móvil y servicios de escritorio devolviendo foco. El formulario no tiene envío ni confirmación y rechaza valores de servicio desconocidos o repetidos mediante Zod.
+
+La herramienta informó «Computer Use was not approved to use Google Chrome». No se pudo realizar revisión visual ni interacción real de escritorio/tablet/móvil, comprobar scroll horizontal en navegador o probar foco y preselección en una sesión visual. La revisión responsive de código y HTTP no sustituye esas pruebas. No se certifica WCAG ni se afirman métricas LCP, INP o CLS.
+
+Portfolio vacío deliberadamente; sin proyectos, testimonios, cifras, equipo, contactos ni historia personal inventados. Sin correo comercial público ni política de privacidad aprobada: contacto sigue pendiente de activación. No hay CRM, CMS, blog, login visual, captura de leads, consultas Neon, envíos Resend, migraciones, despliegues ni cambios DNS. Node utilizado: 26.0.0; no se repitió específicamente con Node 22 LTS.
+
+## Iteración 3 — 12 de octubre de 2026
+
+Se preservaron los cambios sin commit de la iteración 2. Auditoría de variables mediante @next/env sin imprimir sus valores: DATABASE_URL, DIRECT_URL, RESEND_API_KEY, RESEND_FROM_EMAIL y LEADS_NOTIFICATION_EMAIL ausentes. Tampoco existe un aviso de privacidad aprobado. No se aplicaron migraciones, guardaron datos en una base real ni enviaron emails.
+
+Consultadas guías instaladas de Route Handlers, after y fronteras Server/Client; documentación oficial de cabeceras Vercel, idempotencia y dominio Resend. Stack conservado. Única dependencia añadida: tsx 4.23.15 de desarrollo para pruebas/comandos TypeScript, mediante pnpm y lockfile actualizado. Sin dependencias activas Drizzle según pnpm why.
+
+| Comprobación | Resultado real |
+| --- | --- |
+| `pnpm add -D tsx` | Correcto; dependencia y lockfile actualizados |
+| `pnpm prisma format` | Esquema formateado |
+| `pnpm prisma validate` | Correcto |
+| `pnpm db:generate` | Prisma Client 7.10.0 generado sin conexión DB |
+| Prisma Migrate diff entre esquemas locales | SQL aditivo preparado; sin aplicar |
+| `pnpm lint` | Correcto, sin warnings |
+| `pnpm typecheck` | Correcto |
+| `pnpm test:leads` | 24 pruebas aprobadas con dobles de Prisma/Resend |
+| `pnpm test:config` | 6 pruebas aprobadas |
+| `pnpm test:db` | 3 pruebas offline aprobadas |
+| `pnpm build` local sin servicios | Correcto; ocho páginas comerciales estáticas y API leads dinámica |
+| Build local con variables de producción | Correcto; SEO conservado y captación pública bloqueada |
+| `pnpm leads:process` sin DATABASE_URL | Fallo controlado esperado, código 1; no accede a datos ni envía |
+| `pnpm leads:cleanup` sin DATABASE_URL | Fallo controlado esperado, código 1; sin eliminación |
+| `git diff --check` | Correcto |
+
+Las 24 pruebas cubren normalización preservando parte local del email, campos inválidos/opcionales, HTML, selección de servicios, atribución, bloqueo de captación pública, endpoint 201 tras confirmar repositorio, validación, DB fallida, scheduling fallido sin perder confirmación, 429, origen/formato/clave/configuración, límite de bytes, identidad de cliente, creación atómica con NEW/eventos/outbox, repetición de clave, colisión concurrente P2002, fallo de transacción, UPSERT parametrizado, escape de emails, claves estables de proveedor, ventanas de reintento, configuración ausente, excepciones de envío y reserva por dos procesadores.
+
+Los dobles verifican llamadas y decisiones, no garantizan integración ni aislamiento real de PostgreSQL/Neon. No se ha podido realizar una prueba conectada por ausencia de URLs. La prueba de migración permite acciones referenciales ON DELETE CASCADE sobre las nuevas tablas y prohíbe sentencias destructivas; compara las cuatro tablas de Better Auth contra el histórico sin alteraciones. La migración comercial está envuelta en BEGIN/COMMIT y añade exclusivamente sus cuatro tablas/enums/índices/FK. Baseline frente a base externa aún pendiente.
+
+### HTTP, prerenderizado y bloqueo de producción
+
+Peticiones reales al servidor local:
+
+- GET `/api/leads/`: 405, sin lectura pública.
+- POST JSON con origen/clave válidos y sin DB/configuración: 503 con success=false y Cache-Control no-store. No hay persistencia ficticia.
+- POST desde origen externo: 403.
+- POST con text/plain: 415.
+- Respuestas sin email de prueba, detalle Prisma ni datos personales.
+- Contacto con servicio=web/software/aplicacion/mvp/desconocido: 200, H1 único, teléfono/botón y formulario presentes. Las cuatro opciones permitidas aparecen preseleccionadas en SSR de desarrollo; la opción desconocida se ignora. El form usa POST, sin riesgo de enviar sus campos como query por defecto.
+
+Build de producción inspeccionado mediante parser HTML/XML y manifiestos: ocho canonicals exactos con barra final, titles/descriptions únicos, H1 único, sitemap con ocho rutas, robots público y JSON-LD conservados. Formulario con fieldset y botón deshabilitados, aviso de activación y sin información legal inventada. DATABASE_URL, LEADS_SECURITY_SECRET y RESEND_API_KEY no aparecen en el JavaScript cliente generado. Build final restaurado al entorno local con noindex, sin canonical y sitemap vacío.
+
+### Límites y operaciones pendientes
+
+No se ha comprobado un registro real en Neon, envío/recepción Resend, reintento conectado ni limpieza de datos reales. 201 y fallos de proveedor se han probado exclusivamente con dobles. SENT en outbox representa aceptación por el proveedor, no confirmación de entrega en buzón.
+
+La revisión visual y manual de teclado/móvil no se completó: no hay navegador autorizado para control; Chrome ya había rechazado autorización durante la sesión previa. Las verificaciones HTTP/SSR y la revisión de labels, foco, estados, honeypot y CSS responsive no sustituyen interacción visual. No se afirma certificación WCAG ni Core Web Vitals. Node utilizado 26.0.0; Node 22 LTS no probado específicamente.
+
+Antes de habilitar captación pública: preparar rama Neon y verificar baseline; revisar/aplicar migración autorizada; configurar secreto, aviso real/versionado y política de retención; configurar remitente/destinatario y dominio Resend; asignar ejecución privada regular de process/cleanup; probar flujo integral con destinatarios controlados y revisión visual. after() no es una cola durable y no se ha activado cron. Ningún endpoint público de procesamiento ni dashboard/CRM añadido. Sin DNS, despliegues, resets, consultas a producción o marketing por email. Detalle operativo en [leads](leads.md).

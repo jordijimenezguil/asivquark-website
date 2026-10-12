@@ -19,7 +19,10 @@
     "db:studio": "prisma studio",
     "postinstall": "prisma generate",
     "test:config": "node --experimental-strip-types --test tests/site.test.ts",
-    "test:db": "node --experimental-strip-types --test tests/prisma-schema.test.ts"
+    "test:db": "node --experimental-strip-types --test tests/prisma-schema.test.ts",
+    "test:leads": "node --conditions=react-server --import tsx --test tests/leads*.test.ts",
+    "leads:process": "node --conditions=react-server --import tsx scripts/leads-maintenance.ts process",
+    "leads:cleanup": "node --conditions=react-server --import tsx scripts/leads-maintenance.ts cleanup"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "1.7.7",
@@ -46,6 +49,7 @@
     "eslint-config-next": "16.4.0",
     "prisma": "7.10.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

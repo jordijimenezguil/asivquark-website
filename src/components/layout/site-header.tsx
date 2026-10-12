@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { BrandLogo } from "@/components/branding/brand-logo";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { navigation } from "@/config/navigation";
+import { NavigationLinks } from "./navigation-links";
 import { MobileNavigation } from "./mobile-navigation";
 
 export function SiteHeader() {
@@ -15,22 +15,14 @@ export function SiteHeader() {
         </Link>
         <nav
           aria-label="Navegación principal"
-          className="hidden items-center gap-7 md:flex"
+          className="hidden items-center gap-5 lg:flex"
         >
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="py-3 text-sm text-secondary transition-colors hover:text-white"
-            >
-              {item.label}
-            </Link>
-          ))}
+          <NavigationLinks />
         </nav>
         <Button
-          href="/#contacto"
+          href="/contacto/"
           variant="outline"
-          className="hidden min-h-10 px-4 md:inline-flex"
+          className="hidden min-h-10 px-4 lg:inline-flex"
         >
           Hablemos <ArrowUpRight size={16} aria-hidden="true" />
         </Button>

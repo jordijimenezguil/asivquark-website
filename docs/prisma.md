@@ -28,7 +28,7 @@ DIRECT_URL es obligatoria para operaciones conectadas en esta configuración. Se
 | Account       | account      | Índice de user_id, FK en cascada              |
 | Verification  | verification | Índice de identifier                          |
 
-`@map` conserva todas las columnas snake_case, `@@map` las tablas. Texto permanece TEXT; timestamps sin zona usan precisión 6, equivalente al timestamp sin precisión anterior. Nullability, defaults, nombres de índices/constraints, primary keys y acciones de FK se conservan. `@updatedAt` sustituye la actualización desde ORM; no añade un trigger PostgreSQL. No se añaden defaults de ID ni modelos de negocio. Better Auth sigue generando IDs.
+`@map` conserva todas las columnas snake_case, `@@map` las tablas. Texto permanece TEXT; timestamps sin zona usan precisión 6, equivalente al timestamp sin precisión anterior. Nullability, defaults, nombres de índices/constraints, primary keys y acciones de FK se conservan. `@updatedAt` sustituye la actualización desde ORM; no añade un trigger PostgreSQL. Los modelos de autenticación no añaden defaults de ID. Better Auth sigue generándolos. Los modelos de leads de la iteración 3 tienen UUID propios.
 
 La línea base `prisma/migrations/0_init/migration.sql` conserva el SQL original. Mantiene restricciones UNIQUE físicas, aunque Prisma represente su equivalente como índices únicos en SQL generado; esto no autoriza eliminar/recrear esas restricciones. El archivo `drizzle/` con SQL, snapshot y journal no se elimina ni se ejecuta: referencia histórica hasta verificar la transición real.
 
@@ -82,3 +82,8 @@ No ejecutar `migrate dev` en una base con historial aún sin transición: puede 
 - [Configuración Prisma 7 y variables opcionales](https://www.prisma.io/docs/orm/v7/reference/prisma-config-reference)
 - [Línea base sobre una base existente](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/baselining)
 - [Better Auth con Prisma](https://better-auth.com/docs/adapters/prisma)
+
+
+## Iteración 3 — modelos comerciales
+
+Se añaden Lead, LeadEvent, EmailOutbox y LeadRateBucket sin alterar los cuatro modelos anteriores. Migración aditiva `20261012070000_leads` generada offline, sin aplicar. Cliente generado/validate y comparación de auth aprobados; no hubo acceso remoto. Ver [leads](leads.md) para campos, retención, procesamiento y activación. La línea base sigue requiriendo comprobación contra la base real antes de aplicar migraciones.

@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { navigation } from "@/config/navigation";
+import { NavigationLinks } from "./navigation-links";
 
 export function MobileNavigation() {
   const [open, setOpen] = useState(false);
@@ -14,7 +14,7 @@ export function MobileNavigation() {
   }
   return (
     <div
-      className="md:hidden"
+      className="lg:hidden"
       onKeyDown={(event) => {
         if (event.key === "Escape" && open) close();
       }}
@@ -38,20 +38,11 @@ export function MobileNavigation() {
         id="mobile-navigation"
         aria-label="Navegación móvil"
         hidden={!open}
-        className="absolute inset-x-0 top-full border-b border-white/10 bg-night px-6 py-5 shadow-lg"
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-white/10 bg-night px-6 py-5 shadow-lg"
       >
-        {navigation.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={() => setOpen(false)}
-            className="block rounded-lg px-3 py-3 text-base text-white hover:bg-surface"
-          >
-            {item.label}
-          </Link>
-        ))}
+        <NavigationLinks mobile onNavigate={() => setOpen(false)} />
         <Link
-          href="/#contacto"
+          href="/contacto/"
           onClick={() => setOpen(false)}
           className="mt-3 block rounded-lg bg-violet px-3 py-3 text-center font-medium"
         >

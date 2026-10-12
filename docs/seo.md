@@ -1,25 +1,32 @@
-# SEO técnico — Iteración 1
+# SEO técnico — Iteración 3
 
-Objetivo: desarrollo de software y páginas web en Barcelona, con alcance a empresas y emprendedores de España. HTML inicial contiene toda la home, un H1 y jerarquía de headings semántica. Idioma `es` y OG locale `es_ES`.
+Arquitectura comercial con ocho rutas públicas y cuatro intenciones de servicio diferenciadas. Home se orienta a desarrollo de software en Barcelona; diseño web a páginas de empresas y profesionales; software a procesos empresariales; aplicaciones a plataformas de navegador; MVP a primera versión y aprendizaje. Sin páginas doorway, cifras, casos, ratings ni direcciones inventadas.
 
-La sustitución del ORM por Prisma no modifica orígenes, metadata, robots, sitemap ni contenido. La generación de Prisma Client ocurre al instalar/build, sin consultar Neon desde las páginas públicas. Las comprobaciones de regresión quedan registradas en [validación](validacion.md).
+## Metadata y canonicals
 
-Title: `Desarrollo de Software y Diseño Web en Barcelona | ASIVQUARK`.
+`pageMetadata()` centraliza title, description, metadataBase, canonical, robots, Open Graph y Twitter. Las páginas declaran título y descripción específicos según el mapa SEO solicitado. Un H1 por página, idioma `es`, OG `es_ES` y contenido principal en HTML prerenderizado.
 
-Description: `En ASIVQUARK desarrollamos páginas web, aplicaciones y software a medida para empresas y emprendedores en Barcelona y toda España.`
+URLs con barra final mediante `trailingSlash: true`; Next redirige las variantes sin barra. Producción usa exclusivamente `https://asivquark.com`, canonicals absolutos con barra y sin parámetros. La redirección www preparada sigue requiriendo configurar ambos dominios y TLS en Vercel; no se modifica DNS.
 
-## Metadata y entornos
+Producción depende de `VERCEL_ENV=production`, no de `NODE_ENV`. Local/preview carecen de canonical, tienen meta y header `noindex, nofollow`, robots bloquea rastreo y sitemap vacío. Preview toma `VERCEL_URL` aunque herede variables de producción. No promover artefactos de preview a producción.
 
-`pageMetadata()` centraliza metadataBase, title, description, canonical, robots, OG y Twitter. Imagen OG por `ImageResponse` nativo, sin recursos de marketing inventados.
+## Sitemap y navegación
 
-Producción: `VERCEL_ENV=production`, URL exacta `https://asivquark.com`, canonical home con `/`, index/follow, sitemap con solo home. Robots permite contenido público y excluye API. Sin fechas de actualización artificiales.
+`publicPaths` en `config/navigation.ts` enumera exclusivamente home, cuatro servicios, proyectos, nosotros y contacto. Sitemap de producción genera esas ocho URLs, sin lastmod artificial. Robots permite rutas públicas, excluye API y anuncia sitemap únicamente en producción. Robots no protege contenido privado; los permisos futuros deberán comprobarse en servidor.
 
-Preview: metadataBase y auth origin `https://${VERCEL_URL}`, incluso al heredar variables públicas erróneas. Sin canonical público. Meta y cabecera `X-Robots-Tag: noindex, nofollow`. Robots bloquea rastreo y no anuncia sitemap. Sitemap XML vacío, sin URLs destinadas a indexación. Robots no sustituye la protección de contenido privado.
+Home enlaza los cuatro servicios; cada landing enlaza contacto con un parámetro de selección validado y un servicio relacionado mediante texto contextual. Header, footer y breadcrumbs enlazan rutas existentes. No hay fichas individuales de proyecto, legales vacíos, blog ni enlaces a rutas futuras.
 
-Local: localhost por defecto, noindex. `NODE_ENV=production` por sí solo no activa indexación. Producción con localhost, www, origen desconocido o ruta en URL falla. Pruebas de aislamiento en `tests/site.test.ts`.
+## Datos estructurados
 
-## Navegación y lanzamiento
+Home de producción: `Organization` y `WebSite`, nombre y URL reales, ubicación general Barcelona, España. Páginas interiores: `BreadcrumbList` con dos niveles y URL canónica. Serialización JSON y escape de `<` en script nativo. Sin dirección postal, contactos, identificadores o perfiles no confirmados. No hay AggregateRating ni FAQPage. Fuera de producción no se emite JSON-LD público.
 
-Anclas relativas existentes para servicios, proyectos, nosotros y contacto. No agregar fragmentos al sitemap ni links a páginas aún inexistentes. 404 nativa con ayuda y noindex. Redirección 308 www a dominio principal preparada en producción; necesita configurar ambos dominios y TLS en Vercel posteriormente. DNS no modificado.
+Se comprueba sintaxis JSON, tipos, posiciones y URLs contra los artefactos generados. Esto no equivale a una validación remota de Google Rich Results o Schema Markup Validator.
 
-Antes de lanzamiento: completar contacto y legales; comprobar metadata, sitemap, robots, 404 y redirecciones en dominio real; verificar exclusión de previews; medir accesibilidad y Core Web Vitals. Añadir URLs solo con contenido público real. Sin JSON-LD con direcciones, ratings o teléfonos inventados ni analítica avanzada.
+## Renderizado y lanzamiento
+
+Las ocho páginas son estáticas y no consultan Neon. Contacto prerenderiza hero y contenido editorial; su formulario usa `useSearchParams` únicamente para preselección bajo Suspense. El mismo formulario se prerenderiza como fallback para mantener composición y contenidos. Disponibilidad según configuración legal/operativa. El canonical excluye el parámetro `servicio`.
+
+Pendiente antes del lanzamiento comercial: canal operativo y legales, revisión visual en escritorio/tablet/móvil, pruebas de teclado en navegador y medición real de Core Web Vitals. No se afirma posicionamiento ni cumplimiento de métricas. Véase [validación](validacion.md) para resultados y límites reales.
+
+
+La iteración 3 no añade URLs al sitemap ni páginas de agradecimiento indexables. Estado de éxito solo tras 201 dentro de contacto, sin datos en URL. CTA conserva servicio y añade origen real; los parámetros no cambian el canonical. API privada a efectos de indexación, sin endpoints de lectura de leads. El tracker de atribución solo guarda contexto en memoria hasta la solicitud y no emite analítica externa.

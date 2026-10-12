@@ -1,0 +1,124 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import {
+  leadSchema,
+  leadRequestSchema,
+  serviceSchema,
+} from "../src/features/leads/schema";
+import {
+  attributionFromUrl,
+  sanitizeAttribution,
+  safeReferrer,
+} from "../src/features/leads/attribution";
+import { getContactConfig } from "../src/config/contact";
+const valid = {
+  name: "  Empresa   de prueba  ",
+  email: "Nombre.Tag+proyecto@EXAMPLE.COM",
+  projectType: "web",
+  description: "Una web corporativa para un negocio de prueba.",
+  privacy: true,
+};
+test("lead validation normalizes names and only the email domain", () => {
+  const result = leadSchema.parse(valid);
+  assert.equal(result.name, "Empresa de prueba");
+  assert.equal(result.email, "Nombre.Tag+proyecto@example.com");
+});
+test("rejects invalid required fields, long messages, HTML and administrative inputs", () => {
+  for (const data of [
+    { ...valid, name: " " },
+    { ...valid, name: "x".repeat(101) },
+    { ...valid, email: "no-email" },
+    { ...valid, projectType: "admin" },
+    { ...valid, description: "corto" },
+    { ...valid, description: "x".repeat(5001) },
+    { ...valid, description: "<script>alert(1)</script>" },
+    { ...valid, privacy: false },
+    { ...valid, status: "WON" },
+    { ...valid, source: "trusted" },
+  ])
+    assert.equal(leadRequestSchema.safeParse(data).success, false);
+});
+test("optional fields permit omission, empty values and international phones", () => {
+  assert.equal(leadSchema.safeParse(valid).success, true);
+  const result = leadSchema.parse({
+    ...valid,
+    company: "  ",
+    phone: "+1 (212) 555-0123",
+    budget: "",
+  });
+  assert.equal(result.company, undefined);
+  assert.equal(result.budget, undefined);
+  assert.equal(result.phone, "+1 (212) 555-0123");
+  assert.equal(
+    leadSchema.safeParse({ ...valid, phone: "invalid" }).success,
+    false,
+  );
+  assert.equal(
+    leadSchema.safeParse({ ...valid, budget: "guaranteed" }).success,
+    false,
+  );
+});
+test("URL service values are validated, including the four landing selections", () => {
+  for (const value of ["web", "software", "aplicacion", "mvp"])
+    assert.equal(serviceSchema.safeParse(value).success, true);
+  for (const value of [undefined, "unknown", ["web", "mvp"]])
+    assert.equal(serviceSchema.safeParse(value).success, false);
+});
+test("attribution strips untrusted paths and referrer queries without inventing sources", () => {
+  assert.equal(
+    safeReferrer("https://search.example/path?email=private#token"),
+    "https://search.example",
+  );
+  assert.equal(safeReferrer("https://user:password@example.com"), undefined);
+  assert.equal(safeReferrer("javascript:alert(1)"), undefined);
+  const data = attributionFromUrl(
+    new URLSearchParams(
+      "origen=/diseno-web-barcelona/&utm_source=campaign&utm_medium=one&utm_medium=two",
+    ),
+  );
+  assert.equal(data.originPath, "/diseno-web-barcelona/");
+  assert.equal(data.utmSource, "campaign");
+  assert.equal(data.utmMedium, undefined);
+  assert.equal(
+    sanitizeAttribution({ landingPath: "/admin/" }).landingPath,
+    undefined,
+  );
+  assert.equal(
+    attributionFromUrl(new URLSearchParams()).landingPath,
+    undefined,
+  );
+});
+test("public capture requires approved notice, explicit activation and server configuration", () => {
+  const environment = {
+    LEADS_ENABLED: "true",
+    VERCEL: "1",
+    DATABASE_URL: "postgresql://configured-test-only",
+    LEADS_SECURITY_SECRET: "s".repeat(32),
+    LEADS_RETENTION_DAYS: "90",
+  };
+  assert.equal(getContactConfig(environment, "production").enabled, false);
+  assert.equal(
+    getContactConfig(
+      {
+        ...environment,
+        LEADS_PRIVACY_NOTICE_URL: "https://asivquark.com/politica-confirmada/",
+        LEADS_PRIVACY_NOTICE_VERSION: "test-version",
+      },
+      "production",
+    ).enabled,
+    true,
+  );
+  assert.equal(
+    getContactConfig(
+      {
+        ...environment,
+        LEADS_PRIVACY_NOTICE_URL: "http://insecure.example/privacy",
+        LEADS_PRIVACY_NOTICE_VERSION: "test",
+      },
+      "production",
+    ).enabled,
+    false,
+  );
+  assert.equal(getContactConfig({}, "development").testMode, true);
+  assert.equal(getContactConfig({}, "preview").enabled, false);
+});

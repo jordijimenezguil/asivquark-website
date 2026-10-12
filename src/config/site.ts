@@ -77,7 +77,7 @@ export const site = {
   name: "ASIVQUARK",
   title: "Desarrollo de Software y Diseño Web en Barcelona | ASIVQUARK",
   description:
-    "En ASIVQUARK desarrollamos páginas web, aplicaciones y software a medida para empresas y emprendedores en Barcelona y toda España.",
+    "Desarrollamos páginas web, aplicaciones y software a medida para empresas y emprendedores en Barcelona. Descubre ASIVQUARK.",
   ...resolveSite({
     VERCEL_ENV: process.env.VERCEL_ENV,
     VERCEL_URL: process.env.VERCEL_URL,

@@ -69,7 +69,20 @@ test("Prisma SQL preserves physical schema against the historical snapshot offli
       (match) => [match[1], match[2]],
     ),
   );
-  assert.equal(tables.size, Object.keys(snapshot.tables).length);
+  // New commercial tables are additive; the four auth tables still compare exactly.
+  assert.deepEqual(
+    [...tables.keys()].sort(),
+    [
+      "user",
+      "session",
+      "account",
+      "verification",
+      "lead",
+      "lead_event",
+      "email_outbox",
+      "lead_rate_bucket",
+    ].sort(),
+  );
   for (const table of Object.values(snapshot.tables)) {
     const body = tables.get(table.name);
     assert.ok(body, `Missing table ${table.name}`);
@@ -127,4 +140,23 @@ test("Prisma SQL preserves physical schema against the historical snapshot offli
       );
     }
   }
+});
+
+test("lead migration adds commercial tables without destructive or auth changes", () => {
+  const sql = readFileSync(
+    "prisma/migrations/20261012070000_leads/migration.sql",
+    "utf8",
+  );
+  assert.ok(!/^\s*(DROP|TRUNCATE|DELETE)\b/im.test(sql));
+  assert.ok(sql.includes("BEGIN;"));
+  assert.ok(sql.trim().endsWith("COMMIT;"));
+  assert.ok(!/ALTER TABLE "(user|session|account|verification)"/.test(sql));
+  assert.deepEqual(
+    [...sql.matchAll(/CREATE TABLE "([^"]+)"/g)]
+      .map((match) => match[1])
+      .sort(),
+    ["lead", "lead_event", "email_outbox", "lead_rate_bucket"].sort(),
+  );
+  assert.ok(sql.includes('"lead_idempotencyKey_key"'));
+  assert.ok(sql.includes('"email_outbox_leadId_type_key"'));
 });

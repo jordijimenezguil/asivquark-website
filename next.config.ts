@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import { site } from "./src/config/site";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  trailingSlash: true,
   reactCompiler: true,
   async headers() {
     return [

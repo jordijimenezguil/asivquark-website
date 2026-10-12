@@ -1,12 +1,16 @@
-# Producto y diseño — Iteración 1
+# Producto y diseño — Iteración 3
 
 ASIVQUARK desarrolla software y productos digitales en Barcelona. La futura web comercial busca solicitudes cualificadas mediante SEO y una propuesta clara. Público: negocios/profesionales que necesitan web y empresas/emprendedores que necesitan software, aplicaciones o MVP.
 
-La persistencia utiliza Neon PostgreSQL con Prisma ORM/Migrate. Este cambio técnico conserva el producto de la iteración 1: no añade funciones comerciales, pantallas, contactos ni alteraciones del diseño.
+La persistencia mantiene Neon PostgreSQL con Prisma ORM/Migrate. Marketing no utiliza base de datos.
 
 ## Experiencia actual
 
-Home española provisional: header, hero con un H1, tres servicios, propuesta de valor, nota de proyectos, CTA informativo y footer. Navegación a secciones reales, sin servicios completos ni portfolio ficticio. Proyectos anuncia futuros casos verificados. Contacto informa del canal pendiente: los CTAs no envían datos ni solicitan realmente presupuestos todavía.
+Ocho páginas españolas: home, diseño web Barcelona, software a medida, aplicaciones web, MVP, proyectos, nosotros y contacto. Home distingue dos caminos comerciales y presenta cuatro servicios, principios, proceso, enfoque técnico, ubicación general, FAQ y CTA. Cada servicio explica necesidades, alcance y presupuesto cuando corresponde, sin precios o plazos inventados.
+
+Portfolio con estado vacío profesional y modelo para futuros casos verificados. Nosotros presenta criterios de trabajo sin inventar equipo ni trayectoria. El origen personal del nombre permanece fuera del contenido público.
+
+Contacto ofrece formulario real con selección de servicio desde URL, validación, carga, errores y confirmación tras persistir. Su captación pública sigue bloqueada por ausencia de información legal/configuración real; en local permite probar errores sin simular registro. No se han publicado textos legales, correos ni casos ficticios.
 
 ## Identidad
 
@@ -22,4 +26,8 @@ Menú móvil no modal con `aria-expanded`, `aria-controls`, cierre por selecció
 
 ## Pendiente
 
-Contacto real, contenido legal, páginas de servicios, proyectos verificables, blog/CMS, administración, leads y formularios. Sin cifras, clientes, testimonios ni datos comerciales inventados. Objetivos LCP ≤2,5 s, INP ≤200 ms y CLS ≤0,1 pendientes de medición en despliegue real. No publicar comercialmente sin completar canal y requisitos legales.
+Configurar Neon/Resend, verificar baseline y aplicar migración aditiva autorizada, aprobar política de privacidad y retención, operar reintentos/cleanup y probar el recorrido completo con datos controlados. No se han verificado persistencia remota o emails reales. Revisión visual responsive/teclado pendiente.
+
+Los proyectos requieren casos verificables. CRM/admin y gestión manual de estados quedan para una futura iteración, sin implementación actual. No hay newsletter, automatización de seguimiento o marketing por email.
+
+Objetivos LCP ≤2,5 s, INP ≤200 ms y CLS ≤0,1 pendientes de medición. [Flujos y límites de captación](leads.md).

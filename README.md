@@ -1,6 +1,6 @@
 # ASIVQUARK
 
-Web corporativa de un estudio de desarrollo de software y productos digitales en Barcelona. Primera iteración: fundamento técnico, sistema de diseño y home provisional. Dominio público previsto: **https://asivquark.com**, sin `www`.
+Web corporativa de un estudio de desarrollo de software y productos digitales en Barcelona. Tercera iteración: ocho páginas públicas y sistema de leads con validación, persistencia y notificaciones recuperables, pendiente de activar con configuración real. Dominio público: **https://asivquark.com**, sin `www`.
 
 ## Stack
 
@@ -17,14 +17,14 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-Abrir http://localhost:3000. No hacen falta Neon, Better Auth ni Resend para visualizar la home. `.env.local` está ignorado; `.env.example` se versiona sin secretos.
+Abrir http://localhost:3000. No hacen falta Neon, Better Auth ni Resend para visualizar las ocho páginas de marketing. `.env.local` está ignorado; `.env.example` se versiona sin secretos.
 
 ## Estructura
 
 ```text
 src/
   app/
-    (marketing)/       # Home y shell corporativo
+    (marketing)/       # Ocho páginas públicas y shell corporativo
     api/auth/[...all]/ # API con inicialización diferida
     layout.tsx, globals.css, not-found.tsx
     robots.ts, sitemap.ts, icon.svg, opengraph-image.tsx
@@ -32,7 +32,11 @@ src/
     branding/          # Logotipo provisional
     ui/                # Button, Container, Section, Card, SectionHeading
     layout/            # Header, menú móvil y footer
-    marketing/         # Secciones de la home
+    marketing/         # Heroes, servicios, FAQ, proceso y CTA
+    forms/             # Contacto interactivo y estados accesibles
+  features/leads/      # Contratos, repositorio, seguridad y outbox
+  emails/              # Plantillas seguras en HTML y texto
+  content/             # Servicios y proyectos públicos tipados y versionados
   config/              # URLs por entorno y navegación
   lib/
     auth/              # Autenticación y autorización en servidor
@@ -42,15 +46,16 @@ src/
     validations/       # Variables privadas
   generated/prisma/    # Cliente generado; ignorado por Git
 prisma/
-  schema.prisma        # Cuatro modelos de autenticación
+  schema.prisma        # Cuatro modelos de auth y cuatro modelos de captación
   migrations/0_init/   # Línea base SQL, sin aplicar
 prisma.config.ts       # CLI, carga .env.local y conexión directa
 drizzle/               # Archivo histórico inactivo, conservado por seguridad
-tests/                 # Aislamiento de entornos
+scripts/               # Mantenimiento privado de emails y retención
+tests/                 # Entornos, regresión DB y leads con dobles
 docs/                  # Arquitectura, producto, SEO y validación
 ```
 
-No se crean carpetas vacías de funcionalidades futuras. `features/` se incorporará cuando contenga lógica real.
+No se crean carpetas vacías de funcionalidades futuras. `features/leads/` contiene lógica real de captación; no hay módulos vacíos para un CRM futuro.
 
 ## Variables
 
@@ -118,7 +123,7 @@ Instancia diferida mediante `getAuth()`, adaptador oficial `@better-auth/prisma-
 
 ## Resend
 
-Configurar API key y email real de un dominio verificado. `sendTransactionalEmail()` valida destinatario, asunto y texto en servidor; inicializa el cliente solo al enviar. No tiene consumidores activos, formulario ni automatización. No se han enviado emails ni inventado remitentes.
+Configurar API key y email real de un dominio verificado. `sendTransactionalEmail()` valida destinatario, asunto y texto en servidor; inicializa el cliente solo al enviar. El módulo de leads añade emails HTML/texto y outbox mediante el SDK existente. Se activan solo con `LEADS_EMAIL_ENABLED=true` y configuración real; no se han enviado emails en esta sesión. No hay automatizaciones de seguimiento ni remitentes inventados.
 
 ## Scripts
 
@@ -148,9 +153,77 @@ Antes de publicación comercial: canal de contacto real, contenido legal y revis
 
 ## Alcance y siguientes fases
 
-Implementado: home responsive, navegación por anclas, logotipo tipográfico provisional, componentes y tokens, metadata, OG, icono, robots/sitemap e integraciones diferidas. Proyectos informa de próximos casos reales; contacto explica que el canal está en preparación.
+Implementado en iteración 2: home definitiva, cuatro landings de servicios, nosotros, proyectos y contacto. Navegación con servicios desplegables en escritorio, listado en móvil e indicador de página activa. Footer con ubicación general y enlaces reales. Sin servicios externos para renderizar marketing.
 
-Pendiente: servicios completos, proyectos reales, blog, CMS, dashboard, leads, formularios, login, flujos email, páginas legales y mediciones Core Web Vitals. No comenzar otra iteración sin petición expresa.
+### Rutas públicas
+
+- `/`
+- `/diseno-web-barcelona/`
+- `/desarrollo-software-medida/`
+- `/desarrollo-aplicaciones-web/`
+- `/desarrollo-mvp/`
+- `/proyectos/`
+- `/nosotros/`
+- `/contacto/`
+
+`trailingSlash: true` redirige a las URLs con barra final. El sitemap usa la misma lista de ocho rutas de `src/config/navigation.ts`, sin fechas inventadas ni fichas de proyectos inexistentes. Canonicals absolutos, sin parámetros y sin www, exclusivamente en producción. Local y preview permanecen no indexables y sin canonical; el sitemap está vacío. No se ha desplegado ni cambiado DNS.
+
+### Contenido y componentes
+
+`src/content/services.ts` define cuatro servicios mediante el tipo `Service`: copy, SEO, secciones, proceso, FAQ y CTA. `ServicePage` compone las landings con un orden de proceso específico por servicio. Se reutilizan `PageHero`, `ServiceHero`, `ServiceCard`, `FeatureGrid`, `BenefitCard`, `ProcessSteps`, `FAQAccordion`, `ContactCTA` y `Breadcrumbs` del módulo `commercial.tsx`, además de las primitivas existentes y `ProjectCard`.
+
+`src/content/projects.ts` contiene el modelo `PublicProject` (slug, título, resumen, categoría, descripción, tecnologías, imagen y publicación) y una colección vacía. Solo se muestran proyectos publicados; no se han creado fichas individuales. Incorporar trabajos reales con autorización antes de ampliar el portfolio.
+
+Las páginas son Server Components. Las fronteras cliente se limitan al menú, enlaces de navegación con estado activo y formulario/atribución en memoria. Las FAQ usan `details/summary` nativos. El diseño combina cabeceras oscuras y lectura clara, con Geist y los tokens existentes.
+
+### SEO y conversión
+
+`pageMetadata()` en `src/lib/seo/metadata.ts` sigue centralizando title, description, metadataBase, canonical, robots, Open Graph y Twitter. Cada ruta declara textos propios. Las siete páginas interiores muestran breadcrumbs; en producción emiten `BreadcrumbList`. La home emite `Organization` y `WebSite`, con Barcelona como ubicación general y sin dirección postal ni contactos inventados. JSON-LD serializado con escape de `<`; no hay ratings ni marcado FAQPage.
+
+Los servicios enlazan a contacto con `?servicio=web|software|aplicacion|mvp` y a un servicio relacionado. `data-conversion="project-contact"` identifica los CTA para una medición futura; no existe analítica ni emisión de eventos externos.
+
+### Captación de leads — Iteración 3
+
+Formulario real con nombre, email, empresa/teléfono opcionales, tipo de proyecto, presupuesto orientativo opcional, descripción y lectura de privacidad. Validación Zod compartida y definitiva en servidor. Estados de carga, errores por campo, reintento conservando datos y éxito solo tras persistencia. El servicio se preselecciona por URL y se puede modificar. No utiliza React Hook Form ni React Email.
+
+`POST /api/leads/` requiere origen del entorno, JSON, cuerpo de hasta 32 KiB y UUID en `Idempotency-Key`. La transacción Prisma guarda Lead, eventos y dos registros EmailOutbox. La clave única evita duplicados; el hash normalizado impide reutilizarla con contenido distinto. Rate limiting PostgreSQL compartido entre instancias, HMAC para contadores sin IP/email en texto, honeypot y respuestas controladas. No hay endpoints públicos de lectura ni panel administrativo.
+
+Notificaciones mediante Resend después de responder con `after()`. Reservas y claves estables previenen envíos concurrentes; fallos conservan el lead y dejan estados recuperables. Resend mantiene idempotencia 24 horas; el procesador deja de reintentar solicitudes ambiguas a las 20 horas. La respuesta de éxito no afirma entrega de correo.
+
+```bash
+pnpm test:leads
+pnpm leads:process                 # Intentar hasta 20 emails vencidos; envíos con opt-in
+pnpm leads:cleanup                 # Contar datos vencidos sin eliminarlos
+pnpm leads:cleanup --execute       # Eliminar solo con destino y autorización confirmados
+```
+
+`tsx` es la única nueva dependencia, exclusivamente de desarrollo para pruebas y comandos privados. La aplicación utiliza Prisma 7.10.0 y mantiene Better Auth sin cambios de tablas existentes. Migración aditiva preparada en `prisma/migrations/20261012070000_leads/`, no aplicada. Antes de migrar una base existente, verificar baseline según [Prisma](docs/prisma.md). No hay conexión Neon ni entrega Resend comprobadas en esta sesión.
+
+### Configuración y bloqueos de producción
+
+Variables adicionales documentadas en `.env.example`:
+
+| Variable | Uso |
+| --- | --- |
+| `LEADS_NOTIFICATION_EMAIL` | Buzón comercial real, exclusivamente servidor |
+| `LEADS_EMAIL_ENABLED` | Opt-in para envíos reales; false por defecto |
+| `LEADS_SECURITY_SECRET` | Secreto independiente de al menos 32 caracteres para HMAC de límites |
+| `LEADS_ENABLED` | Opt-in de captación pública en el entorno específico |
+| `LEADS_PRIVACY_NOTICE_URL` | HTTPS de información legal real aprobada |
+| `LEADS_PRIVACY_NOTICE_VERSION` | Versión registrada con cada lectura |
+| `LEADS_RETENTION_DAYS` | Vencimiento de leads según política configurada; obligatorio fuera de local |
+
+Local funciona sin servicios y permite comprobar errores; no simula registro. Sin DATABASE_URL o secreto de seguridad, enviar devuelve 503. Sin Resend activado, los emails quedan pendientes. Producción/preview exige configuración de captación, Vercel, DB, secreto, aviso y retención; en ausencia de requisitos el formulario y endpoint permanecen cerrados. No existe política de privacidad aprobada ni se ha publicado una ficticia. Reconstruir el despliegue al cambiar configuración del formulario.
+
+Atribución de entrada, página anterior y UTM en memoria de pestaña; CTA de servicio añade su ruta en `origen`. No hay cookies de seguimiento, almacenamiento de navegador ni trackers externos. Referrer conserva únicamente el origen; datos ausentes quedan null. Los valores nunca se usan para seguridad.
+
+Para Resend, configurar dominio/remitente verificado y buzón interno reales. Obtener registros SPF/DKIM exactos de la consola y aplicarlos únicamente con autorización; consultar [dominios de Resend](https://resend.com/docs/dashboard/domains/introduction). No se modificó DNS.
+
+Antes de activar producción: verificar/aplicar migraciones en rama autorizada, configurar servicios, aprobar información legal y retención, programar mantenimiento privado de pendientes/vencidos, realizar prueba integral con destinatarios controlados y revisar visualmente el formulario. `after()` no es un worker durable y no se ha activado cron ni servicio adicional. La retención requiere ejecutar cleanup; el vencimiento no borra por sí solo.
+
+Detalle de arquitectura, seguridad, límites, reintentos, modelo de datos y operaciones: [sistema de leads](docs/leads.md). Resultados reales: [validación](docs/validacion.md).
+
+Futuras iteraciones: CRM/admin y gestión de estados. No se implementan dashboard, login visual, usuarios, blog, CMS, automatizaciones, pagos o sistemas de reserva. Portfolio sin casos ficticios. Métricas Core Web Vitals y revisión visual responsive pendientes de medición; no se ha desplegado producción.
 
 - [Arquitectura](docs/arquitectura.md)
 - [Producto](docs/producto.md)
