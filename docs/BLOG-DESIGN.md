@@ -59,7 +59,9 @@ Hero / imagen de cabecera opcional
 └─────────────────────┘  └──────────────────────┘
 Sigue leyendo / Footer con CTA
 ```
-El listado se renderiza en servidor al recibir `categoria` y `pagina`, para mantener filtros GET sin JavaScript adicional. Los artículos y RSS se prerenderizan.
+El listado `/blog/` se prerenderiza al construir, igual que los artículos y RSS. No lee searchParams ni incluye búsqueda, filtros de categoría, destacado o paginación. Muestra todos los artículos publicados en un mosaico uniforme: una columna móvil, dos desde sm y tres desde lg. El catálogo previsto por el propietario es de seis artículos como máximo; con uno se muestra una sola tarjeta, sin cajas de relleno. No se recorta silenciosamente el contenido si se publica más.
+
+`PostCard` tiene una variante `boxed` para el listado: borde line, esquinas rounded-2xl, padding 20 px, imagen existente 16/10, categoría 13 px, título h2 de 19 px, descripción de 16 px, fecha y tiempo de lectura de 14 px. La tarjeta completa es un enlace y ocupa la altura de su fila; el primer cover tiene carga prioritaria. Los relacionados conservan su variante actual con h3. Reutilizar estos tokens y tamaños existentes. Los breadcrumbs de categoría en artículos enlazan a `/blog/`, sin parámetros de filtro.
 
 Sin barra inferior: la del handoff es opcional y no existe en el shell actual. El artículo permanece a la izquierda del espacio restante en desktop.
 

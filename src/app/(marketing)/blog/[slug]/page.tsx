@@ -27,7 +27,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const article = await getArticle(params);
   const related = relatedArticles(article, getArticles());
   const href = contactHref(article);
-  const categoryHref = `/blog/?categoria=${article.category}`;
+  const categoryHref = "/blog/";
   return <div className="blog-page">
     {site.isProduction && <><JsonLd data={{ "@context": "https://schema.org", "@type": "BlogPosting", headline: article.title, description: article.description, datePublished: article.publishedAt, dateModified: article.updatedAt ?? article.publishedAt, author: { "@type": "Organization", name: "ASIVQUARK", "@id": `${site.origin}/#organization` }, publisher: { "@id": `${site.origin}/#organization`, "@type": "Organization", name: "ASIVQUARK", logo: { "@type": "ImageObject", url: `${site.origin}/brand/asivquark-horizontal-dark.svg` } }, image: `${site.origin}${article.cover ?? "/opengraph-image"}`, mainEntityOfPage: `${site.origin}${article.href}`, url: `${site.origin}${article.href}`, inLanguage: "es-ES" }} /><JsonLd data={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Inicio", item: `${site.origin}/` }, { "@type": "ListItem", position: 2, name: "Blog", item: `${site.origin}/blog/` }, { "@type": "ListItem", position: 3, name: categories[article.category], item: `${site.origin}${categoryHref}` }] }} /></>}
     <header className="blog-hero bg-navy text-white"><Container className="flex flex-col gap-5 pt-10 pb-12 sm:pt-12 sm:pb-16 lg:gap-6 lg:pt-14 lg:pb-[72px]">

@@ -38,7 +38,8 @@ test("article has Spanish anchors, category breadcrumb and contact CTAs", () => 
     assert.ok(html.includes(`id="${section.id}"`));
     assert.ok(html.includes(`href="#${section.id}"`));
   }
-  assert.ok(html.includes('href="/blog/?categoria=diseno-web"'));
+  assert.ok(html.includes('href="/blog/"'));
+  assert.ok(!html.includes('/blog/?categoria='));
   assert.ok(html.includes('data-location="blog_footer"'));
   assert.ok(html.includes('/contacto/?tipo=web&amp;origen=blog-que-debe-tener-una-pagina-web-profesional'));
 });

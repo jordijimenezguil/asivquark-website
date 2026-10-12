@@ -40,10 +40,10 @@ export function assertRequestOrigin(request: Request, origin: string) {
   )
     throw new LeadHttpError(415, "CONTENT_TYPE_REJECTED");
 }
-export async function readLimitedJson(
+export async function readLimitedText(
   request: Request,
   maxBytes = 32768,
-): Promise<unknown> {
+): Promise<string> {
   const length = request.headers.get("content-length");
   if (length && (!/^\d+$/.test(length) || Number(length) > maxBytes))
     throw new LeadHttpError(413, "BODY_TOO_LARGE");
@@ -75,9 +75,7 @@ export async function readLimitedJson(
       offset += chunk.length;
     }
     try {
-      return JSON.parse(
-        new TextDecoder("utf-8", { fatal: true }).decode(bytes),
-      ) as unknown;
+      return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
     } catch {
       throw new LeadHttpError(400, "INVALID_JSON");
     }
@@ -93,4 +91,10 @@ export function isPrismaCode(error: unknown, code: string) {
     "code" in error &&
     error.code === code
   );
+}
+
+export async function readLimitedJson(request: Request, maxBytes = 32768): Promise<unknown> {
+  const text = await readLimitedText(request, maxBytes);
+  try { return JSON.parse(text) as unknown; }
+  catch { throw new LeadHttpError(400, "INVALID_JSON"); }
 }

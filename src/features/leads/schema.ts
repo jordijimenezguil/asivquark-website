@@ -42,14 +42,14 @@ export const leadSchema = z.strictObject({
     .pipe(
       z
         .string()
-        .min(2, "Introduce al menos 2 caracteres.")
+        .min(2, "Escribe tu nombre.")
         .max(100, "Máximo 100 caracteres.")
         .refine(plainText, "Utiliza texto sin etiquetas HTML."),
     ),
   email: z
     .string()
     .trim()
-    .pipe(z.email("Introduce un email válido.").max(254))
+    .pipe(z.email("Revisa el email; parece incompleto.").max(254))
     .transform((value) => {
       const at = value.lastIndexOf("@");
       return value.slice(0, at) + "@" + value.slice(at + 1).toLowerCase();
@@ -82,8 +82,8 @@ export const leadSchema = z.strictObject({
     .pipe(
       z
         .string()
-        .min(20, "Describe el proyecto con al menos 20 caracteres.")
-        .max(5000, "Máximo 5.000 caracteres.")
+        .min(10, "Cuéntanos en una frase qué necesitas.")
+        .max(2000, "Máximo 2.000 caracteres.")
         .refine(plainText, "Utiliza texto sin etiquetas HTML."),
     ),
   privacy: z.literal(true, {

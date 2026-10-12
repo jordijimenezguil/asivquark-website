@@ -1,23 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
-export function FormSuccess({ type, onRestart }: { type: string; onRestart: () => void }) {
-  return (
-    <div
-      role="status"
-      tabIndex={-1}
-      id="lead-success"
-      className="rounded-xl border border-slate-200 bg-white p-8 sm:p-12"
-    >
-      <p className="mb-4 font-mono text-xs text-ink-500">Paso 3 de 3 · Confirmación</p>
-      <CheckCircle2 className="mb-6 text-violet" aria-hidden="true" />
-      <h2 className="text-3xl font-medium tracking-tight">
-        Solicitud recibida
-      </h2>
-      <p className="mt-5 leading-8 text-slate-600">
-        Gracias por contactar con ASIVQUARK. Hemos recibido la información de tu
-        proyecto de {type.toLowerCase()}. Te respondemos en 24 h laborables.
-      </p>
-      <Button onClick={onRestart} variant="ghost" className="mt-8 text-violet">← Volver al formulario</Button>
-    </div>
-  );
+import { ContactNextSteps } from "./contact-next-steps";
+export function FormSuccess({ onRestart }: { onRestart: () => void }) {
+  return <div role="status">
+    <div aria-hidden="true" className="mb-4 flex size-11 items-center justify-center rounded-full bg-violet-50 text-violet">✓</div>
+    <h2 id="lead-success" tabIndex={-1} className="text-[22px] font-bold">Solicitud enviada</h2>
+    <p className="mt-3 text-[15px] text-ink-600">Te escribimos en 24 h laborables para agendar una llamada de 30 minutos.</p>
+    <div className="text-ink-600 lg:hidden"><ContactNextSteps /></div>
+    <button type="button" onClick={onRestart} className="mt-5 min-h-11 text-sm font-semibold text-violet">Enviar otra solicitud</button>
+  </div>;
 }

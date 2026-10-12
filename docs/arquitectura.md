@@ -68,7 +68,7 @@ WebDesignPage seleccionada únicamente para uiType=web, reutilizando primitivas 
 
 ## Blog MDX — Guía con índice
 
-`src/lib/blog/content.ts` descubre contenido local, valida frontmatter con Zod, genera TOC español desde el AST y calcula lectura. `ArticleBody` compila MDX local revisado en servidor con next-mdx-remote, remark y rehype-slug; headings numerados fuera del texto accesible. `src/components/marketing/blog/` concentra componentes editoriales y TOC cliente (IntersectionObserver y cierre del details móvil). El listado es SSR para filtros/paginación GET sin cliente adicional; artículos SSG y RSS force-static. Sitemap descubre todas las rutas MDX, conservando vacío en preview/local. `src/content/articles.ts` es solo una exportación de compatibilidad; el cuerpo vive exclusivamente en MDX. La card comercial de diseño web conserva su enlace estable en `src/config/blog.ts`; no hay que editar ese archivo al publicar una nueva guía.
+`src/lib/blog/content.ts` descubre contenido local, valida frontmatter con Zod, genera TOC español desde el AST y calcula lectura. `ArticleBody` compila MDX local revisado en servidor con next-mdx-remote, remark y rehype-slug; headings numerados fuera del texto accesible. `src/components/marketing/blog/` concentra componentes editoriales y TOC cliente (IntersectionObserver y cierre del details móvil). El listado se prerenderiza sin leer searchParams: mosaico de todos los artículos MDX publicados, sin filtros ni paginación y sin frontera cliente adicional. Artículos SSG y RSS force-static. Sitemap descubre todas las rutas MDX, conservando vacío en preview/local. `src/content/articles.ts` es solo una exportación de compatibilidad; el cuerpo vive exclusivamente en MDX. La card comercial de diseño web conserva su enlace estable en `src/config/blog.ts`; no hay que editar ese archivo al publicar una nueva guía.
 
 ## Iteración legal — 12/10/2026
 
@@ -85,3 +85,11 @@ Hero exclusivo Home en `components/marketing/home-hero.tsx`: retícula sutil, H1
 Selector con radios nativos y formulario GET: flechas/Tab gestionados por navegador, `tipo=app` convertido al contrato `aplicacion`; funciona sin JS. CTA emite `cta_click` local con location home_hero/tipo, sujeto al consentimiento existente. Header global de 64/90px, CTA Contacto en móvil y oculto en contacto, icono menú 20px y caja 44px. SVG original conservado con caja de 28px y ajuste proporcional al espacio disponible para no desbordar en 320px. Paso 2 datos y paso 3 confirmación en contacto.
 
 Franja reciente solo móvil consume hasta cuatro proyectos publicados del mismo catálogo; actualmente vacío, sin casos ficticios. Carrusel/capturas diferidos hasta trabajos autorizados. No se añade barra flotante: no existe la barra previa mencionada. Resto de Home y páginas conservado, incluyendo infraestructura legal pendiente. Pruebas/limitaciones en docs/validacion.md.
+
+## Contacto compacto 4a
+
+Página servidor con intro y JSON-LD público; ContactForm mantiene frontera cliente, validación compartida, fetch JSON a /api/leads/, idempotencia, límites de reintento y conservación de datos. details funciona sin JavaScript; chips son radios. Alias soft adapta al contrato software sin alterar los tipos existentes.
+
+POST /api/contacto/ acepta únicamente formulario URL-encoded del mismo origen, limita cuerpo a 32 KiB y convierte nombres españoles al contrato de leads. Delega persistencia, rate limit y gates al mismo handler mediante la ruta existente; respuesta HTML sin JS, con datos escapados conservados para reintento y noindex/no-store. Éxito con JS permanece dentro de la hoja y enfoca el h2; pasos solo móvil porque escritorio ya los muestra a la izquierda. generate_lead y form_error {campo} son eventos locales sujetos al consentimiento. Campos origen/utm y atribución nativa también requieren permiso analítico.
+
+Banner cliente acotado a /contacto, antes del header, desactivado con NEXT_PUBLIC_ENV=production y siempre excluido por site.isProduction. Esta variable solo controla el aviso; VERCEL_ENV conserva autoridad para dominio, indexación y gates.

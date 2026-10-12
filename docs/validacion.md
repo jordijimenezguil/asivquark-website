@@ -423,3 +423,25 @@ Checklist jurídico y riesgos: docs/legal/compliance-checklist.md. Informe de ca
 - Carrusel preparado solo para proyectos publicados reales; actualmente estado vacío. Interacción táctil/teclado pendiente hasta disponer de contenido y navegador.
 
 Servidor dev iniciado por petición expresa mediante pnpm dev, localhost:3000. No desplegado, sin migraciones ni envíos.
+
+## Contacto 4a — 12/10/2026
+
+Comprobaciones ejecutadas:
+
+- pnpm prisma validate: esquema válido. pnpm db:generate: cliente 7.10.0 generado sin migraciones.
+- pnpm lint y pnpm typecheck: pasan tras la implementación.
+- pnpm test:config: 6/6; pnpm test:db: 3/3; pnpm test:leads: 29/29; pnpm test:home: 4/4. Nuevas pruebas cubren límites 10–2000, textos requeridos, alias soft/app y rechazo de origen/content-type/cuerpo excesivo del POST nativo. Dobles de persistencia/email en las pruebas existentes; no envíos reales.
+- pnpm build: falla por EPERM al abrir puerto de procesos internos de Turbopack, también tras intento escalado. Alternativa pnpm exec next build --webpack: pasa, incluida generación de /contacto y /api/contacto. Sin cambiar bundler configurado en package.json.
+- Captura aportada durante revisión muestra scroll horizontal de toda la página desde chips. Corrección: min-w-0 en hoja, formulario y especialmente fieldset, cuyo mínimo nativo era min-content. Scroll permanece dentro de la fila overflow-x-auto. Lint/tipos y build Webpack pasan después del ajuste.
+
+Límites: navegador IAB no disponible; Chrome mediante herramienta de control no autorizado. No se afirma revisión visual realizada en 320/375/640/768/1280, H1 de una línea, altura del fold, scroll menor de 300px, foco interactivo, sticky efectivo ni Lighthouse/CLS. Pendiente comprobar con captura actualizada tras corregir desbordamiento. Banner de cookies existente puede cubrir campos hasta decidir preferencias. Sin aprobar privacidad, activar captación pública, migrar base, contactar servicios externos, enviar emails o desplegar producción. La política de privacidad sigue pendiente; producción muestra solo email en la hoja mientras config.enabled sea false.
+
+## Blog — listado estático en mosaico, 12/10/2026
+
+Petición del propietario: retirar búsqueda/filtros y disponer tarjetas uniformes para el catálogo previsto de seis artículos como máximo. Eliminadas lectura de searchParams, selección de categoría, destacado y paginación. PostCard boxed reutiliza estilos existentes; una/dos/tres columnas según móvil/sm/lg. Sin artículos ficticios o relleno. Enlaces de categoría del artículo ahora apuntan a /blog/.
+
+Resultados ejecutados: pnpm prisma validate válido; pnpm db:generate genera cliente 7.10.0 sin migraciones; pnpm lint y pnpm typecheck pasan; pnpm test:config 6/6 y pnpm test:db 3/3. Build alternativo pnpm exec next build --webpack pasa y clasifica **○ /blog** (antes ƒ), artículos ● y RSS ○. Se usa Webpack por el bloqueo EPERM de Turbopack documentado en la comprobación previa, sin modificar package.json.
+
+node --import tsx --test tests/blog-index-static.test.ts: 2/2. Se comprueban artefacto HTML real, inclusión en prerender-manifest, un H1, una tarjeta por artículo publicado, enlaces/descripciones y ausencia de filtros/paginación/destacado. El intento inicial vía CLI tsx falló por EPERM al crear su socket; ejecutado satisfactoriamente como loader Node. git diff --check pasa.
+
+Documentación actualizada: BLOG-DESIGN, README, arquitectura, producto y SEO. Sin desplegar Vercel: la clasificación estática se confirma en build local y aparecerá en el próximo despliegue de este código. Revisión visual móvil/escritorio y Lighthouse no realizados: persiste la indisponibilidad/no autorización del navegador de la sesión anterior. No se modifican MDX, fechas ni contenido editorial.

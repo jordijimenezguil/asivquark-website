@@ -122,3 +122,19 @@ test("public capture stays closed when environment flags point to an unapproved 
   assert.equal(getContactConfig({}, "development").testMode, true);
   assert.equal(getContactConfig({}, "preview").enabled, false);
 });
+
+test("contact message accepts 10–2000 characters with the compact-form errors", () => {
+  assert.equal(leadSchema.safeParse({ ...valid, description: "x".repeat(10) }).success, true);
+  assert.equal(leadSchema.safeParse({ ...valid, description: "x".repeat(2000) }).success, true);
+  assert.equal(leadSchema.safeParse({ ...valid, description: "x".repeat(2001) }).success, false);
+  const result = leadSchema.safeParse({ ...valid, name: "", email: "", description: "" });
+  assert.equal(result.success, false);
+  if (!result.success) assert.deepEqual(result.error.issues.map(issue => issue.message), ["Escribe tu nombre.", "Revisa el email; parece incompleto.", "Cuéntanos en una frase qué necesitas."]);
+});
+
+test("compact software URL alias preserves the existing contact contract", async () => {
+  const { parseContactProjectType, projectTypeForContract } = await import("../src/content/project-type");
+  assert.equal(projectTypeForContract(parseContactProjectType(["soft"], [])), "software");
+  assert.equal(projectTypeForContract(parseContactProjectType(["app"], [])), "aplicacion");
+  assert.equal(parseContactProjectType(["app", "web"], []), "web");
+});

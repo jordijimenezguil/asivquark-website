@@ -16,5 +16,5 @@ export function parseContactProjectType(tipo: readonly string[], servicio: reado
     if (servicio[0] === "otro") return "otro";
     return services.find(service => service.query === servicio[0])?.uiType ?? "web";
   }
-  return parsePublicProjectType(tipo);
+  return parsePublicProjectType(tipo.map(value => value === "soft" ? "software" : value));
 }

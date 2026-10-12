@@ -1,37 +1,43 @@
 "use client";
 import { hasConsent } from "@/features/cookies/consent";
-import { projectOptions, projectTypeForContract, type PublicProjectType } from "@/content/project-type";
+import { projectTypeForContract, type PublicProjectType } from "@/content/project-type";
 import { services, type Service } from "@/content/services";
 import { emitMarketingEvent } from "@/components/marketing/events";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Button } from "@/components/ui/button";
+
 import {
   leadSchema,
   budgetLabels,
-  serviceLabels,
   type FieldErrors,
   type Attribution,
 } from "@/features/leads/schema";
 import { browserAttribution } from "@/features/leads/client-attribution";
 import type { PublicContactConfig } from "@/config/contact";
-import { PrivacyBasicInformation } from "@/components/legal/privacy-basic-information";
-import { FormField } from "./form-field";
+
+
 import { FormSuccess } from "./form-success";
 export function ContactForm({
   config,
   initialService,
+  trackingFields = {},
 }: {
   config: PublicContactConfig;
   initialService?: Service["query"] | "otro";
+  trackingFields?: Record<string, string>;
 }) {
   const form = useRef<HTMLFormElement>(null);
   const submitting = useRef(false);
   const attempt = useRef<{ key: string; payload: string } | null>(null);
   const attribution = useRef<Attribution | null>(null);
   const [optional, setOptional] = useState(false);
-  const started = useRef(false);
   const [selected, setSelected] = useState<PublicProjectType>(initialService === "otro" ? "otro" : services.find(item => item.query === initialService)?.uiType ?? "web");
-  const [confirmed, setConfirmed] = useState("web");
+  const chips = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const row = chips.current;
+    const active = row?.querySelector<HTMLInputElement>("input:checked")?.parentElement;
+    if (row && active) row.scrollLeft = Math.max(0, active.offsetLeft - row.offsetLeft - 20);
+  }, [selected]);
+
   const [errors, setErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState("");
   const [pending, setPending] = useState(false);
@@ -56,14 +62,14 @@ export function ContactForm({
     setErrors({});
     const data = new FormData(event.currentTarget);
     const input = {
-      name: String(data.get("name") ?? ""),
+      name: String(data.get("nombre") ?? ""),
       email: String(data.get("email") ?? ""),
-      company: String(data.get("company") ?? ""),
-      phone: String(data.get("phone") ?? ""),
+      company: String(data.get("empresa") ?? ""),
+      phone: String(data.get("telefono") ?? ""),
       projectType: projectTypeForContract(selected),
-      budget: String(data.get("budget") ?? ""),
-      description: String(data.get("description") ?? ""),
-      privacy: data.get("privacy") === "on",
+      budget: String(data.get("presupuesto") ?? ""),
+      description: String(data.get("mensaje") ?? ""),
+      privacy: true,
     };
     const parsed = leadSchema.safeParse(input);
     if (!parsed.success) {
@@ -72,10 +78,10 @@ export function ContactForm({
         fields[issue.path[0] as keyof FieldErrors] ??= issue.message;
       setErrors(fields);
       if(fields.company || fields.phone || fields.budget) setOptional(true);
-      emitMarketingEvent("form_error");
-      setMessage("Revisa los campos indicados antes de enviar.");
+      emitMarketingEvent("form_error", { campo: Object.keys(fields)[0] });
+
       const first = Object.keys(fields)[0];
-      requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus());
+      requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[id="${first}"]`)?.focus());
       return;
     }
     if (!hasConsent("analytics")) attribution.current = null;
@@ -109,8 +115,8 @@ export function ContactForm({
       )
         throw new Error("INVALID_RESPONSE");
       if (response.status === 201 && result.success === true) {
-        setConfirmed(serviceLabels[projectTypeForContract(selected)]);
-        emitMarketingEvent("form_success");
+
+        emitMarketingEvent("generate_lead", { tipo: type, origen: attribution.current?.originPath, presupuesto: parsed.data.budget });
         setSuccess(true);
         return;
       }
@@ -126,9 +132,9 @@ export function ContactForm({
         setErrors(fields);
         if(fields.company || fields.phone || fields.budget) setOptional(true);
         const first = Object.keys(fields)[0];
-        requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus());
+        requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[id="${first}"]`)?.focus());
       }
-      emitMarketingEvent("form_error");
+      emitMarketingEvent("form_error", { campo: "servidor" });
       if (response.status === 409) attempt.current = null;
       if (response.status === 429) {
         const seconds = Number(response.headers.get("retry-after"));
@@ -141,208 +147,48 @@ export function ContactForm({
         );
       }
       setMessage(
-        "message" in result && typeof result.message === "string"
-          ? result.message
-          : "No hemos podido procesar la solicitud. Inténtalo de nuevo.",
+        "No hemos podido enviar la solicitud. Inténtalo de nuevo o escríbenos a hola@asivquark.com.",
       );
     } catch {
-      emitMarketingEvent("form_error");
+      emitMarketingEvent("form_error", { campo: "servidor" });
       setMessage(
-        "No hemos podido confirmar el envío. Tus datos siguen aquí; puedes reintentar la misma solicitud.",
+        "No hemos podido enviar la solicitud. Inténtalo de nuevo o escríbenos a hola@asivquark.com.",
       );
     } finally {
       submitting.current = false;
       setPending(false);
     }
   }
-  if (success) return <FormSuccess type={confirmed} onRestart={() => { attempt.current = null; attribution.current = null; setErrors({}); setMessage(""); setSuccess(false); }} />;
-  const props = (name: keyof FieldErrors) => ({
-    id: name,
-    name,
-    className: "form-input",
-    "aria-invalid": Boolean(errors[name]),
-    "aria-describedby": errors[name] ? `${name}-error` : undefined,
-  });
-  return (
-    <div className="rounded-2xl border border-line bg-white p-6 shadow-[0_30px_60px_-30px_rgba(11,15,23,.3)] sm:p-10">
-      <h2 className="text-2xl font-bold tracking-tight">
-        Cuéntanos lo que necesitas
-      </h2>
-      <p id="form-status" className="mt-4 leading-7 text-slate-600">
-        {!config.enabled
-          ? "La captación está pendiente de activación y de la información de privacidad aprobada. No se pueden enviar solicitudes en este entorno."
-          : config.testMode && !config.noticeUrl
-            ? "Modo de desarrollo: utiliza solo datos de prueba. Falta la información de privacidad aprobada para publicar el formulario."
-            : "Los campos marcados con * son obligatorios. No incluyas información sensible en la descripción."}
-      </p>
-      <form
-        ref={form}
-        onSubmit={submit}
-        onFocus={() => { if(!started.current) { started.current = true; emitMarketingEvent("form_start"); } }}
-        onBlur={(event) => { const name = event.target.getAttribute("name") as keyof FieldErrors | null; if(!name || !(name in leadSchema.shape)) return; const value = name === "projectType" ? projectTypeForContract(selected) : event.target instanceof HTMLInputElement && event.target.type === "checkbox" ? event.target.checked : event.target.value; const result = leadSchema.shape[name].safeParse(value); setErrors(previous => ({ ...previous, [name]: result.success ? undefined : result.error.issues[0]?.message })); }}
-        method="post"
-        action="/api/leads/"
-        noValidate
-        aria-describedby="form-status"
-        aria-busy={pending}
-        className="mt-8"
-      >
-        <fieldset disabled={!config.enabled || pending}>
-          <legend className="sr-only">Información de tu proyecto</legend>
-          <fieldset className="mb-7"><legend className="form-label">¿Qué quieres desarrollar? *</legend><div className="grid grid-cols-2 gap-2">{projectOptions.map(service => <label key={service.value} className={`relative flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border px-3 py-3 text-sm font-semibold ${selected === service.value ? "border-violet bg-violet text-white" : "border-line-strong"}`}><input type="radio" name="projectType" value={service.value} aria-describedby={errors.projectType ? "projectType-error" : undefined} checked={selected === service.value} onChange={() => setSelected(service.value)} className="h-4 w-4 accent-violet" />{service.label}</label>)}</div>{errors.projectType && <p id="projectType-error" className="mt-2 text-sm text-red-700">{errors.projectType}</p>}</fieldset>
-          <p className="mb-4 font-mono text-xs text-ink-500">Paso 2 de 3 · Datos de contacto</p>
-          <div className="grid gap-6 sm:grid-cols-2">
-            <FormField name="name" label="Nombre" required error={errors.name}>
-              <input
-                {...props("name")}
-                type="text"
-                autoComplete="name"
-                required
-                maxLength={100}
-              />
-            </FormField>
-            <FormField name="email" label="Email" required error={errors.email}>
-              <input
-                {...props("email")}
-                type="email"
-                autoComplete="email"
-                required
-                maxLength={254}
-              />
-            </FormField>
-            <FormField
-              name="description"
-              label="¿Qué quieres resolver?"
-              required
-              error={errors.description}
-              className="sm:col-span-2"
-            >
-              <textarea
-                {...props("description")}
-                rows={4}
-                required
-                minLength={20}
-                maxLength={5000}
-                placeholder="Cuéntanos qué necesitas desarrollar, qué problema quieres resolver o en qué consiste tu idea."
-              />
-            </FormField>
-            <div className="sm:col-span-2"><button type="button" aria-expanded={optional} aria-controls="optional-fields" className="min-h-12 text-left text-sm font-semibold text-violet" onClick={() => { if(!optional) emitMarketingEvent("form_optional_open"); setOptional(!optional); }}>{optional ? "− Ocultar detalles opcionales" : "+ Añadir empresa, teléfono o presupuesto (opcional)"}</button><div id="optional-fields" hidden={!optional}><div className="grid gap-6 pt-4 sm:grid-cols-2">            <FormField
-              name="company"
-              label="Empresa (opcional)"
-              error={errors.company}
-            >
-              <input
-                {...props("company")}
-                autoComplete="organization"
-                maxLength={150}
-              />
-            </FormField>
-            <FormField
-              name="phone"
-              label="Teléfono (opcional)"
-              error={errors.phone}
-            >
-              <input
-                {...props("phone")}
-                type="tel"
-                autoComplete="tel"
-                maxLength={40}
-              />
-            </FormField>
-            <FormField
-              name="budget"
-              label="Presupuesto orientativo (opcional)"
-              error={errors.budget}
-            >
-              <select {...props("budget")} defaultValue="">
-                <option value="" key="budget-placeholder">Sin indicar</option>
-                {Object.entries(budgetLabels).map(([value, label]) => (
-                  <option value={value} key={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-              <p className="mt-2 text-xs leading-5 text-slate-600">
-                Sirve para orientar el alcance; no son precios oficiales.
-              </p>
-            </FormField>
-</div></div></div>
-            <div className="sm:col-span-2">
-              <PrivacyBasicInformation />
-              <label
-                htmlFor="privacy"
-                className="flex items-start gap-3 text-sm leading-6"
-              >
-                <input
-                  {...props("privacy")}
-                  className="mt-1 h-5 w-5 shrink-0 accent-violet"
-                  type="checkbox"
-                  required
-                />
-                <span>
-                  {config.noticeUrl ? (
-                    <>
-                      He leído la{" "}
-                      <a
-                        href={config.noticeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-violet underline underline-offset-4"
-                      >
-                        información sobre el tratamiento de mis datos (nueva
-                        pestaña)
-                      </a>
-                      .
-                    </>
-                  ) : config.testMode ? (
-                    "He leído el aviso del modo de desarrollo y utilizaré solo datos de prueba."
-                  ) : (
-                    "Información sobre el tratamiento de datos pendiente de publicación."
-                  )}
-                </span>
-              </label>
-              {errors.privacy && (
-                <p id="privacy-error" className="mt-2 text-sm text-red-700">
-                  {errors.privacy}
-                </p>
-              )}
-            </div>
-          </div>
-          <div
-            aria-hidden="true"
-            className="absolute -left-[10000px] h-px w-px overflow-hidden"
-          >
-            <label htmlFor="website">No rellenes este campo</label>
-            <input
-              id="website"
-              name="website"
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </div>
-        </fieldset>
-        {message && (
-          <div
-            role="alert"
-            className="mt-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-800"
-          >
-            {message}
-            {retrySeconds > 0 && (
-              <p aria-live="off">
-                Podrás volver a intentarlo en {retrySeconds} segundos.
-              </p>
-            )}
-          </div>
-        )}
-        <Button
-          type="submit"
-          disabled={!config.enabled || pending || retrySeconds > 0}
-          className="mt-8 w-full"
-        >
-          {pending ? "Enviando solicitud..." : "Enviar solicitud"}
-        </Button>
-      </form>
-    </div>
-  );
+  const names = { name: "nombre", email: "email", company: "empresa", phone: "telefono", description: "mensaje", budget: "presupuesto", projectType: "tipo", privacy: "privacy" };
+  const inputClass = "w-full h-[50px] rounded-[10px] border border-line-strong bg-white px-3.5 text-base font-normal text-ink placeholder:text-ink-500 focus:border-violet focus:outline-none focus:ring-2 focus:ring-violet/25";
+  const props = (name: keyof FieldErrors) => ({ id: name, name: names[name], className: `${inputClass} ${errors[name] ? "border-red-600" : ""}`, "aria-invalid": Boolean(errors[name]), "aria-describedby": errors[name] ? `${name}-error` : undefined });
+  const field = (name: keyof FieldErrors, label: string, control: React.ReactNode) => <label className="flex flex-col gap-1.5 text-[13px] font-semibold text-ink" htmlFor={name}>{label}{control}{errors[name] && <span id={`${name}-error`} className="mt-1 text-[13px] font-normal text-red-700">{errors[name]}</span>}</label>;
+  const email = <div className="flex items-center justify-between gap-3 border-t border-line pt-3.5 text-sm"><span className="text-ink-500">¿Prefieres escribir?</span><a href={`mailto:hola@asivquark.com?subject=${encodeURIComponent(`Proyecto: ${selected}`)}`} className="inline-flex min-h-11 items-center font-semibold text-violet">hola@asivquark.com</a></div>;
+  return <div className="contact-sheet min-w-0 min-h-[60vh] rounded-t-[20px] bg-white px-5 pb-7 pt-5 text-ink sm:mx-auto sm:max-w-[640px] sm:px-8 sm:pt-7 md:mx-8 md:mb-12 md:rounded-[20px] md:shadow-[0_30px_60px_-30px_rgba(11,15,23,.45)] lg:sticky lg:top-[114px] lg:mx-0 lg:mb-0 lg:min-h-0 lg:w-full lg:rounded-2xl lg:p-8">
+    {!config.enabled ? email : success ? <FormSuccess onRestart={() => { attempt.current = null; attribution.current = null; setErrors({}); setMessage(""); setSuccess(false); }} /> : <form ref={form} onSubmit={submit} method="post" action="/api/contacto/" noValidate aria-busy={pending} className="flex min-w-0 flex-col gap-3.5"
+      onBlur={event => { const key = Object.entries(names).find(([, value]) => value === event.target.getAttribute("name"))?.[0] as keyof FieldErrors | undefined; if (!key || key === "privacy" || key === "projectType") return; const result = leadSchema.shape[key].safeParse(event.target.value); setErrors(previous => ({ ...previous, [key]: result.success ? undefined : result.error.issues[0]?.message })); if (!result.success) emitMarketingEvent("form_error", { campo: key }); }}>
+      <div className="flex items-center justify-between gap-2"><h2 className="text-[17px] font-bold sm:text-xl">Cuéntanos lo que necesitas</h2><span className="shrink-0 font-mono text-[11px] text-ink-500" aria-hidden="true">2 / 3</span><span className="sr-only">Paso 2 de 3</span></div>
+      <fieldset className="min-w-0" disabled={pending}><legend className="sr-only">Tipo de proyecto</legend><div ref={chips} className="relative -mx-5 flex gap-1.5 overflow-x-auto px-5 pb-1 pt-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">{[
+        { value: "web", label: "Página web" }, { value: "software", label: "Software a medida" }, { value: "app", label: "Aplicación web" }, { value: "mvp", label: "Desarrollo MVP" },
+        ...(selected === "automatizacion" || selected === "otro" ? [{ value: selected, label: selected === "otro" ? "Otro proyecto" : "Automatización" }] : []),
+      ].map(option => <label key={option.value} className="shrink-0"><input type="radio" name="tipo" value={option.value === "software" ? "soft" : option.value} checked={selected === option.value} onChange={() => setSelected(option.value as PublicProjectType)} className="peer sr-only" /><span className="inline-flex h-10 cursor-pointer items-center whitespace-nowrap rounded-full border border-line-strong bg-white px-3.5 text-sm font-semibold text-ink peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-violet">{option.label}</span></label>)}</div></fieldset>
+      <div className="grid gap-3.5 sm:grid-cols-2 sm:gap-3">
+        {field("name", "Nombre", <input {...props("name")} autoComplete="name" required maxLength={100} placeholder="Cómo te llamas" />)}
+        {field("email", "Email", <input {...props("email")} type="email" inputMode="email" autoComplete="email" required maxLength={254} placeholder="tu@empresa.com" />)}
+      </div>
+      {field("description", "¿Qué quieres resolver?", <textarea {...props("description")} className={`${props("description").className} min-h-[96px] resize-y py-3`} rows={3} required minLength={10} maxLength={2000} placeholder="Ej.: necesito una web para mostrar mis servicios y recibir solicitudes" />)}
+      <details id="optional-fields" open={optional} onToggle={event => setOptional(event.currentTarget.open)}><summary className="flex min-h-11 cursor-pointer items-center text-left text-sm font-semibold text-violet" aria-controls="optional-content" aria-expanded={optional}>{optional ? "− Ocultar datos opcionales" : "+ Añadir empresa o teléfono (opcional)"}</summary><div id="optional-content" className="grid gap-3.5 pt-3 sm:grid-cols-2">
+        {field("company", "Empresa", <input {...props("company")} autoComplete="organization" maxLength={150} />)}
+        {field("phone", "Teléfono", <input {...props("phone")} type="tel" autoComplete="tel" maxLength={40} />)}
+        {field("budget", "Presupuesto orientativo", <select {...props("budget")} defaultValue=""><option value="">Sin indicar</option>{Object.entries(budgetLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select>)}
+      </div></details>
+      {Object.entries(trackingFields).map(([name, value]) => <input key={name} name={name} value={value} type="hidden" />)}
+      <input name="privacy" type="hidden" value="on" />
+      <input name="website" className="hidden" tabIndex={-1} autoComplete="off" />
+      {message && <div role="alert" className="rounded-[10px] bg-red-50 p-3 text-sm text-red-800">{message}{retrySeconds > 0 && <p>Podrás volver a intentarlo en {retrySeconds} segundos.</p>}</div>}
+      <button type="submit" disabled={pending || retrySeconds > 0} aria-busy={pending} className="flex min-h-[54px] items-center justify-between rounded-xl bg-violet px-[18px] text-base font-bold text-white hover:bg-violet-600 disabled:opacity-60"><span>{pending ? "Enviando…" : "Enviar solicitud"}</span><span aria-hidden="true">→</span></button>
+      <p className="text-xs leading-normal text-ink-500">Al enviar aceptas la <a href={config.noticeUrl ?? "/politica-privacidad/"} className="text-violet underline">política de privacidad</a>.</p>
+      {email}
+    </form>}
+  </div>;
 }

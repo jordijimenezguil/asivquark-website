@@ -5,7 +5,8 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/branding/brand-logo";
 import { Container } from "@/components/ui/container";
 import { serviceNavigation } from "@/config/navigation";
-export function SiteFooter({ cta = true, ctaHref = "/contacto/", ctaLocation = "footer", ctaSlug }: { cta?: boolean; ctaHref?: string; ctaLocation?: string; ctaSlug?: string }) {
+export function SiteFooter({ cta = true, ctaHref = "/contacto/", ctaLocation = "footer", ctaSlug, minimal = false }: { minimal?: boolean; cta?: boolean; ctaHref?: string; ctaLocation?: string; ctaSlug?: string }) {
+  if (minimal) return <footer className="bg-night px-5 py-7 text-secondary"><nav aria-label="Legal" className="mx-auto flex max-w-[1152px] flex-wrap items-center gap-x-5 gap-y-1 text-xs">{legalDocuments.map(document => <Link className="inline-flex min-h-11 items-center hover:text-white" key={document.id} href={document.path}>{document.title}</Link>)}<CookiePreferencesTrigger /><span>© {new Date().getFullYear()} ASIVQUARK</span></nav></footer>;
   return (
     <footer role="contentinfo" className="bg-night text-white">
       {cta && <div className="border-b border-white/10 py-16 lg:py-20"><Container className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]"><div><h2 className="text-4xl font-bold leading-[1.02] tracking-[-.035em] sm:text-5xl lg:text-[56px]">¿Tienes un proyecto en mente?</h2><p className="mt-5 text-secondary">Cuéntanoslo y te respondemos en 24 h laborables.</p></div><div className="flex flex-col gap-3 xl:flex-row xl:items-center"><Button href={ctaHref} data-location={ctaLocation} data-slug={ctaSlug}>Cuéntanos tu proyecto →</Button><a href="mailto:proyectos@asivquark.com" className="rounded-[10px] border border-white/20 px-5 py-4 text-center text-sm text-white">proyectos@asivquark.com ↗</a></div></Container></div>}
