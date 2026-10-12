@@ -1,0 +1,88 @@
+[
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/referencias/01-contacto.png",
+    "origen": "/Users/jordi.jimenez/Desktop/Screenshot 2026-10-12 at 09.12.45.png",
+    "bytes": 172139,
+    "sha256": "ae7cea5d4cf461b5f4a6ca38dcf39afc012602e35a25bf8dd38ea43fb28f2ec2"
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/referencias/02-footer-con-y-sin-cta.png",
+    "origen": "/Users/jordi.jimenez/Desktop/Screenshot 2026-10-12 at 09.12.40.png",
+    "bytes": 139097,
+    "sha256": "38fe47d97959f583b7c8c343cd4ef152698c325948073ba616ae20522f8b6eb2"
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/referencias/03-servicios-valores-y-footer.png",
+    "origen": "/Users/jordi.jimenez/Desktop/Screenshot 2026-10-12 at 09.12.26.png",
+    "bytes": 128729,
+    "sha256": "41f4b9f9399b4cf3c227d7cf47c7340a3732685b972e77a15460928e5a5c881f"
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/referencias/04-servicios-listado.png",
+    "origen": "/Users/jordi.jimenez/Desktop/Screenshot 2026-10-12 at 09.12.15.png",
+    "bytes": 165256,
+    "sha256": "4eda7e68a0375a23ea0423319ef20a1ca82c840d8ddc22485a7cdf39cdd50e21"
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/referencias/05-home.png",
+    "origen": "/Users/jordi.jimenez/Desktop/Screenshot 2026-10-12 at 09.12.11.png",
+    "bytes": 161859,
+    "sha256": "8e46acdb5e1c5fe05cac8e66ba8d3ff8866aa35894e80b56f64f44ed000db371"
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/logos/asivquark-app-icon-dark.svg",
+    "origen": "/Users/jordi.jimenez/Desktop/handoff/logos/asivquark-app-icon-dark.svg",
+    "bytes": 8108,
+    "sha256": "156a47e18d3a1fc1b7159d8852f09ab233d39a4d95a31a2d41f43ded9e9dbb8a",
+    "viewBox": "0 0 512 512",
+    "textos_svg": 0
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/logos/asivquark-horizontal-dark.svg",
+    "origen": "/Users/jordi.jimenez/Desktop/handoff/logos/asivquark-horizontal-dark.svg",
+    "bytes": 8442,
+    "sha256": "c7da0cd6047f500deaef6baf9af57babd612de50541168a1e2befdab35294124",
+    "viewBox": "0 0 300 48",
+    "textos_svg": 2
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/logos/asivquark-horizontal-light.svg",
+    "origen": "/Users/jordi.jimenez/Desktop/handoff/logos/asivquark-horizontal-light.svg",
+    "bytes": 8442,
+    "sha256": "ab62f080218aefe09645f3bcbbc55b8dcb452145aad30b39e7a533752bf580ff",
+    "viewBox": "0 0 300 48",
+    "textos_svg": 2
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/logos/asivquark-mark-dark.svg",
+    "origen": "/Users/jordi.jimenez/Desktop/handoff/logos/asivquark-mark-dark.svg",
+    "bytes": 8031,
+    "sha256": "912fa5b2d4dc0b551029fb0f7bc3fc226a43d4aa1233202cf39357abd2b210d5",
+    "viewBox": "0 0 100 70",
+    "textos_svg": 0
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/logos/asivquark-mark-light.svg",
+    "origen": "/Users/jordi.jimenez/Desktop/handoff/logos/asivquark-mark-light.svg",
+    "bytes": 8031,
+    "sha256": "77e3bb58021cb51f5514b92762f90445dc507c6ffc0e11bdf9352f97426e9976",
+    "viewBox": "0 0 100 70",
+    "textos_svg": 0
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/logos/asivquark-nav-dark.svg",
+    "origen": "/Users/jordi.jimenez/Desktop/handoff/logos/asivquark-nav-dark.svg",
+    "bytes": 8233,
+    "sha256": "61b19fbe714c400dba9953fbbe8ed0e31a49b2456e38c4cb0bb51d778447112c",
+    "viewBox": "0 0 196 24",
+    "textos_svg": 1
+  },
+  {
+    "archivo": "assets/rediseño-asivquark-2026-10-12/logos/favicon.svg",
+    "origen": "/Users/jordi.jimenez/Desktop/handoff/logos/favicon.svg",
+    "bytes": 8103,
+    "sha256": "791c19858368eb23c3c4cc6fb338979472d6ee56ed9b80105271db7a1cafc0f1",
+    "viewBox": "0 0 64 64",
+    "textos_svg": 0
+  }
+]

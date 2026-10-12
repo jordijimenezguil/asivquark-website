@@ -237,3 +237,14 @@ Verificado: nueva petición HTTP a `/contacto/` devuelve 200 sin reiterar el avi
 Reproducido con Better Auth 1.7.7 y adaptador en memoria: POST `sign-in/email/` devolvía 404 en vez de 401 para contraseña incorrecta. Activado `advanced.skipTrailingSlashes`; tests verifican login y logout con barra final y sesión/rate limit sin barra. El formulario clasifica 404 como error temporal.
 
 Comprobaciones correctas: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3) y test:crm (13). `pnpm build` intentado también con ejecución escalada, bloqueado por Turbopack al abrir puerto (`Operation not permitted`). Chrome denegado por Computer Use; revisión visual escritorio/móvil y login real en navegador pendientes. No se desplegó ni cambió DB en esta corrección.
+
+## 2026-10-12 — Plan de rediseño UI y SEO (sin implementación)
+
+- Preparado `docs/plans/2026-10-12-redisenio-ui-asivquark.md` con arquitectura SEO propuesta, cambios por página/componente, contratos preservados y decisiones pendientes. El usuario indica que no existe producción y descarta retrocompatibilidad.
+- Archivados los cinco PNG de referencia y siete SVG de marca en `docs/plans/assets/rediseño-asivquark-2026-10-12/`; copia byte a byte comprobada frente a originales y SHA-256 registrado en `manifest.json`.
+- Comprobados los 13 enlaces locales a adjuntos del plan y los hashes de los 12 archivos. SVG analizados como XML para registrar viewBox y nodos de texto.
+- Sin cambios de aplicación o recursos públicos; no ejecutados build/tests de aplicación, migraciones, envíos o despliegues. Revisión visual de la implementación pendiente porque esta entrega es exclusivamente documental.
+
+### Ajuste del plan — Portfolio en página única
+
+- Por indicación del usuario, retiradas del plan las rutas y plantillas de fichas de proyectos. El portfolio se limita a `/proyectos/`, con cards informativas y estado vacío mientras no haya material real. Actualizados arquitectura, enlaces, componentes y criterios de aceptación. Sin cambios de aplicación.
