@@ -13,6 +13,7 @@ export function EventObserver() {
       const cta = event.target.closest<HTMLAnchorElement>('a[href^="/contacto/"]');
       if (cta) {
         emitMarketingEvent("cta_click", {
+          slug: cta.dataset.slug,
           location: cta.dataset.location ?? (cta.closest("header") ? "header" : cta.closest("footer") ? "footer" : "service"),
         });
       }

@@ -51,3 +51,13 @@ Banner con aceptación/rechazo equivalentes, configuración analítica independi
 ## Iteración 7 — Automatización de procesos e IA
 
 La oferta pasa a cinco servicios. Automatización se orienta a operaciones existentes y conexiones; software a herramientas personalizadas, aplicaciones a plataformas de navegador y MVP a primeras versiones. Landing completa con hero, seis problemas, seis soluciones, comparación reglas/IA, beneficios potenciales, cinco aplicaciones ilustrativas, cinco pasos, tecnología, seguridad/supervisión, siete FAQ y CTA. Sin promesas de productividad, clientes o proyectos inventados. Home conserva hero/posicionamiento y adapta tarjetas/configurador; contacto incorpora automatizacion y muestra Otro proyecto ya admitido por el contrato. Se mantiene la tipografía real del rediseño, sin cambiar el sistema visual.
+
+## SEO de diseño web y blog
+
+Landing de diseño web ampliada para decisión comercial: prestaciones, tipos, comparación por alcance, contexto local, proceso, precio y FAQ; sin resultados inventados. Estética existente preservada por elección del propietario. Blog estático y artículo educativo públicos autorizados, sin CMS ni estados: criterios para evaluar calidad de una web, checklist y enlace al servicio. No se crea una segunda landing comercial ni se despliega producción.
+
+## Blog — Dirección 1a
+
+Listado por categoría y fecha, destacado, paginación de 12; guías con resumen, puntos clave, índice lateral fijo y desplegable móvil, lectura de 17–18 px, fuentes y CTA contextual a contacto. Los relacionados priorizan categoría y completan por fecha, excluyendo la guía actual; no aparecen si no hay otros artículos publicados. Se conserva todo el contenido educativo previo, agrupado en siete H2; los detalles pasan a H3. Fecha y autor proceden de la especificación del propietario. Sin nuevas entradas ficticias, covers inexistentes ni barra inferior opcional. Guía editorial: `docs/BLOG-DESIGN.md`.
+
+Blog permanece en el footer y se retira del menú superior, también en móvil, por decisión del propietario. Sitemap y enlaces contextuales hacia artículos se conservan.

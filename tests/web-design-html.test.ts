@@ -1,0 +1,31 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { readFileSync } from "node:fs";
+import { webDesignService } from "../src/content/web-design";
+const html = readFileSync(".next/server/app/servicios/diseno-web-barcelona.html", "utf8");
+test("production web landing has exact metadata, one canonical/H1 and initial commercial content", () => {
+  assert.ok(html.includes(`<title>${webDesignService.seoTitle}</title>`));
+  assert.ok(html.includes(`name="description" content="${webDesignService.seoDescription}"`));
+  assert.ok(html.includes(`property="og:description" content="${webDesignService.seoOpenGraphDescription}"`));
+  assert.equal((html.match(/rel="canonical"/g) ?? []).length, 1);
+  assert.ok(html.includes('rel="canonical" href="https://asivquark.com/servicios/diseno-web-barcelona/"'));
+  assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
+  assert.ok(html.includes(webDesignService.h1));
+  for (const section of webDesignService.sections) assert.ok(html.includes(section.title));
+  for (const faq of webDesignService.faqs) assert.ok(html.includes(faq.question));
+  assert.ok(html.includes('id="servicio-diseno-web"'));
+  assert.ok(html.includes('href="/contacto/?servicio=web"'));
+  assert.ok(html.includes('href="/blog/que-debe-tener-una-pagina-web-profesional/"'));
+});
+test("JSON-LD has one shared provider and service; static blog is included in sitemap", () => {
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]) as Record<string, unknown>);
+  const service = blocks.find(block => block["@type"] === "Service");
+  assert.ok(service); assert.equal(service.url, "https://asivquark.com/servicios/diseno-web-barcelona/");
+  assert.deepEqual(service.provider, { "@id": "https://asivquark.com/#organization" });
+  assert.equal(blocks.filter(block => block["@type"] === "Organization").length, 1);
+  assert.equal(blocks.filter(block => block["@type"] === "BreadcrumbList").length, 1);
+  assert.ok(!blocks.some(block => ["FAQPage", "BlogPosting", "AggregateRating", "Review"].includes(String(block["@type"]))));
+  const sitemap = readFileSync(".next/server/app/sitemap.xml.body", "utf8");
+  assert.ok(sitemap.includes("https://asivquark.com/servicios/diseno-web-barcelona/"));
+  assert.ok(sitemap.includes("https://asivquark.com/blog/que-debe-tener-una-pagina-web-profesional/"));
+});

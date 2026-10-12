@@ -1,3 +1,4 @@
+import { webDesignService } from "./web-design.ts";
 import { serviceDefinitions } from "../config/services.ts";
 import { automationService } from "./automation.ts";
 export type ContentItem = { title: string; description: string };
@@ -13,6 +14,7 @@ export type Service = {
   description: string;
   seoTitle: string;
   seoDescription: string;
+  seoOpenGraphDescription?: string;
   h1: string;
   intro: string;
   cta: string;
@@ -23,187 +25,7 @@ export type Service = {
   related: string;
 };
 export const services: Service[] = [
-  {
-    ...serviceDefinitions.web,
-    slug: "diseno-web-barcelona",
-    includes: ["Diseño a medida", "Gestor de contenidos", "SEO técnico", "Formulario conectado"],
-    idealFor: "Empresas, profesionales y negocios que necesitan una presencia digital sólida.",
-    description:
-      "Una presencia digital clara, rápida y diseñada para explicar tu negocio.",
-    seoTitle: "Diseño Web en Barcelona para Empresas | ASIVQUARK",
-    seoDescription:
-      "Diseñamos y desarrollamos páginas web profesionales, rápidas y adaptadas a tu negocio. Servicio de desarrollo web en Barcelona.",
-    h1: "Diseño y desarrollo web en Barcelona para empresas",
-    intro:
-      "Tu web debe ayudar a entender qué haces y facilitar el siguiente paso. Diseñamos sitios para empresas, profesionales y pequeños negocios que necesitan comunicar con claridad.",
-    cta: "Solicitar presupuesto web",
-    sections: [
-      {
-        title: "Una web pensada para tu negocio",
-        items: [
-          {
-            title: "Diseño con intención",
-            description:
-              "Organizamos contenidos y recorridos para que cada visitante encuentre el servicio que necesita.",
-          },
-          {
-            title: "Desarrollo cuidado",
-            description:
-              "Creamos una base técnica coherente con el alcance, sin añadir complejidad innecesaria.",
-          },
-        ],
-      },
-      {
-        title: "Qué tipo de página necesitas",
-        items: [
-          {
-            title: "Web corporativa",
-            description:
-              "Presenta tu empresa, sus servicios y una vía de contacto clara.",
-          },
-          {
-            title: "Web para profesionales",
-            description:
-              "Explica tu especialidad y ayuda a valorar si eres la persona adecuada.",
-          },
-          {
-            title: "Web para pequeños negocios",
-            description:
-              "Una presencia propia con información útil, legible desde el móvil.",
-          },
-          {
-            title: "Landing page",
-            description:
-              "Una página enfocada en un servicio o propuesta concreta.",
-          },
-          {
-            title: "Web personalizada",
-            description:
-              "Estructura y funcionalidades específicas, definidas antes de desarrollar.",
-          },
-        ],
-      },
-      {
-        title: "Una experiencia que facilita el contacto",
-        items: [
-          {
-            title: "Claridad",
-            description:
-              "Mensajes y navegación que reducen dudas sobre lo que ofreces.",
-          },
-          {
-            title: "Coherencia",
-            description: "Una presentación visual alineada con tu identidad.",
-          },
-          {
-            title: "Lectura móvil",
-            description: "Contenido y controles cómodos en pantallas pequeñas.",
-          },
-        ],
-      },
-      {
-        title: "Qué incluye el servicio",
-        items: [
-          {
-            title: "Diseño responsive",
-            description: "Composición adaptable a escritorio, tablet y móvil.",
-          },
-          {
-            title: "Rendimiento y accesibilidad",
-            description:
-              "Carga de recursos controlada, HTML semántico y navegación por teclado.",
-          },
-          {
-            title: "Bases técnicas de SEO",
-            description:
-              "Metadatos, indexabilidad, estructura de encabezados y enlaces internos. El posicionamiento continuado se acuerda por separado.",
-          },
-          {
-            title: "Revisión y lanzamiento",
-            description:
-              "Comprobamos las páginas y coordinamos la publicación según el alcance acordado.",
-          },
-        ],
-      },
-      {
-        title: "Qué influye en el presupuesto",
-        items: [
-          {
-            title: "Contenido y páginas",
-            description:
-              "Número de páginas, idiomas y disponibilidad de textos y recursos.",
-          },
-          {
-            title: "Funcionalidades",
-            description:
-              "Interacciones, integraciones y necesidades específicas.",
-          },
-          {
-            title: "Evolución",
-            description:
-              "Mantenimiento y ampliaciones se valoran y acuerdan por separado.",
-          },
-        ],
-      },
-      {
-        title: "Por qué trabajar con ASIVQUARK",
-        items: [
-          {
-            title: "Criterio técnico",
-            description: "Elegimos la solución según el uso real de tu web.",
-          },
-          {
-            title: "Comunicación directa",
-            description:
-              "Acordamos objetivos, entregables y decisiones con claridad.",
-          },
-        ],
-      },
-    ],
-    process: [
-      {
-        title: "Entender el negocio",
-        description: "Revisamos público, objetivos y contenido disponible.",
-      },
-      {
-        title: "Definir la estructura",
-        description: "Acordamos páginas, funcionalidades y prioridades.",
-      },
-      {
-        title: "Diseñar y construir",
-        description:
-          "Trabajamos la identidad visual y la implementación responsive.",
-      },
-      {
-        title: "Revisar y publicar",
-        description:
-          "Validamos recorridos y preparamos el lanzamiento acordado.",
-      },
-    ],
-    faqs: [
-      {
-        question: "¿Hacéis webs para autónomos?",
-        answer:
-          "Sí. Adaptamos la estructura a tu actividad, tus contenidos y lo que necesitan saber tus clientes.",
-      },
-      {
-        question: "¿Incluye posicionamiento en Google?",
-        answer:
-          "Incluye las bases técnicas de SEO acordadas. No garantiza posiciones ni sustituye una estrategia continuada de contenido y posicionamiento.",
-      },
-      {
-        question: "¿Podré ampliar la web?",
-        answer:
-          "Podemos planificar nuevas páginas o funcionalidades. El mantenimiento y las ampliaciones requieren un acuerdo de alcance.",
-      },
-      {
-        question: "¿Cuánto cuesta una web?",
-        answer:
-          "Depende de la estructura, el diseño, los contenidos y las funcionalidades. Un presupuesto útil empieza por definir esas necesidades.",
-      },
-    ],
-    related: "aplicaciones-web-barcelona",
-  },
+  webDesignService,
   {
     ...serviceDefinitions.software,
     slug: "software-a-medida-barcelona",

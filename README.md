@@ -265,3 +265,15 @@ Prisma: `Lead.service` es String/VarChar(20), admite `automatizacion` sin cambio
 SEO: title y description específicos, canonical de producción `https://asivquark.com/automatizacion-procesos-ia/`, Service enlazado al proveedor Organization compartido, BreadcrumbList, OG propio 1200×630 y contenido inicial estático. Sitemap deriva de publicPaths (diez rutas comerciales); preview/local siguen sin canonical público y con sitemap vacío. No hay ruta duplicada bajo `/servicios/`; enlace final a software usa la ruta real `/servicios/software-a-medida-barcelona/`. Keywords son hipótesis sin métricas inventadas.
 
 Pruebas: `pnpm test:automation` verifica configuración, preselección, validación, persistencia con doble Prisma, CRM y email sin envíos. `pnpm test:automation:html` requiere un build local de producción y comprueba HTML, SEO, JSON-LD, sitemap y enlaces. Ejecutar el build de comprobación con `VERCEL_ENV=production NEXT_PUBLIC_SITE_URL=https://asivquark.com BETTER_AUTH_URL=https://asivquark.com pnpm exec next build --webpack` (no publica). Tests de regresión, resultados y límites de navegador/build: [validación](docs/validacion.md).
+
+## SEO de diseño web y blog estático
+
+Landing conservada en `/servicios/diseno-web-barcelona/`, optimizada para diseño web Barcelona y diseño web profesional. Contenido comercial completo, ocho FAQ, CTA al formulario existente y enlace a guía informativa. Mismo diseño público y sin cambios en otros servicios.
+
+Blog estático autorizado en `/blog/`, con `/blog/que-debe-tener-una-pagina-web-profesional/`. No CMS, editor, estado editorial ni modelo Prisma: catálogo en `src/config/blog.ts`, contenido en `src/content/articles.ts`, prerenderizado con slugs cerrados. Artículo incluido como contenido público del próximo despliegue; no se ha desplegado. Header/footer y enlaces guía/servicio mantienen intenciones diferenciadas y sitemap de producción actualizado.
+
+`pnpm test:web-design` comprueba contenido, URL conservada, contrato del CTA y blog. `pnpm test:web-design:html` verifica artefactos después de build local con metadata de producción, igual que test:automation:html. [Estrategia, metadatos e investigación](docs/seo.md); [validaciones reales](docs/validacion.md).
+
+### Blog — Guía con índice
+
+Artículos locales en `content/blog/*.mdx`, autores en `content/authors.json`, descubrimiento y validación de frontmatter automáticos. Diseño y plantilla editorial en [docs/BLOG-DESIGN.md](docs/BLOG-DESIGN.md). Artículos SSG, RSS estático en `/blog/rss.xml`; listado SSR con filtros GET y paginación de 12 entradas, sin JS para filtrar. No hay CMS ni estados editoriales.

@@ -4,10 +4,10 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/branding/brand-logo";
 import { Container } from "@/components/ui/container";
 import { serviceNavigation } from "@/config/navigation";
-export function SiteFooter({ cta = true }: { cta?: boolean }) {
+export function SiteFooter({ cta = true, ctaHref = "/contacto/", ctaLocation = "footer", ctaSlug }: { cta?: boolean; ctaHref?: string; ctaLocation?: string; ctaSlug?: string }) {
   return (
     <footer role="contentinfo" className="bg-night text-white">
-      {cta && <div className="border-b border-white/10 py-16 lg:py-20"><Container className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]"><div><h2 className="text-4xl font-bold leading-[1.02] tracking-[-.035em] sm:text-5xl lg:text-[56px]">¿Tienes un proyecto en mente?</h2><p className="mt-5 text-secondary">Cuéntanoslo y te respondemos en 24 h laborables.</p></div><div className="flex flex-col gap-3 xl:flex-row xl:items-center"><Button href="/contacto/" data-location="footer">Cuéntanos tu proyecto →</Button><a href="mailto:proyectos@asivquark.com" className="rounded-[10px] border border-white/20 px-5 py-4 text-center text-sm text-white">proyectos@asivquark.com ↗</a></div></Container></div>}
+      {cta && <div className="border-b border-white/10 py-16 lg:py-20"><Container className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]"><div><h2 className="text-4xl font-bold leading-[1.02] tracking-[-.035em] sm:text-5xl lg:text-[56px]">¿Tienes un proyecto en mente?</h2><p className="mt-5 text-secondary">Cuéntanoslo y te respondemos en 24 h laborables.</p></div><div className="flex flex-col gap-3 xl:flex-row xl:items-center"><Button href={ctaHref} data-location={ctaLocation} data-slug={ctaSlug}>Cuéntanos tu proyecto →</Button><a href="mailto:proyectos@asivquark.com" className="rounded-[10px] border border-white/20 px-5 py-4 text-center text-sm text-white">proyectos@asivquark.com ↗</a></div></Container></div>}
       <Container className="py-16">
         <div className="grid grid-cols-2 gap-10 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="col-span-2 lg:col-span-1">
@@ -36,6 +36,7 @@ export function SiteFooter({ cta = true }: { cta?: boolean }) {
             {[
               { label: "Nosotros", href: "/nosotros/" },
               { label: "Proyectos", href: "/proyectos/" },
+              { label: "Blog", href: "/blog/" },
               { label: "Contacto", href: "/contacto/" },
               { label: "Cómo trabajamos", href: "/#proceso" },
             ].map((item) => (
@@ -54,19 +55,14 @@ export function SiteFooter({ cta = true }: { cta?: boolean }) {
             <p className="text-sm leading-7 text-secondary">
               Barcelona, España.
             </p>
-            <p className="mt-5 text-sm leading-7 text-secondary">
-              Software con propósito.
-              <br />
-              Desde Barcelona.
-            </p>
           </div>
         </div>
-        <div className="mt-12 border-t border-white/10 pt-6 text-xs text-secondary">
+        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-secondary sm:flex-row sm:items-center sm:justify-between sm:gap-6">
           <p>
             © {new Date().getFullYear()} ASIVQUARK. Todos los derechos
             reservados.
           </p>
-          <div className="flex flex-wrap items-center gap-x-6"><Link href="/politica-de-cookies/" className="min-h-11 py-3 text-sm underline underline-offset-4">Política de cookies</Link><CookiePreferencesTrigger /></div>
+          <div className="flex flex-wrap items-center justify-end gap-x-6"><Link href="/politica-de-cookies/" className="min-h-11 py-3 text-sm underline underline-offset-4">Política de cookies</Link><CookiePreferencesTrigger /></div>
         </div>
       </Container>
     </footer>

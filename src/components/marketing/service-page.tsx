@@ -1,3 +1,4 @@
+import { WebDesignPage } from "./web-design-page";
 import Link from "next/link";
 import { services, type Service } from "@/content/services";
 import { FAQAccordion, ServiceHero } from "./commercial";
@@ -30,6 +31,7 @@ const situations = {
  mvp: ["Tienes una idea y necesitas concretar el primer paso", "La lista de funcionalidades no deja de crecer", "Necesitas probar la propuesta con usuarios", "Quieres aprender antes de invertir en el producto completo"],
 };
 export function ServicePage({ service }: { service: Service }) {
+ if (service.uiType === "web") return <WebDesignPage />;
  const related = services.find(item => item.slug === service.related)!;
  return <><ServiceHero service={service} /><Section><Container className="grid gap-10 lg:grid-cols-[1fr_1.5fr]"><h2 className="section-title">¿Te suena alguna de estas situaciones?</h2><div className="grid gap-4 sm:grid-cols-2">{situations[service.uiType].map(item => <div key={item} className="rounded-[14px] border border-line bg-paper-soft p-6"><span aria-hidden="true" className="text-violet">↗</span><h3 className="mt-4 font-bold leading-relaxed">{item}</h3></div>)}</div></Container></Section><Section className="bg-paper-soft"><Container><h2 className="section-title">Qué incluye</h2><div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{service.includes.map((item) => <div key={item} className="border-t border-violet pt-5"><h3 className="text-lg font-bold">{item}</h3><p className="mt-3 text-sm leading-relaxed text-ink-500">{inclusionDescriptions[item]}</p></div>)}</div></Container></Section><FAQAccordion items={service.faqs.slice(0,3)} /><Section space="sm"><Container><p className="text-ink-500">Explora también <Link href={related.href} className="font-semibold text-violet underline underline-offset-4">{related.title.toLowerCase()}</Link> o consulta nuestro <Link href="/proyectos/" className="font-semibold text-violet underline underline-offset-4">listado de proyectos</Link>.</p></Container></Section>{["software", "app"].includes(service.uiType) && <Section space="sm"><Container><p className="text-ink-500">Si necesitas conectar herramientas o reducir tareas manuales en procesos existentes, explora <Link href="/automatizacion-procesos-ia/" className="font-semibold text-violet underline underline-offset-4">automatización de procesos e IA</Link>.</p></Container></Section>}<SiteFooter /></>;
 }

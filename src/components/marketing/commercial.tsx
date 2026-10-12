@@ -24,6 +24,7 @@ export function JsonLd({ data }: { data: object }) {
   );
 }
 export function Breadcrumbs({ label, path }: { label: string; path: string }) {
+  const parent = path.startsWith("/servicios/") && path !== "/servicios/" ? { name: "Servicios", href: "/servicios/" } : path.startsWith("/blog/") && path !== "/blog/" ? { name: "Blog", href: "/blog/" } : null;
   return (
     <>
       <nav
@@ -37,7 +38,7 @@ export function Breadcrumbs({ label, path }: { label: string; path: string }) {
             </Link>
           </li>
           <li aria-hidden="true">/</li>
-          {path.startsWith("/servicios/") && path !== "/servicios/" && <><li><Link href="/servicios/">Servicios</Link></li><li aria-hidden="true">/</li></>}
+          {parent && <><li><Link href={parent.href}>{parent.name}</Link></li><li aria-hidden="true">/</li></>}
           <li aria-current="page">{label}</li>
         </ol>
       </nav>
@@ -53,10 +54,10 @@ export function Breadcrumbs({ label, path }: { label: string; path: string }) {
                 name: "Inicio",
                 item: `${site.origin}/`,
               },
-              ...(path.startsWith("/servicios/") && path !== "/servicios/" ? [{ "@type": "ListItem", position: 2, name: "Servicios", item: `${site.origin}/servicios/` }] : []),
+              ...(parent ? [{ "@type": "ListItem", position: 2, name: parent.name, item: `${site.origin}${parent.href}` }] : []),
               {
                 "@type": "ListItem",
-                position: path.startsWith("/servicios/") && path !== "/servicios/" ? 3 : 2,
+                position: parent ? 3 : 2,
                 name: label,
                 item: `${site.origin}${path}`,
               },
@@ -124,8 +125,8 @@ export function PageHero({
     </section>
   );
 }
-export function ServiceHero({ service }: { service: Service }) {
- return <section className="bg-night pb-16 pt-12 text-white lg:pb-24 lg:pt-16"><Container><Breadcrumbs label={service.title} path={service.href} /><div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14"><div><h1 className="text-[36px] font-bold leading-[1.05] tracking-[-.035em] sm:text-5xl lg:text-[64px]">{service.h1}</h1><p className="mt-7 text-lg leading-relaxed text-secondary">{service.intro}</p><div className="mt-8 flex flex-wrap gap-4"><Button href={`/contacto/?tipo=${service.uiType}&origen=/servicios/${service.slug}/`} data-location="service">{service.cta} →</Button><Button href="/proyectos/" variant="outline">Ver proyectos</Button></div></div><div className="rounded-2xl border border-white/10 bg-navy-800 p-7"><h2 className="eyebrow text-violet-200">Ideal para</h2><p className="mt-3 leading-relaxed text-secondary">{service.idealFor}</p><h2 className="eyebrow mt-7 text-violet-200">Forma de trabajo</h2><p className="mt-3 leading-relaxed text-secondary">Fases con precio cerrado y entregas cada dos semanas.</p><h2 className="eyebrow mt-7 text-violet-200">Primer paso</h2><p className="mt-3 leading-relaxed text-secondary">Llamada de 30 minutos, sin compromiso.</p></div></div></Container></section>;
+export function ServiceHero({ service, label, contactHref, secondaryHref = "/proyectos/", secondaryLabel = "Ver proyectos", showDetails = true }: { service: Service; label?: string; contactHref?: string; secondaryHref?: string; secondaryLabel?: string; showDetails?: boolean }) {
+ return <section className="bg-night pb-16 pt-12 text-white lg:pb-24 lg:pt-16"><Container><Breadcrumbs label={service.title} path={service.href} /><div className={showDetails ? "grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14" : "max-w-4xl"}><div>{label && <p className="eyebrow mb-7 text-violet-soft">{label}</p>}<h1 className="text-[36px] font-bold leading-[1.05] tracking-[-.035em] sm:text-5xl lg:text-[64px]">{service.h1}</h1><p className="mt-7 text-lg leading-relaxed text-secondary">{service.intro}</p><div className="mt-8 flex flex-wrap gap-4"><Button href={contactHref ?? `/contacto/?tipo=${service.uiType}&origen=/servicios/${service.slug}/`} data-location="service">{service.cta} →</Button><Button href={secondaryHref} variant="outline">{secondaryLabel}</Button></div></div>{showDetails && <div className="rounded-2xl border border-white/10 bg-navy-800 p-7"><h2 className="eyebrow text-violet-200">Ideal para</h2><p className="mt-3 leading-relaxed text-secondary">{service.idealFor}</p><h2 className="eyebrow mt-7 text-violet-200">Forma de trabajo</h2><p className="mt-3 leading-relaxed text-secondary">Fases con precio cerrado y entregas cada dos semanas.</p><h2 className="eyebrow mt-7 text-violet-200">Primer paso</h2><p className="mt-3 leading-relaxed text-secondary">Llamada de 30 minutos, sin compromiso.</p></div>}</div></Container></section>;
 }
 export function BenefitCard({ item }: { item: ContentItem }) {
   return (
@@ -184,7 +185,7 @@ export function ProcessSteps({ items, title = "De la primera llamada al lanzamie
     </Section>
   );
 }
-export function FAQAccordion({ items, structuredData = true }: { items: FAQ[]; structuredData?: boolean }) {
+export function FAQAccordion({ items, structuredData = true, title = "Preguntas frecuentes" }: { items: FAQ[]; structuredData?: boolean; title?: string }) {
   return (
     <Section className="bg-paper-soft">
       <Container>
@@ -192,7 +193,7 @@ export function FAQAccordion({ items, structuredData = true }: { items: FAQ[]; s
         <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr]">
           <SectionHeading
             label="RESOLVEMOS DUDAS"
-            title="Preguntas frecuentes"
+            title={title}
           />
           <div>
             {items.map((item, index) => (

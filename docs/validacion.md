@@ -326,3 +326,61 @@ Modificados: `src/content/services.ts`, `src/content/project-type.ts`, `src/conf
 No se ejecutan envíos Resend ni persistencia en Neon reales; tests usan dobles y conservan la operación principal transaccional y controles existentes. Activación del formulario/privacidad siguen sujetas a la configuración previa; no se desbloquean comercialmente como efecto de añadir el servicio. CMS/blog no existen en el repositorio; no se crearon.
 
 El acceso a Chrome fue rechazado en esta sesión por Computer Use y no hay navegador conectado disponible. No se afirman revisión visual de home/landing/contacto a 320/375/768/1280, interacción móvil, teclado, foco ni WCAG 2.2 AA comprobado. Solo se inspeccionó el PNG de OG. Core Web Vitals no medidos. Fuentes y sistema visual reales del rediseño conservados, sin sustituirlos ni añadir dependencias. Dev permanece disponible en 127.0.0.1:3000 como solicitado previamente.
+
+## SEO de diseño web y blog estático — 12/10/2026
+
+### Alcance y decisiones confirmadas
+
+El propietario confirmó mantener `/servicios/diseno-web-barcelona/`, misma estética/tipografía actual y crear blog estático sin CMS. Autorizó expresamente el artículo como contenido público, sin estados editoriales. Esto sustituye la petición inicial de DRAFT: no se crean flags, editor o tabla Post. No se hizo despliegue ni publicación en un entorno remoto.
+
+Landing comercial: contenido separado en `content/web-design.ts`; diez bloques H2 principales, comparación por alcance, ocho prestaciones, cinco tipos, cinco pasos y ocho FAQ. Hero/CTA web, metadatos y OG específicos; imagen de marca conservada. WebDesignPage reutiliza componentes. Home recibe solo la descripción profesional del servicio compartido; no cambia H1 general. Copy de otros servicios conservado.
+
+Blog: índice `/blog/` y artículo `/blog/que-debe-tener-una-pagina-web-profesional/`, educativos, estáticos y sin DB. Enlaces header/footer, landing→artículo y artículo→landing/CTA. Service/BreadcrumbList/BlogPosting enlazan Organization real compartida; sin ratings, precios, autor ni fechas inventadas.
+
+### Archivos
+
+Creados: `src/content/web-design.ts`, `src/components/marketing/web-design-page.tsx`, `src/config/blog.ts`, `src/content/articles.ts`, `src/app/(marketing)/blog/page.tsx`, `src/app/(marketing)/blog/[slug]/page.tsx`, `tests/web-design.test.ts`, `tests/web-design-html.test.ts`, `tests/blog-html.test.ts`.
+
+Modificados: `src/content/services.ts`, `src/components/marketing/service-page.tsx`, `src/components/marketing/commercial.tsx`, `src/app/(marketing)/servicios/[slug]/page.tsx`, `src/config/navigation.ts`, `src/components/layout/site-footer.tsx`, `tests/marketing.test.ts`, `package.json`; README y documentos SEO/arquitectura/producto/validación. Sitemap no necesita cambio de lógica porque consume publicPaths. Sin cambios Prisma, Better Auth, CRM, cookies, DNS, stack o dependencias.
+
+### Ejecuciones
+
+- `pnpm lint`: correcto, sin warnings. `pnpm typecheck`: correcto tras corregir guards de campos opcionales checklist/link del contenido editorial. `git diff --check`: correcto.
+- `pnpm prisma validate`: válido. `pnpm db:generate`: cliente 7.10.0 generado; no cambios de esquema ni migraciones ni acceso a base remota.
+- `pnpm test:web-design`: 4/4, URL conservada, metadatos, cobertura comercial, preselección contrato web, artículo educativo sin estados y separación de contenido.
+- `pnpm test:marketing`: 2/2; `pnpm test:automation`: 6/6; `pnpm test:cookies`: 4/4; `pnpm test:config`: 6/6; `pnpm test:db`: 3/3; `pnpm test:leads`: 25/25; `pnpm test:crm`: 13/13.
+- `pnpm build`: bloqueo de Turbopack por puertos internos (`Operation not permitted`), también ejecutado fuera del sandbox. No se cambia ni se declara correcto el script habitual.
+- `VERCEL_ENV=production NEXT_PUBLIC_SITE_URL=https://asivquark.com BETTER_AUTH_URL=https://asivquark.com pnpm exec next build --webpack`: correcto, compilación/TypeScript y prerenderizado de 22 páginas; landing, índice blog y artículo estáticos. Sin publicación, migración ni consulta DB para contenido.
+- `pnpm test:web-design:html`: 5/5 sobre artefactos de producción. Metadatos exactos landing/artículo, OG, canonical único independiente, H1 único, contenidos iniciales completos, enlaces de conversión/enlazado interno, blog e inclusión en sitemap. JSON-LD parseado y sin proveedor duplicado; Service/BreadcrumbList y BlogPosting reales, sin datos inventados. Sin nuevo FAQPage en landing web.
+- `pnpm test:automation:html`: 3/3; confirma metadata/JSON-LD/sitemap de automatización conservados.
+- Total: **71 tests correctos** (4 + 2 + 6 + 4 + 6 + 3 + 25 + 13 + 5 + 3). Pruebas de DB/leads/CRM con dobles/offline, sin emails o escrituras de producción.
+- HTTP dev: landing real, `/blog/` y artículo 200. `/diseno-web-barcelona/` y `/blog/no-existe/` 404. Los tres HTML locales tienen un H1, noindex y ningún canonical de producción. El dominio/robots de preview se preservan mediante pruebas de configuración; no se desplegó un preview externo.
+- Fuentes oficiales y muestra web real de las dos búsquedas registradas en `docs/seo.md`. Sin acceso Semrush/Google localizado/Search Console ni datos posteriores de rankings. Números del propietario conservados como referencia histórica no garantizada.
+
+### Límites y pendientes
+
+El acceso a Chrome fue rechazado por Computer Use en esta sesión, sin navegador conectado; no se afirma revisión visual 320/375/768/1280 ni interacción de teclado/foco, lector de pantalla o cumplimiento WCAG 2.2 AA certificado. Tabla comparativa con scroll contenido y acceso por teclado implementada; validación real pendiente. Core Web Vitals no medidos. Indexación, schema validation remota y mejora de consultas/rankings requieren comprobación después de un despliegue autorizado. Captación conserva sus requisitos legales/operativos existentes; no se activa ni prueba entrega de leads remotos como efecto de esta optimización.
+
+## Blog 1a — Guía con índice (12/10/2026)
+
+Implementados listado con filtros GET/paginación de 12, artículos MDX locales, frontmatter validado, resumen y key points, TOC español numerado, observer desktop, details móvil que se cierra al navegar, cards CTA a contacto con tipo/origen y eventos consentidos con slug, fuentes, relacionados sin entradas ficticias, RSS y sitemap descubierto desde MDX. `docs/BLOG-DESIGN.md` y regla literal en `AGENTS.md`. Header existente conserva servicios; Blog retirado de menús desktop/móvil por petición posterior y conservado en footer.
+
+Comprobaciones ejecutadas:
+- `pnpm prisma validate`: correcto; `pnpm db:generate`: correcto, sin migraciones ni conexiones a base.
+- `pnpm test:config`: 6/6; `pnpm test:db`: 3/3, offline.
+- `pnpm test:web-design`: 4/4; `node --import tsx --test tests/blog-content.test.ts`: 4/4 (frontmatter, fechas, links, duplicación de IDs y selección de relacionados).
+- `pnpm lint` y `pnpm typecheck`: correctos también en la ejecución final tras retirar la configuración provisional de Tailwind.
+- `pnpm build`: bloqueado por el entorno en los loaders de React Compiler/Turbopack: `binding to a port / Operation not permitted`; se intentó también con escalación. No es un despliegue ni un error de tipos del blog.
+- Build alternativo `VERCEL_ENV=production NEXT_PUBLIC_SITE_URL=https://asivquark.com BETTER_AUTH_URL=https://asivquark.com pnpm exec next build --webpack`: compilación, tipos, generación de 23 páginas y trazas correctas. Artículo SSG y RSS estático; listado SSR. **Este fallback no valida los estilos de producción**, porque la configuración existente de Tailwind usa loader exclusivo de Turbopack, sin PostCSS para Webpack. No se cambia el bundler ni se recomienda publicar ese artefacto.
+- Sobre ese HTML de producción: `node --import tsx --test tests/blog-html.test.ts`: 4/4, metadata/canonical, JSON-LD, encabezados/anclajes, fuente de sitemap/RSS y CTA. Fue ejecutado antes del ajuste final del menú y del alias `max-w-prose`; los archivos de build se regeneran/borran al intentar Turbopack.
+- `pnpm dev` activo en http://localhost:3000; GET `/blog/` y artículo responden 200. GET categoría MVP muestra estado vacío, diseño web muestra artículo, página 999 se limita al rango disponible; RSS contiene el artículo. Sin consultas externas.
+- HTML servido tras reiniciar dev: Blog ausente de header y presente en footer. CSS de desarrollo real contiene `text-article-h1`, `prose-asiv` y `max-w-prose` con `--max-width-prose: 720px` (alias requerido por Tailwind 4.3).
+- Cálculo WCAG de luminancia relativa: ink-600 (#454956) sobre blanco = **8,97:1**, aproximadamente 9:1, AA/AAA para texto normal. No se afirma literalmente «más de 9:1».
+
+Límites: el navegador rechazó el acceso a Chrome. No se han revisado visualmente 360/1280 px, teclado en navegador, sección activa en scroll, contraste con antialiasing real ni Lighthouse. Objetivos ≥95 accesibilidad/100 SEO quedan pendientes de medir. No hay covers reales ni otros artículos: placeholder decorativo y OG de marca, sin bloque vacío de relacionados. No se añade la barra flotante opcional que no existe en el shell. No se ha desplegado, enviado email, migrado base ni cambiado DNS. El servidor de desarrollo queda abierto a petición del propietario.
+
+### Imagen de cabecera del artículo profesional
+
+Foto aportada por el propietario añadida al hero mediante `headerImage`, conservando composición 3:2 (1440×960), alt «Portátil con una web profesional de ASIVQUARK en pantalla, junto a un móvil con su versión responsive.» y carga eager/fetchPriority high. WebP de 129.182 bytes. Cover separado 1200×630 con encaje completo sobre navy para no cortar etiquetas, 73.534 bytes; listado, OG/Twitter y BlogPosting usan esta ruta. No se presenta el 98 visible dentro de la ilustración como una métrica real de la web.
+
+Guía editorial actualizada con campo `headerImage` y anatomía. HTTP del artículo devuelve la cabecera con dimensiones y alt correctos; meta tags comprobados mediante parser HTML: og:image, width/height/alt y twitter:image con su alt, todos asociados a la imagen aportada. `pnpm lint`, `pnpm typecheck` y 4 pruebas de contenido correctas. Prisma validate/generate y tests config/db reejecutados; sin migraciones. Build habitual reintentado, con el mismo bloqueo de puertos de Turbopack descrito arriba. Sin nueva revisión visual del navegador, que no autorizó acceso en la sesión anterior. Dev permanece activo en localhost:3000.

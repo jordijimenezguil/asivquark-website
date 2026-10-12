@@ -42,3 +42,6 @@ Leer `README.md`, `docs/arquitectura.md`, `docs/producto.md` y `docs/seo.md` ant
 ## Verificación
 
 Preservar cambios del usuario y consultar las guías relevantes de Next.js instalado antes de editar. Ejecutar `pnpm prisma validate`, `pnpm db:generate`, `pnpm lint`, `pnpm typecheck`, `pnpm test:config`, `pnpm test:db`, `pnpm build`; revisar escritorio y móvil si existe navegador. No afirmar resultados o métricas sin ejecución. Documentar límites y bloqueos. Instalación/build generan cliente, no aplican migraciones.
+
+## Blog
+Antes de crear, editar o maquetar cualquier cosa bajo `/blog` (páginas, componentes del blog o artículos en `content/blog/`), lee `docs/BLOG-DESIGN.md` y síguelo. No introduzcas colores, tamaños tipográficos ni componentes nuevos sin añadirlos antes a ese documento. Si un cambio altera la anatomía del artículo, el frontmatter o los componentes MDX, actualiza `docs/BLOG-DESIGN.md` en el mismo cambio.

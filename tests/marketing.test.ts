@@ -11,8 +11,8 @@ test("public type accepts the five services and other projects and defaults repe
  for (const type of ["web", "software", "mvp"] as const) assert.equal(projectTypeForContract(type), type);
 });
 test("public routes and attribution use the definitive service paths without case details", () => {
- assert.equal(publicPaths.length, 10);
- assert.equal(new Set(publicPaths).size, 10);
+ assert.equal(publicPaths.length, 12);
+ assert.equal(new Set(publicPaths).size, 12);
  for(const service of services) {
   const path = service.href;
   assert.ok(publicPaths.includes(path));

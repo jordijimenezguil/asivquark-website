@@ -61,3 +61,11 @@ Provider cliente acotado al shell público; páginas siguen servidor. Inventario
 ## Iteración 7 — Quinto servicio
 
 Catálogo breve en `config/services.ts` compartido por navegación y etiquetas de leads, separado del contenido extenso de `content/automation.ts`. `Service.href` permite la nueva landing raíz sin alterar las cuatro rutas anteriores; generateStaticParams y búsqueda bajo `/servicios/[slug]` excluyen servicios de otra ubicación. Página de automatización servidor, estática y sin consultas a Neon; reutiliza primitivas comerciales. Formulario adapta tipo público/contrato mediante project-type y reconoce ambos parámetros documentados. CRM y emails consumen las mismas etiquetas; Lead.service String no requiere migración. Cookies y fronteras servidor/cliente existentes conservadas.
+
+## SEO de diseño web y blog estático
+
+WebDesignPage seleccionada únicamente para uiType=web, reutilizando primitivas comerciales con opciones que conservan defaults de otros servicios. Copy en web-design.ts; href/canonical existentes bajo servicios. Blog público estático autorizado: catálogo pequeño en config/blog.ts y cuerpo en content/articles.ts; índice y detalles Server Components, generateStaticParams y slugs cerrados. Sin estados, CMS, consultas DB o dependencias nuevas. Breadcrumbs reutiliza parent Blog/Servicios. Sitemap deriva las nuevas rutas; preview/local conservan aislamiento.
+
+## Blog MDX — Guía con índice
+
+`src/lib/blog/content.ts` descubre contenido local, valida frontmatter con Zod, genera TOC español desde el AST y calcula lectura. `ArticleBody` compila MDX local revisado en servidor con next-mdx-remote, remark y rehype-slug; headings numerados fuera del texto accesible. `src/components/marketing/blog/` concentra componentes editoriales y TOC cliente (IntersectionObserver y cierre del details móvil). El listado es SSR para filtros/paginación GET sin cliente adicional; artículos SSG y RSS force-static. Sitemap descubre todas las rutas MDX, conservando vacío en preview/local. `src/content/articles.ts` es solo una exportación de compatibilidad; el cuerpo vive exclusivamente en MDX. La card comercial de diseño web conserva su enlace estable en `src/config/blog.ts`; no hay que editar ese archivo al publicar una nueva guía.

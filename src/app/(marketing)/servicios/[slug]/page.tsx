@@ -12,6 +12,7 @@ async function getService(params: Promise<{ slug: string }>) {
 }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
  const service = await getService(params);
- return pageMetadata({ title: service.seoTitle, description: service.seoDescription, path: `/servicios/${service.slug}/` });
+ const metadata = pageMetadata({ title: service.seoTitle, description: service.seoDescription, path: service.href });
+ return service.seoOpenGraphDescription ? { ...metadata, openGraph: { ...metadata.openGraph, description: service.seoOpenGraphDescription } } : metadata;
 }
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) { return <ServicePage service={await getService(params)} />; }

@@ -1,3 +1,4 @@
+import { blogArticles } from "./blog.ts";
 import { serviceDefinitions } from "./services.ts";
 export const serviceNavigation = Object.values(serviceDefinitions).map(service => ({ label: service.navigationLabel, footerLabel: service.footerLabel, href: service.href }));
 export const navigation = [
@@ -13,4 +14,6 @@ export const publicPaths = [
   "/proyectos/",
   "/nosotros/",
   "/contacto/",
+  "/blog/",
+  ...blogArticles.map(article => article.href),
 ];
