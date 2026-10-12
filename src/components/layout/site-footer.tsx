@@ -1,15 +1,17 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BrandLogo } from "@/components/branding/brand-logo";
 import { Container } from "@/components/ui/container";
 import { serviceNavigation } from "@/config/navigation";
-export function SiteFooter() {
+export function SiteFooter({ cta = true }: { cta?: boolean }) {
   return (
-    <footer className="bg-night py-16 text-white">
-      <Container>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
-          <div>
+    <footer role="contentinfo" className="bg-night text-white">
+      {cta && <div className="border-b border-white/10 py-16 lg:py-20"><Container className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]"><div><h2 className="text-4xl font-bold leading-[1.02] tracking-[-.035em] sm:text-5xl lg:text-[56px]">¿Tienes un proyecto en mente?</h2><p className="mt-5 text-secondary">Cuéntanoslo y te respondemos en 24 h laborables.</p></div><div className="flex flex-col gap-3 xl:flex-row xl:items-center"><Button href="/contacto/" data-location="footer">Cuéntanos tu proyecto →</Button><a href="mailto:hola@asivquark.com" className="rounded-[10px] border border-white/20 px-5 py-4 text-center text-sm text-white">hola@asivquark.com ↗</a></div></Container></div>}
+      <Container className="py-16">
+        <div className="grid grid-cols-2 gap-10 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+          <div className="col-span-2 lg:col-span-1">
             <Link href="/" aria-label="ASIVQUARK, inicio">
-              <BrandLogo />
+              <BrandLogo size="lg" />
             </Link>
             <p className="mt-6 max-w-xs text-sm leading-7 text-secondary">
               Estudio de desarrollo de software y productos digitales en
@@ -34,6 +36,7 @@ export function SiteFooter() {
               { label: "Nosotros", href: "/nosotros/" },
               { label: "Proyectos", href: "/proyectos/" },
               { label: "Contacto", href: "/contacto/" },
+              { label: "Cómo trabajamos", href: "/#proceso" },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -45,7 +48,8 @@ export function SiteFooter() {
             ))}
           </nav>
           <div>
-            <h2 className="mb-4 text-sm font-medium">Ubicación</h2>
+            <h2 className="mb-4 text-sm font-medium">Contacto</h2>
+            <a href="mailto:hola@asivquark.com" className="mb-3 block break-all text-sm text-secondary hover:text-white">hola@asivquark.com</a>
             <p className="text-sm leading-7 text-secondary">
               Barcelona, España.
             </p>

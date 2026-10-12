@@ -2,9 +2,7 @@ export type PublicProject = {
   slug: string;
   title: string;
   summary: string;
-  category: string;
-  description: string;
-  technologies: readonly string[];
+  category: "web" | "software" | "app" | "mvp";
   image: { src: string; alt: string; width: number; height: number } | null;
   published: boolean;
 };

@@ -1,54 +1,19 @@
 "use client";
-
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { NavigationLinks } from "./navigation-links";
-
 export function MobileNavigation() {
-  const [open, setOpen] = useState(false);
-  const trigger = useRef<HTMLButtonElement>(null);
-  function close() {
-    setOpen(false);
-    trigger.current?.focus();
-  }
-  return (
-    <div
-      className="lg:hidden"
-      onKeyDown={(event) => {
-        if (event.key === "Escape" && open) close();
-      }}
-    >
-      <button
-        ref={trigger}
-        type="button"
-        aria-expanded={open}
-        aria-controls="mobile-navigation"
-        aria-label={open ? "Cerrar menú" : "Abrir menú"}
-        onClick={() => setOpen(!open)}
-        className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-white/15"
-      >
-        {open ? (
-          <X size={22} aria-hidden="true" />
-        ) : (
-          <Menu size={22} aria-hidden="true" />
-        )}
-      </button>
-      <nav
-        id="mobile-navigation"
-        aria-label="Navegación móvil"
-        hidden={!open}
-        className="absolute inset-x-0 top-full max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-white/10 bg-night px-6 py-5 shadow-lg"
-      >
-        <NavigationLinks mobile onNavigate={() => setOpen(false)} />
-        <Link
-          href="/contacto/"
-          onClick={() => setOpen(false)}
-          className="mt-3 block rounded-lg bg-violet px-3 py-3 text-center font-medium"
-        >
-          Hablemos
-        </Link>
-      </nav>
-    </div>
-  );
+ const dialog = useRef<HTMLDialogElement>(null);
+ const trigger = useRef<HTMLButtonElement>(null);
+ const close = () => dialog.current?.close();
+ useEffect(() => {
+ const media = window.matchMedia("(min-width: 1024px)");
+ const resize = () => { if(media.matches) dialog.current?.close(); };
+ media.addEventListener("change", resize);
+ return () => { media.removeEventListener("change", resize); document.body.style.overflow = ""; };
+ }, []);
+ return <div className="lg:hidden"><button ref={trigger} type="button" aria-label="Abrir menú" aria-haspopup="dialog" aria-expanded={false} aria-controls="mobile-navigation" onClick={() => { dialog.current?.showModal(); trigger.current?.setAttribute("aria-expanded", "true"); document.body.style.overflow = "hidden"; }} className="flex h-12 w-12 items-center justify-center rounded-[10px] border border-white/15"><Menu aria-hidden="true" /></button>
+ <dialog ref={dialog} id="mobile-navigation" aria-label="Navegación móvil" onClose={() => { document.body.style.overflow = ""; trigger.current?.setAttribute("aria-expanded", "false"); trigger.current?.focus(); }} className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto bg-night px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-5 text-white backdrop:bg-night">
+ <button type="button" onClick={close} aria-label="Cerrar menú" className="ml-auto flex h-12 w-12 items-center justify-center rounded-lg border border-white/15"><X aria-hidden="true" /></button><nav className="mt-5" aria-label="Menú móvil"><NavigationLinks mobile onNavigate={close} /><Link href="/contacto/" onClick={close} className="mt-8 block rounded-[10px] bg-violet px-6 py-4 text-center font-semibold">Cuéntanos tu proyecto →</Link></nav></dialog></div>;
 }

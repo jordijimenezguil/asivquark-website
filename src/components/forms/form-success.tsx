@@ -1,6 +1,6 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
-export function FormSuccess() {
+export function FormSuccess({ type, onRestart }: { type: string; onRestart: () => void }) {
   return (
     <div
       role="status"
@@ -10,18 +10,13 @@ export function FormSuccess() {
     >
       <CheckCircle2 className="mb-6 text-violet" aria-hidden="true" />
       <h2 className="text-3xl font-medium tracking-tight">
-        ¡Solicitud recibida!
+        Solicitud recibida
       </h2>
       <p className="mt-5 leading-8 text-slate-600">
         Gracias por contactar con ASIVQUARK. Hemos recibido la información de tu
-        proyecto.
+        proyecto de {type.toLowerCase()}. Te respondemos en 24 h laborables.
       </p>
-      <Link
-        href="/"
-        className="mt-8 inline-flex min-h-12 items-center font-medium text-violet"
-      >
-        Volver al inicio →
-      </Link>
+      <Button onClick={onRestart} variant="ghost" className="mt-8 text-violet">← Volver al formulario</Button>
     </div>
   );
 }

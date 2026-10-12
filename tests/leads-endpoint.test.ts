@@ -17,7 +17,7 @@ const input = {
   description: "Queremos una web corporativa accesible de prueba.",
   privacy: true,
   website: "",
-  attribution: { originPath: "/diseno-web-barcelona/", utmSource: "test" },
+  attribution: { originPath: "/servicios/diseno-web-barcelona/", utmSource: "test" },
 };
 function request(
   data: unknown = input,
@@ -61,7 +61,7 @@ test("valid payload receives 201 only after persistence and no personal data in 
     assert.equal(command.input.projectType, "web");
     assert.equal(
       command.input.attribution?.originPath,
-      "/diseno-web-barcelona/",
+      "/servicios/diseno-web-barcelona/",
     );
     assert.equal(command.noticeVersion, "test");
     committed = true;

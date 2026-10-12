@@ -26,7 +26,7 @@ const lead = {
   budget: null,
   message: "Mensaje <script>alert(1)</script>\nSegunda línea",
   createdAt: new Date("2026-10-12T08:00:00Z"),
-  landingPath: "/diseno-web-barcelona/",
+  landingPath: "/servicios/diseno-web-barcelona/",
   originPath: null,
   referrer: null,
   utmSource: null,

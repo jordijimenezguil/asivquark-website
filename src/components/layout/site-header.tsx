@@ -8,8 +8,8 @@ import { MobileNavigation } from "./mobile-navigation";
 
 export function SiteHeader() {
   return (
-    <header className="relative z-30 border-b border-white/10 bg-night text-white">
-      <Container className="flex h-20 items-center justify-between gap-6 sm:h-24">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-night text-white">
+      <Container className="flex h-16 items-center justify-between gap-6 lg:h-[90px]">
         <Link href="/" aria-label="ASIVQUARK, inicio">
           <BrandLogo />
         </Link>
@@ -21,10 +21,10 @@ export function SiteHeader() {
         </nav>
         <Button
           href="/contacto/"
-          variant="outline"
+          variant="primary"
           className="hidden min-h-10 px-4 lg:inline-flex"
         >
-          Hablemos <ArrowUpRight size={16} aria-hidden="true" />
+          Cuéntanos tu proyecto <ArrowUpRight size={16} aria-hidden="true" />
         </Button>
         <MobileNavigation />
       </Container>

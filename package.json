@@ -18,6 +18,7 @@
     "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "postinstall": "prisma generate",
+    "test:marketing": "node --conditions=react-server --import tsx --test tests/marketing.test.ts",
     "test:config": "node --experimental-strip-types --test tests/site.test.ts",
     "test:db": "node --experimental-strip-types --test tests/prisma-schema.test.ts",
     "test:leads": "node --conditions=react-server --import tsx --test tests/leads*.test.ts",

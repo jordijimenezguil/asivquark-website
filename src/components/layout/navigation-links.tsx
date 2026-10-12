@@ -14,7 +14,7 @@ export function NavigationLinks({
     pathname === href ||
     (href !== "/" && `${pathname.replace(/\/$/, "")}/` === href);
   const style = mobile
-    ? "block min-h-11 rounded-lg px-3 py-3 text-base text-secondary hover:bg-surface hover:text-white"
+    ? "block min-h-12 rounded-lg px-3 py-3 text-2xl font-bold text-secondary hover:bg-surface hover:text-white"
     : "inline-flex min-h-11 items-center text-sm text-secondary hover:text-white";
   return (
     <>
@@ -25,7 +25,7 @@ export function NavigationLinks({
               key={item.label}
               className="my-3 border-y border-white/10 py-3"
             >
-              <p className="eyebrow px-3 text-violet-soft">Servicios</p>
+              <Link href="/servicios/" onClick={onNavigate} className={style}>Todos los servicios →</Link>
               {serviceNavigation.map((service) => (
                 <Link
                   key={service.href}
@@ -50,7 +50,7 @@ export function NavigationLinks({
               }}
             >
               <summary
-                className={`cursor-pointer list-none ${style} ${serviceNavigation.some((service) => active(service.href)) ? "text-white" : ""}`}
+                className={`cursor-pointer list-none ${style} ${pathname.startsWith("/servicios") ? "text-white" : ""}`}
               >
                 Servicios{" "}
                 <span aria-hidden="true" className="ml-2">
@@ -58,6 +58,7 @@ export function NavigationLinks({
                 </span>
               </summary>
               <div className="absolute left-0 top-full w-64 rounded-lg border border-white/15 bg-surface p-3 shadow-xl">
+                <Link href="/servicios/" aria-current={active("/servicios/") ? "page" : undefined} className="block px-3 py-3 text-sm text-white">Todos los servicios →</Link>
                 {serviceNavigation.map((service) => (
                   <Link
                     key={service.href}

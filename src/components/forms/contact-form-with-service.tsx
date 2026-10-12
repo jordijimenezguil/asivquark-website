@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { serviceSchema } from "@/features/leads/schema";
+import { parsePublicProjectType, projectTypeForContract } from "@/content/project-type";
 import type { PublicContactConfig } from "@/config/contact";
 import { ContactForm } from "./contact-form";
 export function ContactFormWithService({
@@ -8,14 +8,12 @@ export function ContactFormWithService({
 }: {
   config: PublicContactConfig;
 }) {
-  const values = useSearchParams().getAll("servicio");
-  const service = serviceSchema.safeParse(
-    values.length === 1 ? values[0] : undefined,
-  );
+  const values = useSearchParams().getAll("tipo");
+  const service = parsePublicProjectType(values);
   return (
     <ContactForm
       config={config}
-      initialService={service.success ? service.data : undefined}
+      initialService={projectTypeForContract(service)}
     />
   );
 }

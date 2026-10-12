@@ -1,9 +1,11 @@
 "use client";
+import { projectTypeForContract } from "@/content/project-type";
+import { services, type Service } from "@/content/services";
+import { emitMarketingEvent } from "@/components/marketing/events";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import {
   leadSchema,
-  serviceLabels,
   budgetLabels,
   type FieldErrors,
   type Attribution,
@@ -17,12 +19,16 @@ export function ContactForm({
   initialService,
 }: {
   config: PublicContactConfig;
-  initialService?: keyof typeof serviceLabels;
+  initialService?: Service["query"];
 }) {
   const form = useRef<HTMLFormElement>(null);
   const submitting = useRef(false);
   const attempt = useRef<{ key: string; payload: string } | null>(null);
   const attribution = useRef<Attribution | null>(null);
+  const [optional, setOptional] = useState(false);
+  const started = useRef(false);
+  const [selected, setSelected] = useState<Service["uiType"]>(services.find(item => item.query === initialService)?.uiType ?? "web");
+  const [confirmed, setConfirmed] = useState("web");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState("");
   const [pending, setPending] = useState(false);
@@ -51,7 +57,7 @@ export function ContactForm({
       email: String(data.get("email") ?? ""),
       company: String(data.get("company") ?? ""),
       phone: String(data.get("phone") ?? ""),
-      projectType: String(data.get("projectType") ?? ""),
+      projectType: projectTypeForContract(selected),
       budget: String(data.get("budget") ?? ""),
       description: String(data.get("description") ?? ""),
       privacy: data.get("privacy") === "on",
@@ -62,9 +68,11 @@ export function ContactForm({
       for (const issue of parsed.error.issues)
         fields[issue.path[0] as keyof FieldErrors] ??= issue.message;
       setErrors(fields);
+      if(fields.company || fields.phone || fields.budget) setOptional(true);
+      emitMarketingEvent("form_error");
       setMessage("Revisa los campos indicados antes de enviar.");
       const first = Object.keys(fields)[0];
-      form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus());
       return;
     }
     attribution.current ??= browserAttribution();
@@ -75,6 +83,8 @@ export function ContactForm({
     });
     if (!attempt.current || attempt.current.payload !== payload)
       attempt.current = { key: crypto.randomUUID(), payload };
+    const type = selected;
+    emitMarketingEvent("form_submit", { tipo: type, has_budget: Boolean(parsed.data.budget) });
     submitting.current = true;
     setPending(true);
     try {
@@ -95,6 +105,8 @@ export function ContactForm({
       )
         throw new Error("INVALID_RESPONSE");
       if (response.status === 201 && result.success === true) {
+        setConfirmed(services.find(item => item.uiType === selected)!.title);
+        emitMarketingEvent("form_success");
         setSuccess(true);
         return;
       }
@@ -108,7 +120,11 @@ export function ContactForm({
           if (key in input && typeof value === "string")
             fields[key as keyof FieldErrors] = value;
         setErrors(fields);
+        if(fields.company || fields.phone || fields.budget) setOptional(true);
+        const first = Object.keys(fields)[0];
+        requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus());
       }
+      emitMarketingEvent("form_error");
       if (response.status === 409) attempt.current = null;
       if (response.status === 429) {
         const seconds = Number(response.headers.get("retry-after"));
@@ -126,6 +142,7 @@ export function ContactForm({
           : "No hemos podido procesar la solicitud. Inténtalo de nuevo.",
       );
     } catch {
+      emitMarketingEvent("form_error");
       setMessage(
         "No hemos podido confirmar el envío. Tus datos siguen aquí; puedes reintentar la misma solicitud.",
       );
@@ -134,7 +151,7 @@ export function ContactForm({
       setPending(false);
     }
   }
-  if (success) return <FormSuccess />;
+  if (success) return <FormSuccess type={confirmed} onRestart={() => { attempt.current = null; attribution.current = null; setErrors({}); setMessage(""); setSuccess(false); }} />;
   const props = (name: keyof FieldErrors) => ({
     id: name,
     name,
@@ -143,8 +160,8 @@ export function ContactForm({
     "aria-describedby": errors[name] ? `${name}-error` : undefined,
   });
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-6 sm:p-10">
-      <h2 className="text-2xl font-medium tracking-tight">
+    <div className="rounded-2xl border border-line bg-white p-6 shadow-[0_30px_60px_-30px_rgba(11,15,23,.3)] sm:p-10">
+      <h2 className="text-2xl font-bold tracking-tight">
         Cuéntanos lo que necesitas
       </h2>
       <p id="form-status" className="mt-4 leading-7 text-slate-600">
@@ -157,6 +174,8 @@ export function ContactForm({
       <form
         ref={form}
         onSubmit={submit}
+        onFocus={() => { if(!started.current) { started.current = true; emitMarketingEvent("form_start"); } }}
+        onBlur={(event) => { const name = event.target.getAttribute("name") as keyof FieldErrors | null; if(!name || !(name in leadSchema.shape)) return; const value = name === "projectType" ? projectTypeForContract(selected) : event.target instanceof HTMLInputElement && event.target.type === "checkbox" ? event.target.checked : event.target.value; const result = leadSchema.shape[name].safeParse(value); setErrors(previous => ({ ...previous, [name]: result.success ? undefined : result.error.issues[0]?.message })); }}
         method="post"
         action="/api/leads/"
         noValidate
@@ -166,6 +185,7 @@ export function ContactForm({
       >
         <fieldset disabled={!config.enabled || pending}>
           <legend className="sr-only">Información de tu proyecto</legend>
+          <fieldset className="mb-7"><legend className="form-label">¿Qué quieres desarrollar? *</legend><div className="grid grid-cols-2 gap-2">{services.map(service => <label key={service.uiType} className={`relative flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border px-3 py-3 text-sm font-semibold ${selected === service.uiType ? "border-violet bg-violet text-white" : "border-line-strong"}`}><input type="radio" name="projectType" value={service.uiType} aria-describedby={errors.projectType ? "projectType-error" : undefined} checked={selected === service.uiType} onChange={() => setSelected(service.uiType)} className="h-4 w-4 accent-violet" />{service.title}</label>)}</div>{errors.projectType && <p id="projectType-error" className="mt-2 text-sm text-red-700">{errors.projectType}</p>}</fieldset>
           <div className="grid gap-6 sm:grid-cols-2">
             <FormField name="name" label="Nombre" required error={errors.name}>
               <input
@@ -186,6 +206,22 @@ export function ContactForm({
               />
             </FormField>
             <FormField
+              name="description"
+              label="¿Qué quieres resolver?"
+              required
+              error={errors.description}
+              className="sm:col-span-2"
+            >
+              <textarea
+                {...props("description")}
+                rows={4}
+                required
+                minLength={20}
+                maxLength={5000}
+                placeholder="Cuéntanos qué necesitas desarrollar, qué problema quieres resolver o en qué consiste tu idea."
+              />
+            </FormField>
+            <div className="sm:col-span-2"><button type="button" aria-expanded={optional} aria-controls="optional-fields" className="min-h-12 text-left text-sm font-semibold text-violet" onClick={() => { if(!optional) emitMarketingEvent("form_optional_open"); setOptional(!optional); }}>{optional ? "− Ocultar detalles opcionales" : "+ Añadir empresa, teléfono o presupuesto (opcional)"}</button><div id="optional-fields" hidden={!optional}><div className="grid gap-6 pt-4 sm:grid-cols-2">            <FormField
               name="company"
               label="Empresa (opcional)"
               error={errors.company}
@@ -209,26 +245,6 @@ export function ContactForm({
               />
             </FormField>
             <FormField
-              name="projectType"
-              label="Tipo de proyecto"
-              required
-              error={errors.projectType}
-            >
-              <select
-                {...props("projectType")}
-                key={initialService ?? "empty"}
-                defaultValue={initialService ?? ""}
-                required
-              >
-                <option value="" key="service-placeholder">Selecciona un tipo</option>
-                {Object.entries(serviceLabels).map(([value, label]) => (
-                  <option value={value} key={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-            </FormField>
-            <FormField
               name="budget"
               label="Presupuesto orientativo (opcional)"
               error={errors.budget}
@@ -245,22 +261,7 @@ export function ContactForm({
                 Sirve para orientar el alcance; no son precios oficiales.
               </p>
             </FormField>
-            <FormField
-              name="description"
-              label="Descripción del proyecto"
-              required
-              error={errors.description}
-              className="sm:col-span-2"
-            >
-              <textarea
-                {...props("description")}
-                rows={6}
-                required
-                minLength={20}
-                maxLength={5000}
-                placeholder="Cuéntanos qué necesitas desarrollar, qué problema quieres resolver o en qué consiste tu idea."
-              />
-            </FormField>
+</div></div></div>
             <div className="sm:col-span-2">
               <label
                 htmlFor="privacy"
@@ -331,7 +332,7 @@ export function ContactForm({
         <Button
           type="submit"
           disabled={!config.enabled || pending || retrySeconds > 0}
-          className="mt-8 w-full sm:w-auto"
+          className="mt-8 w-full"
         >
           {pending ? "Enviando solicitud..." : "Enviar solicitud"}
         </Button>

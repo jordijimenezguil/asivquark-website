@@ -1,3 +1,4 @@
+import { SiteFooter } from "@/components/layout/site-footer";
 import { Suspense } from "react";
 import { PageHero } from "@/components/marketing/commercial";
 import { ContactForm } from "@/components/forms/contact-form";
@@ -17,40 +18,29 @@ export default function Page() {
   const config = { enabled, testMode, noticeUrl };
   return (
     <>
-      <PageHero
+      <div className="bg-night pb-24 lg:pb-32"><PageHero
         label="Contacto"
         path="/contacto/"
         title="Hablemos de tu proyecto"
         description="Una página web, una herramienta para tu empresa o una idea que quieres probar. El primer paso es aclarar qué necesitas y qué debe resolver."
       />
-      <Section>
-        <Container className="grid items-start gap-12 lg:grid-cols-[1fr_1.6fr]">
-          <aside>
-            <p className="eyebrow text-violet">ANTES DE EMPEZAR</p>
-            <h2 className="mt-5 text-3xl font-medium tracking-tight">
-              Un buen punto de partida
-            </h2>
-            <p className="mt-5 leading-7 text-slate-600">
-              Para valorar un proyecto, conviene conocer el contexto, los
-              usuarios y las funcionalidades principales.
-            </p>
-            <ul className="mt-7 space-y-4 border-t border-slate-200 pt-7 text-slate-600">
-              <li>Qué problema quieres resolver.</li>
-              <li>Quién utilizará la solución.</li>
-              <li>Qué necesitas en la primera versión.</li>
-              <li>Si hay sistemas o contenidos existentes.</li>
-            </ul>
-            <p className="mt-8 text-sm leading-7 text-slate-600">
-              Barcelona, España. Podemos trabajar con proyectos de toda España.
-              El envío solo se confirma cuando el servidor ha registrado tu
-              solicitud.
-            </p>
+      </div>
+      <Section className="relative -mt-24 pt-0 lg:-mt-32">
+        <Container className="grid items-start gap-12 lg:grid-cols-[1fr_1.5fr]">
+          <aside className="order-2 lg:order-1 lg:pt-[150px]">
+            <h2 className="text-2xl font-bold">Qué pasa después</h2>
+            <ol className="mt-8 space-y-8">{[
+              ["Te respondemos", "En 24 h laborables por email."],
+              ["Llamada de 30 minutos", "Hablamos del problema, los usuarios y la primera necesidad."],
+              ["Propuesta por escrito", "Alcance, fases y presupuesto cerrado."],
+            ].map(([title, description], index) => <li key={title} className="grid grid-cols-[40px_1fr] gap-4"><span className="font-mono text-sm text-violet">0{index + 1}</span><div><h3 className="font-bold">{title}</h3><p className="mt-2 text-sm leading-relaxed text-ink-500">{description}</p></div></li>)}</ol><div className="mt-10 border-t border-line pt-8"><h3 className="font-bold">¿Prefieres escribirnos?</h3><a href="mailto:hola@asivquark.com" className="mt-3 block break-all text-violet">hola@asivquark.com ↗</a><p className="mt-4 text-sm text-ink-500">Barcelona, España</p></div>
           </aside>
-          <Suspense fallback={<ContactForm config={config} />}>
+          <div className="order-1 min-w-0 lg:order-2"><Suspense fallback={<ContactForm config={config} />}>
             <ContactFormWithService config={config} />
-          </Suspense>
+          </Suspense></div>
         </Container>
       </Section>
+      <SiteFooter cta={false} />
     </>
   );
 }

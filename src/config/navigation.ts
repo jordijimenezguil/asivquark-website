@@ -1,18 +1,18 @@
 export const serviceNavigation = [
-  { label: "Diseño web", href: "/diseno-web-barcelona/" },
-  { label: "Software a medida", href: "/desarrollo-software-medida/" },
-  { label: "Aplicaciones web", href: "/desarrollo-aplicaciones-web/" },
-  { label: "Desarrollo MVP", href: "/desarrollo-mvp/" },
+  { label: "Diseño web", href: "/servicios/diseno-web-barcelona/" },
+  { label: "Software a medida", href: "/servicios/software-a-medida-barcelona/" },
+  { label: "Aplicaciones web", href: "/servicios/aplicaciones-web-barcelona/" },
+  { label: "Desarrollo MVP", href: "/servicios/desarrollo-mvp/" },
 ] as const;
 export const navigation = [
-  { label: "Inicio", href: "/" },
-  { label: "Servicios", href: "/#servicios" },
+    { label: "Servicios", href: "/servicios/" },
   { label: "Proyectos", href: "/proyectos/" },
   { label: "Nosotros", href: "/nosotros/" },
-  { label: "Contacto", href: "/contacto/" },
+  { label: "Cómo trabajamos", href: "/#proceso" },
 ] as const;
 export const publicPaths = [
   "/",
+  "/servicios/",
   ...serviceNavigation.map((item) => item.href),
   "/proyectos/",
   "/nosotros/",

@@ -3,6 +3,9 @@ export type FAQ = { question: string; answer: string };
 export type Service = {
   slug: string;
   title: string;
+  uiType: "web" | "software" | "app" | "mvp";
+  includes: string[];
+  idealFor: string;
   description: string;
   seoTitle: string;
   seoDescription: string;
@@ -18,7 +21,10 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "diseno-web-barcelona",
-    title: "Diseño y desarrollo web",
+    uiType: "web",
+    includes: ["Diseño a medida", "Gestor de contenidos", "SEO técnico", "Formulario conectado"],
+    idealFor: "Empresas, profesionales y negocios que necesitan una presencia digital sólida.",
+    title: "Página web",
     description:
       "Una presencia digital clara, rápida y diseñada para explicar tu negocio.",
     seoTitle: "Diseño Web en Barcelona para Empresas | ASIVQUARK",
@@ -194,10 +200,13 @@ export const services: Service[] = [
           "Depende de la estructura, el diseño, los contenidos y las funcionalidades. Un presupuesto útil empieza por definir esas necesidades.",
       },
     ],
-    related: "desarrollo-aplicaciones-web",
+    related: "aplicaciones-web-barcelona",
   },
   {
-    slug: "desarrollo-software-medida",
+    slug: "software-a-medida-barcelona",
+    uiType: "software",
+    includes: ["Análisis de procesos", "Integraciones", "Roles y permisos", "Mantenimiento"],
+    idealFor: "Empresas con hojas de cálculo o herramientas que no encajan con sus procesos.",
     title: "Software a medida",
     description:
       "Herramientas adaptadas a tus procesos y a la forma de trabajar de tu empresa.",
@@ -365,11 +374,14 @@ export const services: Service[] = [
           "Las condiciones de soporte, corrección y evolución se definen en el acuerdo del proyecto.",
       },
     ],
-    related: "desarrollo-aplicaciones-web",
+    related: "aplicaciones-web-barcelona",
   },
   {
-    slug: "desarrollo-aplicaciones-web",
-    title: "Aplicaciones web",
+    slug: "aplicaciones-web-barcelona",
+    uiType: "app",
+    includes: ["UX de producto", "Área de usuarios", "Panel de administración", "API"],
+    idealFor: "Servicios digitales para clientes o equipos que trabajan desde el navegador.",
+    title: "Aplicación web",
     description:
       "Plataformas accesibles desde el navegador, con flujos y permisos bien definidos.",
     seoTitle: "Desarrollo de Aplicaciones Web en Barcelona | ASIVQUARK",
@@ -508,10 +520,13 @@ export const services: Service[] = [
           "Sí. Una primera versión puede centrarse en el recorrido principal y ampliarse tras recoger información de uso.",
       },
     ],
-    related: "desarrollo-software-medida",
+    related: "software-a-medida-barcelona",
   },
   {
     slug: "desarrollo-mvp",
+    uiType: "mvp",
+    includes: ["Definición de alcance", "Prototipo", "Primera versión", "Métricas"],
+    idealFor: "Emprendedores que necesitan poner a prueba una primera versión de su producto.",
     title: "Desarrollo MVP",
     description:
       "Una primera versión útil para poner a prueba la propuesta de tu producto.",
@@ -661,6 +676,6 @@ export const services: Service[] = [
           "Sí. Planificamos una base mantenible y revisamos las ampliaciones según el aprendizaje y las necesidades reales.",
       },
     ],
-    related: "desarrollo-aplicaciones-web",
+    related: "aplicaciones-web-barcelona",
   },
 ];

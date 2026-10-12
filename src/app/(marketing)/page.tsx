@@ -1,19 +1,18 @@
+import { process } from "@/content/marketing";
+import { SiteFooter } from "@/components/layout/site-footer";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { services } from "@/content/services";
 import {
   PageHero,
-  FeatureGrid,
   ProcessSteps,
   FAQAccordion,
-  ContactCTA,
   ServiceCard,
   JsonLd,
 } from "@/components/marketing/commercial";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Card } from "@/components/ui/card";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { site } from "@/config/site";
 export const metadata = pageMetadata();
@@ -30,6 +29,8 @@ export default function Home() {
                 "@id": `${site.origin}/#organization`,
                 name: "ASIVQUARK",
                 url: `${site.origin}/`,
+                email: "hola@asivquark.com",
+                logo: `${site.origin}/brand/asivquark-horizontal-dark.svg`,
                 location: { "@type": "Place", name: "Barcelona, España" },
               },
               {
@@ -52,66 +53,18 @@ export default function Home() {
         cta="Cuéntanos tu proyecto"
         href="/contacto/"
       />
-      <Section className="bg-white">
-        <Container>
-          <SectionHeading
-            label="EL PUNTO DE PARTIDA"
-            title="¿Qué necesitas desarrollar?"
-          />
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {[
-              {
-                title: "Una página web para mi negocio",
-                description:
-                  "Creamos páginas web profesionales para empresas, autónomos y negocios que necesitan una presencia digital sólida.",
-                href: "/diseno-web-barcelona/",
-                cta: "Desarrollo web",
-              },
-              {
-                title: "Software para mi empresa o proyecto",
-                description:
-                  "Diseñamos y desarrollamos aplicaciones, plataformas y herramientas digitales a medida.",
-                href: "/desarrollo-software-medida/",
-                cta: "Software a medida",
-              },
-            ].map((item, index) => (
-              <Card
-                key={item.href}
-                className={
-                  index ? "border-surface bg-surface text-white" : "bg-mist"
-                }
-              >
-                <p
-                  className={`eyebrow ${index ? "text-violet-soft" : "text-violet"}`}
-                >
-                  0{index + 1}
-                </p>
-                <h3 className="mt-6 max-w-sm text-3xl font-medium tracking-tight">
-                  {item.title}
-                </h3>
-                <p
-                  className={`mt-5 max-w-md leading-7 ${index ? "text-secondary" : "text-slate-600"}`}
-                >
-                  {item.description}
-                </p>
-                <Link
-                  href={item.href}
-                  className={`mt-8 inline-flex min-h-11 items-center gap-3 font-medium ${index ? "text-violet-soft" : "text-violet"}`}
-                >
-                  {item.cta}
-                  <ArrowUpRight size={20} aria-hidden="true" />
-                </Link>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </Section>
+      <div className="border-b border-line bg-white"><Container className="grid sm:grid-cols-3">{[
+        ["Precio cerrado por fase", "Cada fase se aprueba antes de empezar. Sin sorpresas."],
+        ["Entregas cada dos semanas", "Ves el avance real y ajustas prioridades."],
+        ["El código es tuyo", "Repositorio y accesos a tu nombre desde el primer día."],
+      ].map(([title, text]) => <div key={title} className="border-line py-8 sm:border-r sm:px-6 first:pl-0 last:border-0"><h2 className="font-bold">{title}</h2><p className="mt-3 text-sm leading-relaxed text-ink-500">{text}</p></div>)}</Container></div>
       <Section id="servicios">
         <Container>
           <SectionHeading
             label="NUESTROS SERVICIOS"
-            title="Soluciones digitales adaptadas a cada proyecto"
+            title="¿Qué necesitas desarrollar?"
           />
+          <Link href="/servicios/" className="mt-5 inline-block text-sm font-semibold text-violet">Todos los servicios →</Link>
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {services.map((service, index) => (
               <ServiceCard key={service.slug} service={service} index={index} />
@@ -119,56 +72,7 @@ export default function Home() {
           </div>
         </Container>
       </Section>
-      <FeatureGrid
-        title="Tecnología que aporta valor a tu negocio"
-        tinted
-        items={[
-          {
-            title: "Soluciones a medida",
-            description:
-              "Partimos de tus objetivos y procesos para decidir qué solución tiene sentido.",
-          },
-          {
-            title: "Calidad técnica",
-            description:
-              "Cuidamos estructura, accesibilidad y mantenimiento desde las primeras decisiones.",
-          },
-          {
-            title: "Comunicación directa",
-            description:
-              "Compartimos prioridades, alcance y decisiones con un lenguaje claro.",
-          },
-          {
-            title: "Desarrollo preparado para evolucionar",
-            description:
-              "Construimos una base mantenible y planificamos mejoras cuando sean necesarias.",
-          },
-        ]}
-      />
-      <ProcessSteps
-        items={[
-          {
-            title: "Entendemos tu proyecto",
-            description:
-              "Escuchamos qué necesitas, para quién y qué dificultades quieres resolver.",
-          },
-          {
-            title: "Definimos la solución",
-            description:
-              "Acordamos alcance, prioridades y criterios para revisar el resultado.",
-          },
-          {
-            title: "Diseñamos y desarrollamos",
-            description:
-              "Convertimos la definición en una experiencia funcional y cuidada.",
-          },
-          {
-            title: "Lanzamos y evolucionamos",
-            description:
-              "Preparamos la puesta en marcha y valoramos los siguientes pasos.",
-          },
-        ]}
-      />
+      <ProcessSteps items={process} />
       <Section>
         <Container>
           <div className="grid gap-10 lg:grid-cols-2">
@@ -196,21 +100,6 @@ export default function Home() {
               </Link>
             </div>
           </div>
-        </Container>
-      </Section>
-      <Section className="bg-white">
-        <Container>
-          <SectionHeading
-            title="Desarrollo de software en Barcelona, para proyectos de cualquier lugar"
-            description="ASIVQUARK tiene su base en Barcelona. Trabajamos también con empresas y emprendedores de toda España, organizando la comunicación y las revisiones según cada proyecto."
-          />
-          <Link
-            href="/contacto/"
-            className="mt-6 inline-flex min-h-11 items-center gap-2 font-medium text-violet"
-          >
-            Hablemos de lo que necesitas
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
         </Container>
       </Section>
       <FAQAccordion
@@ -248,7 +137,8 @@ export default function Home() {
           },
         ]}
       />
-      <ContactCTA />
+
+      <SiteFooter />
     </>
   );
 }

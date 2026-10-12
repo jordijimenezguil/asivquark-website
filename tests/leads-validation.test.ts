@@ -73,10 +73,10 @@ test("attribution strips untrusted paths and referrer queries without inventing 
   assert.equal(safeReferrer("javascript:alert(1)"), undefined);
   const data = attributionFromUrl(
     new URLSearchParams(
-      "origen=/diseno-web-barcelona/&utm_source=campaign&utm_medium=one&utm_medium=two",
+      "origen=/servicios/diseno-web-barcelona/&utm_source=campaign&utm_medium=one&utm_medium=two",
     ),
   );
-  assert.equal(data.originPath, "/diseno-web-barcelona/");
+  assert.equal(data.originPath, "/servicios/diseno-web-barcelona/");
   assert.equal(data.utmSource, "campaign");
   assert.equal(data.utmMedium, undefined);
   assert.equal(

@@ -1,8 +1,8 @@
+import { BrandLogo } from "@/components/branding/brand-logo";
+import { Principles } from "@/components/marketing/principles";
+import { SiteFooter } from "@/components/layout/site-footer";
 import {
   PageHero,
-  FeatureGrid,
-  ProcessSteps,
-  ContactCTA,
 } from "@/components/marketing/commercial";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
@@ -38,7 +38,7 @@ export default function Page() {
               emprendedores que quieren dar forma a una primera versión.
             </p>
             <Button
-              href="/#servicios"
+              href="/servicios/"
               variant="ghost"
               className="px-0 text-violet"
             >
@@ -47,61 +47,8 @@ export default function Page() {
           </div>
         </Container>
       </Section>
-      <FeatureGrid
-        title="Cómo entendemos el desarrollo"
-        items={[
-          {
-            title: "Claridad",
-            description:
-              "Explicamos opciones y límites para que puedas tomar decisiones informadas.",
-          },
-          {
-            title: "Calidad",
-            description:
-              "Cuidamos legibilidad, accesibilidad y mantenimiento, además del resultado visual.",
-          },
-          {
-            title: "Proporción",
-            description:
-              "Ajustamos la solución al problema y evitamos añadir complejidad sin utilidad.",
-          },
-        ]}
-      />
-      <ProcessSteps
-        items={[
-          {
-            title: "Escuchar",
-            description:
-              "Empezamos por tus necesidades y por el contexto del proyecto.",
-          },
-          {
-            title: "Acordar",
-            description:
-              "Definimos entregables, prioridades y criterios de revisión.",
-          },
-          {
-            title: "Compartir",
-            description:
-              "Hacemos visibles las decisiones y revisamos el trabajo contigo.",
-          },
-          {
-            title: "Evolucionar",
-            description:
-              "Valoramos mejoras según necesidades reales y un alcance acordado.",
-          },
-        ]}
-      />
-      <Section>
-        <Container>
-          <h2 className="section-title">Desde Barcelona</h2>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-            Nuestra base está en Barcelona y podemos colaborar con clientes de
-            toda España. Organizamos la comunicación y las revisiones para
-            mantener un contexto compartido durante el desarrollo.
-          </p>
-        </Container>
-      </Section>
-      <ContactCTA />
+      <Section className="bg-night text-white"><Container className="grid items-center gap-10 lg:grid-cols-[1fr_2fr]"><BrandLogo variant="compact" size="lg" className="h-24" /><div><h2 className="section-title">Software con propósito. Desde Barcelona.</h2><p className="mt-5 text-secondary">Trabajamos con proyectos de toda España.</p></div></Container></Section><Principles />
+      <SiteFooter />
     </>
   );
 }

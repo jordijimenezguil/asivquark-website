@@ -1,38 +1,6 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
-const sizes = { sm: "text-lg", md: "text-xl sm:text-2xl", lg: "text-3xl" };
-export function BrandLogo({
-  variant = "dark",
-  size = "md",
-  className,
-}: {
-  variant?: "dark" | "light" | "compact";
-  size?: keyof typeof sizes;
-  className?: string;
-}) {
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-2.5 font-semibold tracking-[-0.045em]",
-        variant === "light" ? "text-ink" : "text-white",
-        sizes[size],
-        className,
-      )}
-      aria-label="ASIVQUARK"
-    >
-      {variant === "compact" ? (
-        <span aria-hidden="true">
-          A<span className="text-violet-soft">Q</span>
-        </span>
-      ) : (
-        <span aria-hidden="true">
-          ASIV
-          <span
-            className={variant === "light" ? "text-violet" : "text-violet-soft"}
-          >
-            QUARK
-          </span>
-        </span>
-      )}
-    </span>
-  );
+export function BrandLogo({ variant = "dark", size = "md", className }: { variant?: "dark" | "light" | "compact"; size?: "sm" | "md" | "lg"; className?: string }) {
+ const name = variant === "compact" ? "mark-dark" : size === "lg" ? `horizontal-${variant}` : variant === "light" ? "horizontal-light" : "nav-dark";
+ return <Image src={`/brand/asivquark-${name}.svg`} alt="ASIVQUARK" width={name.startsWith("mark") ? 100 : name.startsWith("nav") ? 196 : 300} height={name.startsWith("mark") ? 70 : name.startsWith("nav") ? 24 : 48} className={cn("w-auto", size === "lg" ? "h-10" : "h-6", className)} />;
 }

@@ -25,7 +25,7 @@ type Props = Shared &
 export function Button(props: Props) {
   const { children, variant = "primary", className, ...rest } = props;
   const styles = cn(
-    "inline-flex min-h-12 items-center justify-center gap-3 rounded-lg px-6 py-3 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-45",
+    "inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] px-6 py-3 text-[15px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-45",
     variants[variant],
     className,
   );
