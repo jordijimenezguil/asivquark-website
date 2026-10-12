@@ -1,4 +1,4 @@
-# Plan de rediseño ASIVQUARK — UI, conversión y arquitectura SEO
+# El Plan de rediseño ASIVQUARK — UI, conversión y arquitectura SEO
 
 Fecha: 12 de octubre de 2026. Estado: **implementación solicitada por el usuario el 12/10/2026; validación en docs/validacion.md**.
 
