@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
+import { getArticles } from "../src/lib/blog/content";
 import { professionalWebArticle } from "../src/content/articles";
+const publishedArticle = getArticles().find(article => article.slug === professionalWebArticle.slug)!;
 const html = readFileSync(`.next/server/app/blog/${professionalWebArticle.slug}.html`, "utf8");
 test("public static article has independent metadata, one H1 and all educational sections", () => {
   assert.ok(html.includes(`<title>${`${professionalWebArticle.title} | ASIVQUARK`}</title>`));
@@ -18,7 +20,7 @@ test("article JSON-LD reflects the approved author and dates", () => {
   const article = blocks.find(block => block["@type"] === "BlogPosting");
   assert.ok(article);
   assert.equal(article.headline, professionalWebArticle.title);
-  assert.equal((article.author as { name: string }).name, "ASIVQUARK"); assert.equal(article.datePublished, "2026-10-12"); assert.equal(article.dateModified, "2026-10-12");
+  assert.equal((article.author as { name: string }).name, "ASIVQUARK"); assert.equal(article.datePublished, publishedArticle.publishedAt); assert.equal(article.dateModified, publishedArticle.updatedAt ?? publishedArticle.publishedAt);
   assert.equal((article.publisher as Record<string, unknown>)["@id"], "https://asivquark.com/#organization");
   assert.equal(blocks.filter(block => block["@type"] === "Organization").length, 1);
   assert.equal(blocks.filter(block => block["@type"] === "BreadcrumbList").length, 1);

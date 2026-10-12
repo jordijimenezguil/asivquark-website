@@ -19,7 +19,7 @@ async function getArticle(params: Promise<{ slug: string }>) {
 }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const article = await getArticle(params);
-  const metadata = pageMetadata({ title: `${article.title} | ASIVQUARK`, description: article.description, path: article.href });
+  const metadata = pageMetadata({ title: article.seoTitle ?? `${article.title} | ASIVQUARK`, description: article.description, path: article.href });
   const image = article.cover ? { url: article.cover, width: 1200, height: 630, alt: article.coverAlt ?? article.title } : { url: "/opengraph-image", width: 1200, height: 630, alt: "ASIVQUARK" };
   return { ...metadata, openGraph: { ...metadata.openGraph, type: "article" as const, publishedTime: article.publishedAt, modifiedTime: article.updatedAt ?? article.publishedAt, images: [image] }, twitter: { ...metadata.twitter, images: [image] } };
 }

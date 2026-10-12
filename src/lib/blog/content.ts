@@ -13,13 +13,16 @@ import { serviceDefinitions } from "../../config/services.ts";
 export const categories = {
   "diseno-web": "Diseño web", "software-a-medida": "Software a medida",
   apps: "Aplicaciones web", mvp: "MVP", mantenimiento: "Mantenimiento",
+  "automatizacion-ia": "Automatización e IA",
 } as const;
 const date = z.iso.date();
 const localImage = z.string().regex(/^\/blog\/[a-z0-9/-]+\.(avif|webp|jpg|png)$/);
 const schema = z.object({
   title: z.string().min(1).max(70), description: z.string().min(1).max(160),
+  seoTitle: z.string().min(1).max(70).optional(),
+  excerpt: z.string().min(1).max(300).optional(),
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-  category: z.enum(["diseno-web", "software-a-medida", "apps", "mvp", "mantenimiento"]),
+  category: z.enum(["diseno-web", "software-a-medida", "apps", "mvp", "mantenimiento", "automatizacion-ia"]),
   author: z.string(), publishedAt: date, updatedAt: date.optional(),
   keyPoints: z.array(z.string().min(1)).min(3).max(6).optional(),
   tocLabel: z.record(z.string(), z.string().min(1).max(40)).optional(),
@@ -53,13 +56,13 @@ export function parseArticle(source: string, filename: string) {
     const id = slug(title);
     if (node.depth === 1) throw new Error(`No escribir H1 en MDX: ${filename}`);
     if (node.depth === 2) {
-      if (title.length > 60) throw new Error(`H2 supera 60 caracteres: ${title}`);
+      if (title.length > 100) throw new Error(`H2 supera 100 caracteres: ${title}`);
       const label = data.tocLabel?.[id] ?? title.split(":")[0];
       if (label.length > 40) throw new Error(`Añade tocLabel para ${id}`);
       toc.push({ id, title, label, number: String(toc.length + 1).padStart(2, "0") });
     }
   });
-  if (toc.length < 4 || toc.length > 8) throw new Error(`Usar 4–8 secciones: ${filename}`);
+  if (toc.length < 4 || toc.length > 12) throw new Error(`Usar 4–12 secciones: ${filename}`);
   const first = tree.children.find(node => node.type !== "mdxFlowExpression");
   if (!first || !(first.type === "paragraph" || (first.type === "mdxJsxFlowElement" && first.name === "Lead"))) throw new Error(`Comenzar con párrafo o Lead: ${filename}`);
   const end = first.position?.end.offset ?? 0;

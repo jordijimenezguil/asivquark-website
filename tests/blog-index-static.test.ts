@@ -15,7 +15,7 @@ test("blog index is prerendered and lists each published article in the card gri
   for (const article of getArticles()) {
     assert.ok(listing.includes(`href="${article.href}"`));
     assert.ok(listing.includes(article.title));
-    assert.ok(listing.includes(article.description));
+    assert.ok(listing.includes(article.excerpt ?? article.description));
   }
 });
 

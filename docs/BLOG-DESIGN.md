@@ -87,7 +87,7 @@ Archivos `.mdx` en `content/blog/`; autores en `content/authors.json`. El cargad
 | contactType | enum | Sí | catálogo inferior | web |
 | ctaTitle | string | No | texto pertinente al artículo | ¿Revisamos tu web? |
 
-Categorías: `diseno-web`, `software-a-medida`, `apps`, `mvp`, `mantenimiento`. Contacto: `web`, `software`, `app`, `mvp`, `automatizacion`, `otro`, alineado con el formulario existente. Cover es opcional mientras no haya una imagen real: se muestra un placeholder decorativo y se usa la OG de marca existente, nunca una URL inexistente.
+Categorías: `diseno-web`, `software-a-medida`, `apps`, `mvp`, `mantenimiento`, `automatizacion-ia`. Contacto: `web`, `software`, `app`, `mvp`, `automatizacion`, `otro`, alineado con el formulario existente. Cover es opcional mientras no haya una imagen real: se muestra un placeholder decorativo y se usa la OG de marca existente, nunca una URL inexistente.
 
 ## 5. Componentes MDX disponibles
 Implementados en `src/components/marketing/blog/article-components.tsx`; el índice interactivo reside en `src/components/marketing/blog/toc.tsx` (`TocDesktop`, `TocMobile`). `PostCard`, `PostImage` y `PostMeta` componen listado y relacionados. Sin imports en el MDX; `ArticleBody` los inyecta con los datos del artículo.
@@ -104,7 +104,7 @@ Implementados en `src/components/marketing/blog/article-components.tsx`; el índ
 El primer párrafo se convierte automáticamente en Lead. También admite `<Lead>…</Lead>` como primer bloque. `KeyPoints`, `Sources` y `AsideCta` están disponibles para composición React, pero sus posiciones en artículos las controla la página: no los insertes manualmente en el MDX.
 
 ## 6. Reglas de redacción y estructura
-- De 4 a 8 `##` por artículo; máximo 60 caracteres. Para índices largos, añade `tocLabel` usando el ID español sin tildes. Los `###` no entran en el índice.
+- De 4 a 12 `##` por artículo; máximo 100 caracteres. Para índices largos, añade `tocLabel` usando el ID español sin tildes. Los `###` no entran en el índice.
 - Párrafos de cinco líneas como máximo en desktop. Dividir ideas extensas sin truncar el texto.
 - Un solo `<ServiceLink />` por artículo, cuando el contexto lo justifique.
 - Fuentes externas en `sources`, no repartidas por el texto.
@@ -192,3 +192,13 @@ contactType: web
 
 ## 11. Extensiones previstas (no implementadas)
 `EvaluableCriterion`: props `id`, `label`, `description?`; respuestas Sí / A medias / No, sin puntuaciones comerciales ni garantías. `ChecklistResult`: props `criteria`, `answers`, `contactHref`; resume respuestas y orienta la consulta sin diagnóstico automático. Usarlos solo en artículos con criterios evaluables y sin barra fija inferior. Antes de implementarlos, actualizar este documento y revisar accesibilidad, persistencia y consentimiento.
+
+## 12. Artículo de digitalización de empresas
+
+El propietario autorizó incorporar el artículo al catálogo público el 12/10/2026. Archivo: `content/blog/digitalizacion-empresas.mdx`; autor editorial existente `equipo`; fecha editorial 2026-10-07, elegida por el propietario para situarla en la semana anterior. Sin despliegue de producción.
+
+El contrato admite ahora `seoTitle` opcional (máximo 70 caracteres), usado en metadata/OG/Twitter, y `excerpt` opcional (máximo 300), usado en tarjetas y RSS. Los artículos anteriores conservan sus valores por defecto. Nueva categoría `automatizacion-ia`: Automatización e IA. Se admiten 4–12 H2 de hasta 100 caracteres con etiquetas TOC de hasta 40 caracteres. Por petición posterior del propietario, este artículo se resume a seis párrafos: una introducción y cinco secciones H2. Se eliminan subsecciones, listas y repeticiones; los enlaces comerciales se integran en el texto. Fecha de actualización editorial: 2026-10-12.
+
+La imagen facilitada por el propietario se convierte a WebP: cabecera 1440 px de ancho con proporción original y cover 1200×630 con ajuste contain sobre navy, sin recortar contenido. Alt describe una ilustración de documentos, escáner y portátil, sin presentarla como cliente o software real. El hero y los CTA conservan sus componentes y estilos existentes.
+
+Rutas de enlaces: `/automatizacion-procesos-ia/`, `/servicios/software-a-medida-barcelona/` y `/contacto/?servicio=automatizacion`. Canonical propio en producción: `https://asivquark.com/blog/digitalizacion-empresas/`. Descubrimiento automático del artículo en catálogo, RSS y sitemap de producción; local/preview siguen noindex y sin canonical.

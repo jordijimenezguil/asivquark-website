@@ -445,3 +445,41 @@ Resultados ejecutados: pnpm prisma validate válido; pnpm db:generate genera cli
 node --import tsx --test tests/blog-index-static.test.ts: 2/2. Se comprueban artefacto HTML real, inclusión en prerender-manifest, un H1, una tarjeta por artículo publicado, enlaces/descripciones y ausencia de filtros/paginación/destacado. El intento inicial vía CLI tsx falló por EPERM al crear su socket; ejecutado satisfactoriamente como loader Node. git diff --check pasa.
 
 Documentación actualizada: BLOG-DESIGN, README, arquitectura, producto y SEO. Sin desplegar Vercel: la clasificación estática se confirma en build local y aparecerá en el próximo despliegue de este código. Revisión visual móvil/escritorio y Lighthouse no realizados: persiste la indisponibilidad/no autorización del navegador de la sesión anterior. No se modifican MDX, fechas ni contenido editorial.
+
+## 2026-10-12 — Borrador editorial: digitalización de empresas
+
+- Creado `content/drafts/digitalizacion-empresas.mdx` con contenido completo, once H2, SEO title, meta description, excerpt, categoría propuesta y CTA. Sin H1 en cuerpo; el título queda en frontmatter. Se omite la instrucción interna sobre no introducir precios del texto visible.
+- Sin CMS/modelo Post en el esquema real. No se cambia Prisma ni se consulta/modifica Neon. No hay migraciones, emails, cambios de otros artículos/landings ni despliegue.
+- Compilación del cuerpo con `compileMDX`: correcta. Assertions reales de slug, estado, título SEO, categoría, ausencia de H1 y exclusión de `getArticles()`: correctas. La primera comprobación esperaba por error doce H2; corregida a los once del contenido aportado y repetida correctamente.
+- El catálogo público solo lee `content/blog/`: el borrador queda fuera de listado, parámetros estáticos, sitemap y RSS; no tiene ruta pública ni preview. `dynamicParams=false` impide servir slugs que no figuren en ese catálogo. No se afirma una prueba HTTP de esta ruta.
+- Enlaces contrastados con catálogo `src/config/services.ts` y rutas existentes: `/automatizacion-procesos-ia/`, `/servicios/software-a-medida-barcelona/`, `/contacto/?servicio=automatizacion`. El formulario admite el parámetro servicio para preselección. Sin prueba de envío real.
+- `pnpm prisma validate`: correcto. `pnpm db:generate`: correcto. `pnpm lint`: correcto. `pnpm typecheck`: correcto. `pnpm test:config`: 6/6. `pnpm test:db`: 3/3, comprobación offline.
+- `pnpm build`: falla con 13 errores de Turbopack al crear procesos y abrir un puerto interno (`Operation not permitted`). Repetido solicitando ejecución fuera del sandbox: mismo fallo. No se afirma build correcto.
+- Sin revisión visual móvil/escritorio ni Lighthouse: no hay página renderizable del borrador en el sistema actual. Imagen destacada pendiente de selección editorial; no se generan ni suben assets.
+- Pendiente para publicar: revisión editorial, autor/fecha reales, resolver categoría y metadatos separados no admitidos actualmente, y límites de H2/TOC del cargador descritos en `docs/BLOG-DESIGN.md`. Preservado el contenido solicitado fuera de publicación automática, sin ampliar el sistema en este encargo.
+
+## 2026-10-12 — Incorporación pública autorizada e imagen de cabecera
+
+El propietario revoca el estado borrador y solicita «ponlo publico implementalo», además de arrancar dev. Artículo movido a `content/blog/digitalizacion-empresas.mdx`, sin copia paralela. Autor editorial existente Equipo ASIVQUARK y fecha editorial de esta incorporación 2026-10-12. No se despliega producción.
+
+Imagen proporcionada por el propietario: `goto_blog_digitalizacion_empresas.png`. Sharp existente en Next convierte a `public/blog/digitalizacion-empresas/cabecera.webp` (1440×810, 156452 bytes), conservando encuadre; cover WebP separado 1200×630 con contain/fondo navy, sin recorte. HeaderImage y cover configurados, alt describe la ilustración real. No se generan nuevas imágenes.
+
+Extensiones mínimas del cargador para este contenido: categoría Automatización e IA, seoTitle y excerpt opcionales, hasta doce H2 de cien caracteres; etiquetas breves de TOC. No se cambian estilos, CMS, servicios ni texto de otros artículos. Tarjetas y RSS usan excerpt si existe; metadata usa seoTitle si existe. Canonical/BlogPosting/sitemap siguen mecanismos existentes por entorno.
+
+`pnpm dev` inicialmente falla por puerto bloqueado en sandbox; iniciado con ejecución ampliada, disponible en http://localhost:3000. GET del artículo con curl devuelve éxito; HTML comprobado con assertions de un H1, título SEO, cabecera y contenido hasta paso 7. No se afirma revisión visual responsive ni Lighthouse. Local conserva noindex; canonical de producción se obtiene del href existente y configuración, no de prueba remota.
+
+Pruebas de contenido: 5/5. Se corrigió la fecha YAML para declararla string y se actualizaron tests anteriores que suponían un único artículo/primer elemento fijo. El test de listado estático usa excerpt cuando existe; no ejecutable sin artefactos de build. `pnpm lint` y `pnpm typecheck` pasan. `pnpm build` intentado nuevamente con ejecución ampliada: continúa fallando con 13 errores de permisos de Turbopack al abrir puerto interno. No hay build completo ni despliegue.
+
+## 2026-10-12 — Fechas editoriales solicitadas
+
+El propietario solicita una fecha de septiembre para un artículo y otra de la semana pasada. Diseño web: publicación y actualización 2026-09-14; digitalización: publicación 2026-10-07 (semana del 5 al 11 de octubre). Son fechas editoriales elegidas para este encargo; no acreditan un despliegue histórico. Frontmatter compartido alimenta fecha visible, metadata, JSON-LD y RSS. El catálogo ordena digitalización primero. No se añade lastModified al sitemap.
+
+Validación real: tests de contenido 5/5; lectura del catálogo y formatDate confirma «14 sept 2026» y «7 oct 2026». Tests existentes de fechas adaptados al frontmatter para evitar constantes obsoletas. Sin modificación del contenido ni despliegue. Build no repetido para esta edición de fechas; continúa el bloqueo de Turbopack documentado anteriormente. Test HTML pendiente de artefacto de build completo.
+
+## 2026-10-12 — Resumen y estilo del artículo de digitalización
+
+A petición del propietario, reducido el cuerpo a exactamente seis párrafos (introducción Lead y cinco secciones H2), sin listas ni subsecciones. Tono práctico y directo, siguiendo la guía de página web profesional. Reutiliza Lead, encabezados numerados, índice, CTA, shell e imagen existentes; no introduce CSS ni componentes. Conserva slug, fecha de publicación 2026-10-07, SEO title/description, imagen y enlaces a automatización, software y contacto. Actualización editorial 2026-10-12.
+
+Pruebas de contenido: 5/5, incluida comprobación de seis párrafos. ESLint y TypeScript correctos. HTTP local del artículo resumido correcto antes del ajuste final de Lead y título Conclusión; comprobación final registrada a continuación. Sin nuevo build: bloqueo previo de permisos Turbopack documentado. Sin deploy ni modificación de otros artículos.
+
+HTML final servido por dev comprobado: seis párrafos editoriales (sin contar shell/CTA), cinco H2 numerados, Lead compartido y un H1.
