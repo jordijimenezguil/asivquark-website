@@ -30,3 +30,7 @@ Pendiente antes del lanzamiento comercial: canal operativo y legales, revisión 
 
 
 La iteración 3 no añade URLs al sitemap ni páginas de agradecimiento indexables. Estado de éxito solo tras 201 dentro de contacto, sin datos en URL. CTA conserva servicio y añade origen real; los parámetros no cambian el canonical. API privada a efectos de indexación, sin endpoints de lectura de leads. El tracker de atribución solo guarda contexto en memoria hasta la solicitud y no emite analítica externa.
+
+## Actualización — Iteración 4
+
+Login y todas las rutas admin dinámicas y noindex/nofollow con headers no-store. Ausentes del sitemap y navegación pública; metadata genérica sin datos personales. Robots excluye admin/login en producción. Véase [CRM](crm.md) para implementación, procedimientos y límites actuales. Las secciones anteriores describen la fase previa.

@@ -41,3 +41,7 @@ Marketing conserva ocho rutas estáticas, contenido local y SEO. `features/leads
 LeadRateBucket utiliza PostgreSQL y hashes temporales para compartir límites. Captura pública bloqueada sin aviso real/versionado y configuración operativa. Local solo para pruebas cuando falta información legal. Sin tracking persistente de navegador ni logs de datos personales.
 
 Única dependencia nueva: tsx de desarrollo para tests/comandos. Sin cambios de Better Auth, domain strategy o servicios externos adicionales. [Arquitectura y límites de leads](leads.md).
+
+## Actualización — Iteración 4
+
+Layout administrativo separado, Server Actions y consultas protegidas en features/crm; notas/eventos transaccionales, concurrencia optimista y limitador de login PostgreSQL. Véase [CRM](crm.md) para implementación, procedimientos y límites actuales. Las secciones anteriores describen la fase previa.

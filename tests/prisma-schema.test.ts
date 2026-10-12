@@ -81,6 +81,8 @@ test("Prisma SQL preserves physical schema against the historical snapshot offli
       "lead_event",
       "email_outbox",
       "lead_rate_bucket",
+      "lead_note",
+      "auth_rate_limit",
     ].sort(),
   );
   for (const table of Object.values(snapshot.tables)) {

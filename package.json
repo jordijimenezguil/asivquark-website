@@ -22,7 +22,9 @@
     "test:db": "node --experimental-strip-types --test tests/prisma-schema.test.ts",
     "test:leads": "node --conditions=react-server --import tsx --test tests/leads*.test.ts",
     "leads:process": "node --conditions=react-server --import tsx scripts/leads-maintenance.ts process",
-    "leads:cleanup": "node --conditions=react-server --import tsx scripts/leads-maintenance.ts cleanup"
+    "leads:cleanup": "node --conditions=react-server --import tsx scripts/leads-maintenance.ts cleanup",
+    "admin:account": "node --conditions=react-server --import tsx scripts/admin-account.ts",
+    "test:crm": "node --conditions=react-server --import tsx --test tests/crm*.test.ts"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "1.7.7",

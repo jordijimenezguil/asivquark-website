@@ -103,3 +103,9 @@ a[aria-current="page"] {
 .bg-surface :focus-visible {
   outline-color: #a78bfa;
 }
+
+.crm-card { border: 1px solid #e2e8f0; border-radius: .8rem; background: white; padding: clamp(1rem, 2vw, 1.5rem); min-width: 0; }
+.crm-button { min-height: 2.75rem; padding: .7rem 1.1rem; border-radius: .5rem; background: #7c3aed; color: white; font-weight: 500; cursor: pointer; align-items: center; justify-content: center; }
+.crm-button:hover { background: #6d28d9; }
+.crm-button:disabled { opacity: .6; cursor: wait; }
+.crm-link { color: #6d28d9; text-decoration: underline; text-underline-offset: .2rem; }

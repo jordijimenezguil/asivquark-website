@@ -220,7 +220,7 @@ export function ContactForm({
                 defaultValue={initialService ?? ""}
                 required
               >
-                <option value="">Selecciona un tipo</option>
+                <option value="" key="service-placeholder">Selecciona un tipo</option>
                 {Object.entries(serviceLabels).map(([value, label]) => (
                   <option value={value} key={value}>
                     {label}
@@ -234,7 +234,7 @@ export function ContactForm({
               error={errors.budget}
             >
               <select {...props("budget")} defaultValue="">
-                <option value="">Sin indicar</option>
+                <option value="" key="budget-placeholder">Sin indicar</option>
                 {Object.entries(budgetLabels).map(([value, label]) => (
                   <option value={value} key={value}>
                     {label}

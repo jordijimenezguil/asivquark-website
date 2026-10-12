@@ -31,3 +31,7 @@ Configurar Neon/Resend, verificar baseline y aplicar migración aditiva autoriza
 Los proyectos requieren casos verificables. CRM/admin y gestión manual de estados quedan para una futura iteración, sin implementación actual. No hay newsletter, automatización de seguimiento o marketing por email.
 
 Objetivos LCP ≤2,5 s, INP ≤200 ms y CLS ≤0,1 pendientes de medición. [Flujos y límites de captación](leads.md).
+
+## Actualización — Iteración 4
+
+CRM privado con resumen comercial, filtros, listado responsive, detalle, estados, notas y actividad. Sin estadísticas ficticias, borrado, exportación o fases futuras. Véase [CRM](crm.md) para implementación, procedimientos y límites actuales. Las secciones anteriores describen la fase previa.

@@ -175,3 +175,59 @@ No se ha comprobado un registro real en Neon, envío/recepción Resend, reintent
 La revisión visual y manual de teclado/móvil no se completó: no hay navegador autorizado para control; Chrome ya había rechazado autorización durante la sesión previa. Las verificaciones HTTP/SSR y la revisión de labels, foco, estados, honeypot y CSS responsive no sustituyen interacción visual. No se afirma certificación WCAG ni Core Web Vitals. Node utilizado 26.0.0; Node 22 LTS no probado específicamente.
 
 Antes de habilitar captación pública: preparar rama Neon y verificar baseline; revisar/aplicar migración autorizada; configurar secreto, aviso real/versionado y política de retención; configurar remitente/destinatario y dominio Resend; asignar ejecución privada regular de process/cleanup; probar flujo integral con destinatarios controlados y revisión visual. after() no es una cola durable y no se ha activado cron. Ningún endpoint público de procesamiento ni dashboard/CRM añadido. Sin DNS, despliegues, resets, consultas a producción o marketing por email. Detalle operativo en [leads](leads.md).
+
+## Iteración 4 — 12/10/2026
+
+Implementación CRM privada en el repositorio, sin despliegue ni conexión externa de datos. Estado inicial Git limpio. No había .env.local ni rama Neon de pruebas configurada. No se aplicaron migraciones, crearon cuentas o enviaron emails.
+
+Comprobaciones ejecutadas:
+
+- `pnpm install --frozen-lockfile`: completado con versiones bloqueadas, sin cambios de dependencias/lockfile. El intento inicial en sandbox falló por resolución DNS; reejecutado con acceso autorizado, reutilizando el store. postinstall generó cliente.
+- `pnpm prisma validate`: esquema válido.
+- `pnpm db:generate`: cliente Prisma 7.10.0 generado.
+- `pnpm lint`: sin errores ni advertencias.
+- `pnpm typecheck`: correcto.
+- `pnpm test:config`: 6/6.
+- `pnpm test:db`: 3/3; baseline histórico y cuatro tablas auth preservadas, tablas comerciales aditivas.
+- `pnpm test:leads`: 24/24; regresiones de formulario, persistencia con dobles, outbox y límites.
+- `pnpm test:crm`: 13/13; motor Better Auth real con adaptador de memoria: ausencia/expiración de sesión, login, rol, cookies HttpOnly/SameSite, logout, bloqueo de registro y límite 429. Consultas/mutaciones con dobles: permisos antes de DB, búsqueda/filtros/paginación/orden, métricas incluyendo exclusión comercial de spam, notas/eventos, datos inválidos y conflictos de versión. Total: 46 pruebas.
+- `pnpm build`: correcto con acceso de red a Geist; ocho rutas comerciales estáticas y cuatro rutas CRM/login dinámicas. El primer intento sandbox quedó sin completar y se canceló antes de reejecutar; no se presenta como build exitoso.
+- Migración SQL generada offline con `pnpm prisma migrate diff --from-schema /tmp/asivquark-before-crm.prisma --to-schema prisma/schema.prisma --script`, revisada: únicamente enum values, columnas/índice/FKs aditivas y dos tablas. **No aplicada**.
+- HTTP local con `pnpm dev --hostname 127.0.0.1`: login 200 con campos email/password, metadata noindex/nofollow y Cache-Control no-store; `/admin/` y una URL de detalle solicitadas sin sesión devuelven 307 hacia login. No devolvieron información comercial.
+- `git diff --check`: sin incidencias.
+
+Límites: la herramienta de Computer Use denegó acceso a Google Chrome («Computer Use was not approved to use Google Chrome»). No se completó revisión visual desktop/móvil ni teclado. No se verificó contra Neon el recorrido login → dashboard → filtros → estado → nota → logout, ni las FKs/rollback transaccional/migraciones sobre PostgreSQL real. No se probó el aprovisionamiento contra DB ni recuperación de contraseña remota. Los tests de memoria/dobles no cubren esos límites. Resolución de IP de Vercel y cookies Secure en HTTPS real pendientes de entorno configurado. No se afirma WCAG, cumplimiento jurídico, rendimiento medido ni CRM activado en producción.
+
+Procedimientos de configuración, migración autorizada, creación privada del administrador y recuperación: [CRM](crm.md). No hay nuevas variables permanentes; se utilizan DATABASE_URL, DIRECT_URL, BETTER_AUTH_SECRET y BETTER_AUTH_URL existentes. Captación/Resend mantienen sus requisitos previos. No se implementa iteración 5.
+
+## Configuración local y comprobación Neon — 12/10/2026
+
+Petición posterior: comentar variables vacías y aplicar migraciones. `.env.local` permanece ignorado y con permisos 0600; variables vacías comentadas. Se generaron secretos locales independientes para Better Auth y protección de leads, sin registrar valores. No se crearon contraseñas por defecto.
+
+Conexión Neon comprobada mediante consulta read-only con el driver instalado: esquema public sin tablas, sin historial Prisma. DATABASE_URL y DIRECT_URL configuradas pertenecen al mismo endpoint/base/usuario y contienen TLS, pero ambas son pooled. Aplicación de migraciones pendiente de sustituir DIRECT_URL por la conexión directa suministrada por Neon; no se construyeron hostnames ni se cambió la estrategia de conexiones. La petición del usuario autoriza aplicar las migraciones revisadas una vez satisfecho ese requisito.
+
+Prisma validate/generate, lint, typecheck y las 46 pruebas vuelven a pasar. Pendientes la cuenta administrativa elegida por el usuario y configuración real de Resend/aviso de privacidad/retención para activación pública. No se habilitan envíos ni se inventan datos legales o contactos.
+
+## Migraciones aplicadas con conexión única — 12/10/2026
+
+El usuario solicitó expresamente prescindir de DIRECT_URL. Se verificó documentación oficial de Neon sobre migraciones con pooling y se adaptó `prisma.config.ts` a `DIRECT_URL || DATABASE_URL || ""`; DIRECT_URL queda opcional y comentada en .env.local. No se alteraron hostnames/credenciales. La conexión pooled real funcionó con Prisma Migrate 7.10.0.
+
+`pnpm prisma migrate status` identificó las tres migraciones pendientes. `pnpm db:deploy`, autorizado por la petición previa, aplicó correctamente `0_init`, `20261012070000_leads` y `20261012120000_crm` a la base previamente comprobada vacía. Segunda comprobación de status: «Database schema is up to date». Sin reset/db push, truncados ni eliminación de registros.
+
+Cliente regenerado. Verificación read-only con `getPrisma()` real y adaptador Neon de runtime: conexión OK; lecturas count de User, Lead, LeadNote y LeadEvent y groupBy de estados correctas. Cero usuarios/admins/leads/notas/eventos; las tres migraciones constan finalizadas en historial. No se creó cuenta ni datos de prueba en esta base, que no está designada como rama de pruebas. Un primer script temporal falló por formato CJS antes de consultar; reejecutado como ESM con éxito.
+
+Tras el cambio: lint, typecheck, build, test:config (6), test:db (3) y test:crm (13) aprobados; test:leads (24) aprobado en la comprobación anterior de esta misma configuración local, antes del cambio de selección de URL CLI. `git diff --check` correcto. README, documentación Prisma/CRM y .env.example actualizados para conexión única Neon. No se realizaron envíos, despliegue ni cambios DNS. Pendiente aprovisionar el administrador elegido por el usuario y completar configuración Resend/legal para captación pública; no se afirma recorrido autenticado de extremo a extremo.
+
+Referencia: [Neon: migraciones Prisma sobre conexión pooled](https://neon.com/blog/better-postgres-with-prisma-experience). La compatibilidad comprobada corresponde a Neon y no autoriza asumirla para otros proveedores/poolers.
+
+## Aprovisionamiento del administrador e inicio local — 12/10/2026
+
+A petición del usuario, creada su cuenta con nombre/email facilitados y rol admin mediante `pnpm admin:account create`. Contraseña exclusiva generada con crypto.randomBytes, sin defaults ni impresión de credenciales. JSON guardado fuera del repositorio en directorio privado 0700 y archivo 0600 para consulta local del usuario. Verificación posterior read-only del rol correcta. No se promocionó una cuenta previa ni se habilitó registro público.
+
+`pnpm dev` iniciado a petición del usuario, usando .env.local; Next.js listo en http://localhost:3000. No se desplegó producción.
+
+## Corrección de claves de ContactForm — 12/10/2026
+
+Aviso React reproducido al renderizar `/contacto/` en desarrollo: las opciones iniciales de servicio y presupuesto carecían de key en la lista de opciones. Se añadieron claves estables y distintas a ambos placeholders; las opciones generadas ya tenían claves por valor. Sin cambios de valores/preselección/validación ni envíos de formularios.
+
+Verificado: nueva petición HTTP a `/contacto/` devuelve 200 sin reiterar el aviso en el render del servidor; lint, typecheck, 24 tests de leads y build correctos. No se realizó revisión de consola cliente en navegador; el servidor dev permanece iniciado.

@@ -15,7 +15,7 @@ Copiar las conexiones de la consola Neon, sin inventarlas:
 - DATABASE_URL: conexión pooled de la aplicación, privada, con TLS y a la rama correspondiente.
 - DIRECT_URL: conexión directa de **la misma base/rama** para Prisma CLI, migraciones y Studio.
 
-DIRECT_URL es obligatoria para operaciones conectadas en esta configuración. Se conserva vacía para `generate` y `validate`, que no necesitan DB; no se sustituye por DATABASE_URL. `prisma.config.ts` carga `.env.local` mediante `@next/env`, respetando la precedencia de Next.js. No usar `directUrl` dentro del esquema: Prisma 7 obtiene la URL administrativa desde la configuración.
+Por petición expresa del usuario, DIRECT_URL pasa a ser un override opcional. Prisma CLI usa `DIRECT_URL || DATABASE_URL`; Neon admite migraciones por la conexión pooled. `generate` y `validate` siguen funcionando sin URLs. `prisma.config.ts` carga `.env.local` mediante `@next/env`, respetando la precedencia de Next.js. No usar `directUrl` dentro del esquema: Prisma 7 obtiene la URL administrativa desde la configuración.
 
 `getPrisma()` crea cliente/adapter cuando un servicio de servidor lo solicita. PrismaNeon usa WebSockets y el WebSocket nativo de Node >=22.12; no hace falta añadir `ws`. El pool se abre al consultar. Reutilización por módulo en producción y globalThis en desarrollo para hot reload. Sin `$connect()` en importación ni `$disconnect()` por cada petición. API auth permanece en runtime Node.js. El cliente generado se importa desde `@/generated/prisma/client`, ignorado por Git y regenerado en postinstall/build.
 
@@ -87,3 +87,13 @@ No ejecutar `migrate dev` en una base con historial aún sin transición: puede 
 ## Iteración 3 — modelos comerciales
 
 Se añaden Lead, LeadEvent, EmailOutbox y LeadRateBucket sin alterar los cuatro modelos anteriores. Migración aditiva `20261012070000_leads` generada offline, sin aplicar. Cliente generado/validate y comparación de auth aprobados; no hubo acceso remoto. Ver [leads](leads.md) para campos, retención, procesamiento y activación. La línea base sigue requiriendo comprobación contra la base real antes de aplicar migraciones.
+
+## Actualización — Iteración 4
+
+Migración 20261012120000_crm generada offline con Prisma diff y revisada, no aplicada. Añade LeadNote, RateLimit, Lead.version/índice y LeadEvent.actorId/tipos, sin cambios destructivos de tablas existentes. Véase [CRM](crm.md) para implementación, procedimientos y límites actuales. Las secciones anteriores describen la fase previa.
+
+## Configuración efectiva — conexión única y migraciones aplicadas
+
+El usuario solicitó prescindir de DIRECT_URL. Se conserva como override opcional; .env.local la tiene comentada y Prisma CLI usa DATABASE_URL pooled. [Neon documenta soporte de migraciones pooled](https://neon.com/blog/better-postgres-with-prisma-experience). No se construyeron hostnames ni se cambiaron credenciales. La conexión directa continúa siendo una alternativa para herramientas/proveedores que la requieran; el soporte de Neon no se generaliza a todos los poolers.
+
+Tras consulta read-only se confirmó public vacío. Se aplicaron mediante `pnpm db:deploy`, con autorización del usuario: 0_init, 20261012070000_leads y 20261012120000_crm. No se ejecutó reset, db push ni se borraron datos. Las secciones anteriores conservan el contexto histórico de preparación offline.

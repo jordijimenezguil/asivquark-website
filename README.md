@@ -1,6 +1,6 @@
 # ASIVQUARK
 
-Web corporativa de un estudio de desarrollo de software y productos digitales en Barcelona. Tercera iteración: ocho páginas públicas y sistema de leads con validación, persistencia y notificaciones recuperables, pendiente de activar con configuración real. Dominio público: **https://asivquark.com**, sin `www`.
+Web corporativa de un estudio de desarrollo de software y productos digitales en Barcelona. Cuarta iteración: ocho páginas públicas, captación y CRM privado implementados, pendientes de activar con base y credenciales reales. Dominio público: **https://asivquark.com**, sin `www`.
 
 ## Stack
 
@@ -48,7 +48,7 @@ src/
 prisma/
   schema.prisma        # Cuatro modelos de auth y cuatro modelos de captación
   migrations/0_init/   # Línea base SQL, sin aplicar
-prisma.config.ts       # CLI, carga .env.local y conexión directa
+prisma.config.ts       # CLI, carga .env.local y conexión Neon
 drizzle/               # Archivo histórico inactivo, conservado por seguridad
 scripts/               # Mantenimiento privado de emails y retención
 tests/                 # Entornos, regresión DB y leads con dobles
@@ -64,7 +64,7 @@ No se crean carpetas vacías de funcionalidades futuras. `features/leads/` conti
 | `NEXT_PUBLIC_SITE_URL` | Origen público; localhost por defecto       | No                          |
 | `BETTER_AUTH_URL`      | Origen de autenticación, coincide con sitio | No                          |
 | `DATABASE_URL`         | URL Neon pooled privada para la aplicación  | No                          |
-| `DIRECT_URL`           | URL Neon directa privada para Prisma CLI    | No                          |
+| `DIRECT_URL`           | Override directo opcional para Prisma CLI   | No                          |
 | `BETTER_AUTH_SECRET`   | Secreto aleatorio de al menos 32 caracteres | No                          |
 | `RESEND_API_KEY`       | API key privada                             | No                          |
 | `RESEND_FROM_EMAIL`    | Remitente real verificado                   | No                          |
@@ -94,11 +94,11 @@ Para probar un build público fuera de Vercel se necesitan ambas variables y `VE
 
 ## Neon y Prisma
 
-Copiar las URLs reales de la consola Neon: `DATABASE_URL` pooled para la aplicación y `DIRECT_URL` directa para migraciones, introspección y Studio. No construir hostnames manualmente. Ambas deben apuntar a la misma base/rama y utilizar los parámetros TLS suministrados por Neon. Usar ramas separadas para desarrollo, previews y producción.
+Copiar `DATABASE_URL` pooled real de la consola Neon: se utiliza en la aplicación y Prisma CLI, incluidas migraciones. `DIRECT_URL` es un override directo opcional para herramientas administrativas; si se configura, debe apuntar a la misma base/rama. No construir hostnames manualmente y conservar TLS. Usar ramas separadas para desarrollo, previews y producción.
 
 `getPrisma()` utiliza `@prisma/adapter-neon` con WebSockets y Prisma Client 7.10.0 en Node.js. Valida DATABASE_URL al utilizarse, mantiene una instancia por proceso y la reutiliza en `globalThis` durante hot reload. No se conecta ni valida secretos al importar módulos de marketing.
 
-`prisma/schema.prisma` utiliza el generador moderno `prisma-client`, salida explícita `src/generated/prisma`, y PostgreSQL. Importar desde `@/generated/prisma/client`; los archivos generados no se versionan. Instalación y build generan el cliente automáticamente sin credenciales. `prisma.config.ts` carga el entorno con `@next/env`; las URLs ya no se declaran en el esquema Prisma 7. La CLI exige DIRECT_URL para operaciones de base, sin fallback a una URL ficticia ni a la pooled.
+`prisma/schema.prisma` utiliza el generador moderno `prisma-client`, salida explícita `src/generated/prisma`, y PostgreSQL. Importar desde `@/generated/prisma/client`; los archivos generados no se versionan. Instalación y build generan el cliente automáticamente sin credenciales. `prisma.config.ts` carga el entorno con `@next/env`; las URLs ya no se declaran en el esquema Prisma 7. La CLI utiliza DIRECT_URL si está configurada; en su ausencia usa DATABASE_URL. No hay URLs ficticias. Neon permite migraciones sobre su conexión pooled.
 
 ```bash
 pnpm db:generate
@@ -117,9 +117,9 @@ La línea base `0_init` conserva el SQL anterior con cuatro tablas de autenticac
 
 Configurar base de datos, secreto y origen del entorno antes de utilizar `/api/auth/*`. Generar secreto con `openssl rand -base64 48`, guardándolo únicamente en variables privadas.
 
-Instancia diferida mediante `getAuth()`, adaptador oficial `@better-auth/prisma-adapter` con provider `postgresql`. Los modelos Prisma conservan tablas físicas mediante `@@map`, columnas mediante `@map`, índices y claves foráneas. Se mantiene `transaction: false` para preservar la configuración previa del adaptador. API devuelve 503 sin credenciales; la home sigue funcionando. Email/contraseña preparado, registro público deshabilitado, sin OAuth, login visual ni usuarios sembrados. Sesiones de siete días y cookies seguras en HTTPS.
+Instancia diferida mediante `getAuth()`, adaptador oficial `@better-auth/prisma-adapter` con provider `postgresql`. Los modelos Prisma conservan tablas físicas mediante `@@map`, columnas mediante `@map`, índices y claves foráneas. Se mantiene `transaction: false` para preservar la configuración previa del adaptador. API devuelve 503 sin credenciales; la home sigue funcionando. Email/contraseña preparado, registro público deshabilitado, sin OAuth ni usuarios sembrados; login visual añadido en iteración 4. Sesiones de siete días y cookies seguras en HTTPS.
 
-`role` no admite entrada del cliente y tiene valor `user`. `requireAdmin()` exige sesión y rol admin en servidor; debe invocarse en cada futura página, acción y API privada. Crear administradores, recuperación de contraseña y controles de abuso definitivos queda pendiente antes de activar administración. Ocultar rutas no es autorización.
+`role` no admite entrada del cliente y tiene valor `user`. `requireAdmin()` exige sesión y rol admin en servidor; debe invocarse en cada futura página, acción y API privada. La iteración 4 añade aprovisionamiento privado, recuperación administrativa y limitador PostgreSQL. Ocultar rutas no es autorización.
 
 ## Resend
 
@@ -139,7 +139,7 @@ Configurar API key y email real de un dominio verificado. `sendTransactionalEmai
 | `pnpm db:generate` | Generar Prisma Client sin conectar a DB                |
 | `pnpm db:migrate`  | Crear y aplicar migraciones en desarrollo              |
 | `pnpm db:deploy`   | Aplicar migraciones existentes, con autorización       |
-| `pnpm db:studio`   | Abrir Prisma Studio con DIRECT_URL                     |
+| `pnpm db:studio`   | Abrir Prisma Studio con conexión configurada                     |
 
 `postinstall` genera Prisma Client. `pnpm-workspace.yaml` permite scripts de herramientas necesarias: esbuild, sharp, unrs-resolver, prisma y @prisma/engines. ESLint 9 se conserva por los peers de los plugins Next.js, pendientes de compatibilidad con 10.
 
@@ -186,7 +186,7 @@ Los servicios enlazan a contacto con `?servicio=web|software|aplicacion|mvp` y a
 
 Formulario real con nombre, email, empresa/teléfono opcionales, tipo de proyecto, presupuesto orientativo opcional, descripción y lectura de privacidad. Validación Zod compartida y definitiva en servidor. Estados de carga, errores por campo, reintento conservando datos y éxito solo tras persistencia. El servicio se preselecciona por URL y se puede modificar. No utiliza React Hook Form ni React Email.
 
-`POST /api/leads/` requiere origen del entorno, JSON, cuerpo de hasta 32 KiB y UUID en `Idempotency-Key`. La transacción Prisma guarda Lead, eventos y dos registros EmailOutbox. La clave única evita duplicados; el hash normalizado impide reutilizarla con contenido distinto. Rate limiting PostgreSQL compartido entre instancias, HMAC para contadores sin IP/email en texto, honeypot y respuestas controladas. No hay endpoints públicos de lectura ni panel administrativo.
+`POST /api/leads/` requiere origen del entorno, JSON, cuerpo de hasta 32 KiB y UUID en `Idempotency-Key`. La transacción Prisma guarda Lead, eventos y dos registros EmailOutbox. La clave única evita duplicados; el hash normalizado impide reutilizarla con contenido distinto. Rate limiting PostgreSQL compartido entre instancias, HMAC para contadores sin IP/email en texto, honeypot y respuestas controladas. No hay endpoints públicos de lectura; la iteración 4 añade CRM autorizado.
 
 Notificaciones mediante Resend después de responder con `after()`. Reservas y claves estables previenen envíos concurrentes; fallos conservan el lead y dejan estados recuperables. Resend mantiene idempotencia 24 horas; el procesador deja de reintentar solicitudes ambiguas a las 20 horas. La respuesta de éxito no afirma entrega de correo.
 
@@ -233,3 +233,11 @@ Futuras iteraciones: CRM/admin y gestión de estados. No se implementan dashboar
 - [Instrucciones de agentes](AGENTS.md)
 
 Referencias: [Better Auth/Prisma](https://better-auth.com/docs/adapters/prisma), [Prisma 7 PostgreSQL](https://www.prisma.io/docs/orm/v7/core-concepts/supported-databases/postgresql), [configuración Prisma 7](https://www.prisma.io/docs/orm/v7/reference/prisma-config-reference), [baselining](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/baselining), [Resend](https://resend.com/docs/send-with-nextjs). Para Next, consultar primero las guías instaladas en `node_modules/next/dist/docs/`.
+
+## CRM interno — Iteración 4
+
+Rutas `/login/`, `/admin/`, `/admin/leads/` y `/admin/leads/[id]/`. Dashboard real, listado paginado y responsive, búsqueda privada por POST, filtros URL, detalle/atribución, estados con concurrencia optimista, notas internas e historial con autor. Better Auth mantiene registro deshabilitado y rol existente `admin`, comprobado en servidor para cada operación. Sin CRM externo ni cambios de dependencias.
+
+Migración aditiva `20261012120000_crm` preparada y revisada, **aplicada a la base Neon configurada por el usuario el 12/10/2026**. Añade LeadNote, RateLimit, versión de lead y actor de eventos. Primero configurar una rama autorizada y revisar baseline; después `pnpm db:deploy` y `pnpm db:generate`. Aprovisionamiento exclusivamente privado: `pnpm admin:account create < /ruta/privada/cuenta.json`. JSON privado con email/name/password propios, permisos 0600, contraseña >=12 sin defaults; nunca versionarlo. No promociona cuentas previas. Recuperación: `pnpm admin:account reset-password` con stdin privado; invalida sesiones. Comprobación nueva: `pnpm test:crm`.
+
+[Arquitectura, configuración, procedimientos y límites del CRM](docs/crm.md). [Resultados reales](docs/validacion.md). Las tres migraciones están aplicadas; todavía no se ha creado administrador ni desplegado producción. La iteración 5 no se implementa.

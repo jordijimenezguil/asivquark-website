@@ -7,7 +7,7 @@ nextEnv.loadEnvConfig(process.cwd());
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: { path: "prisma/migrations" },
-  // Empty is intentional: generate/validate work offline, database commands
-  // fail until a real direct Neon URL is explicitly configured.
-  datasource: { url: process.env.DIRECT_URL || "" },
+  // Neon supports migrations over pooled connections. A separate direct URL
+  // remains an optional override; generate/validate also work without a URL.
+  datasource: { url: process.env.DIRECT_URL || process.env.DATABASE_URL || "" },
 });

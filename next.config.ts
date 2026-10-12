@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   async headers() {
     return [
+      ...["/admin/:path*", "/login/:path*", "/api/auth/:path*"].map((source) => ({
+        source,
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+          { key: "Cache-Control", value: "private, no-store" },
+        ],
+      })),
       {
         source: "/:path*",
         headers: [
