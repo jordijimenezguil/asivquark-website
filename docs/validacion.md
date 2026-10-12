@@ -270,3 +270,10 @@ Comprobación HTTP de solo lectura del servidor local: las nueve rutas responden
 El usuario reportó un + y flecha superpuestos en Servicios. Se corrigió la regla CSS: el pseudo-elemento +/− solo se aplica a `details[data-question]`, nunca al dropdown de navegación.
 
 Revisión visual responsive y pruebas de teclado/formulario en navegador pendientes: la API de navegador no ofrecía Chrome y el acceso nativo devolvió «Computer Use was not approved to use Google Chrome». Se inspeccionaron las cinco referencias originales, pero no se afirma comparación visual de la aplicación, ausencia de overflow en todos los anchos, conformidad AA, foco modal probado, ni flujos UI de envío con dobles. Tampoco se midieron Lighthouse/CWV. SVG externos con texto siguen requiriendo exportación a contornos para garantizar tipografía; falta URL LinkedIn y contenido legal aprobado. La captación mantiene sus controles de disponibilidad.
+
+
+## Cambio de correo público — 12/10/2026
+
+Sustituido el correo público por `proyectos@asivquark.com` en configuración (incluidos datos estructurados), contacto, enlaces mailto y footer; actualizado el plan de rediseño. Búsqueda en `src` y `docs`: sin referencias al correo anterior.
+
+Comprobaciones ejecutadas: `pnpm prisma validate`, `pnpm db:generate`, `pnpm lint`, `pnpm typecheck`, `pnpm test:config` (6/6), `pnpm test:db` (3/3) y `git diff --check` correctos. No se aplicaron migraciones. `pnpm build` llegó a «Creating an optimized production build» sin resultado durante la comprobación; no se afirma build completado. El servidor local no respondió en localhost:3000; no se verificó HTML servido ni vista escritorio/móvil en esta tarea.

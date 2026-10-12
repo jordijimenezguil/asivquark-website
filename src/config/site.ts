@@ -75,7 +75,7 @@ export function resolveSite(environment: Environment) {
 // This module is consumed only by server components and Next configuration.
 export const site = {
   name: "ASIVQUARK",
-  email: "hola@asivquark.com",
+  email: "proyectos@asivquark.com",
   title: "Desarrollo de Software y Diseño Web en Barcelona | ASIVQUARK",
   description:
     "Desarrollamos páginas web, aplicaciones y software a medida para empresas y emprendedores en Barcelona. Descubre ASIVQUARK.",
