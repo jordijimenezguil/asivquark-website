@@ -1,0 +1,17 @@
+import { LegalPageLayout, legalMetadata, type LegalSection } from "@/components/legal/legal-page-layout";
+import { legalDocuments } from "@/config/legal";
+export const metadata = legalMetadata("terms");
+const sections: LegalSection[] = [
+{ id: "objeto", title: "Objeto y ámbito de aplicación", content: <><p>Estas condiciones se refieren a la navegación y utilización de la web corporativa. No sustituyen presupuestos, contratos de desarrollo ni acuerdos de mantenimiento. Enviar una solicitud no implica contratar un proyecto ni aceptar condiciones comerciales.</p></> },
+{ id: "acceso", title: "Acceso al sitio web", content: <><p>La información pública puede consultarse sin crear una cuenta ni aceptar tecnologías opcionales. El acceso administrativo está reservado a personas autorizadas. No hay registro público de usuarios.</p></> },
+{ id: "permitido", title: "Uso permitido", content: <><p>Puedes consultar información, leer artículos y solicitar contacto para un proyecto. Los materiales se utilizan conforme a sus licencias y a los usos permitidos por la normativa.</p></> },
+{ id: "obligaciones", title: "Obligaciones del usuario", content: <><p>Facilita datos pertinentes y correctos en tus solicitudes. No suplantes identidades, envíes spam o código malicioso, ni intentes acceder a información privada o interferir con el servicio. Evita enviar información confidencial innecesaria en una consulta inicial.</p></> },
+{ id: "propiedad", title: "Propiedad intelectual", content: <><p>El aviso legal describe los derechos sobre contenidos propios y materiales de terceros. La lectura de artículos o ejemplos no supone una cesión general de derechos. Se respetan las excepciones legales y las licencias aplicables.</p></> },
+{ id: "externos", title: "Enlaces externos", content: <><p>Los recursos enlazados pertenecen a sus respectivos titulares y pueden tener condiciones propias. Revisa el destino y las licencias antes de reutilizar contenidos.</p></> },
+{ id: "disponibilidad", title: "Disponibilidad del sitio", content: <><p>Pueden producirse interrupciones por mantenimiento o incidencias. La disponibilidad de esta web no establece un nivel de servicio contractual para proyectos de clientes.</p></> },
+{ id: "limites", title: "Responsabilidad dentro de los límites legales", content: <><p>La información general sirve para conocer los servicios y orientar consultas. El alcance, idoneidad y garantías de un proyecto requieren valoración específica. Se mantienen las responsabilidades y derechos que no pueden excluirse conforme a la ley.</p></> },
+{ id: "modificaciones", title: "Modificaciones del sitio", content: <><p>La información y funcionalidades pueden actualizarse. Los cambios en esta web no modifican por sí solos contratos previamente aceptados por las partes.</p></> },
+{ id: "contacto", title: "Contacto", content: <><p>Para consultas comerciales está publicado proyectos@asivquark.com. La identidad y contacto legal del titular se incorporarán tras su confirmación.</p></> },
+{ id: "normativa", title: "Normativa aplicable", content: <><p>Se aplicará la normativa española y europea pertinente, respetando los derechos de consumidores cuando proceda. Las reglas de contratación, información precontractual y eventual desistimiento se analizarán en el proceso contractual específico; esta web no permite comprar ni pagar directamente.</p></> },
+];
+export default function Page() { return <LegalPageLayout document={legalDocuments.find(item => item.id === "terms")!} sections={sections} />; }

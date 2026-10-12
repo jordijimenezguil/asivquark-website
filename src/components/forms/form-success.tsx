@@ -8,6 +8,7 @@ export function FormSuccess({ type, onRestart }: { type: string; onRestart: () =
       id="lead-success"
       className="rounded-xl border border-slate-200 bg-white p-8 sm:p-12"
     >
+      <p className="mb-4 font-mono text-xs text-ink-500">Paso 3 de 3 · Confirmación</p>
       <CheckCircle2 className="mb-6 text-violet" aria-hidden="true" />
       <h2 className="text-3xl font-medium tracking-tight">
         Solicitud recibida

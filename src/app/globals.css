@@ -204,3 +204,17 @@ a[aria-current="page"] {
 .blog-hero :focus-visible { outline-color: var(--color-violet-300); }
 .blog-page :focus-visible { outline-width: 2px; outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .blog-page img { transform: none !important; } }
+
+/* Legal documents use the existing Geist face without changing marketing. */
+.marketing .legal-page { font-family: var(--font-geist-sans), sans-serif; }
+.legal-page .legal-section { scroll-margin-top: 7rem; }
+.legal-page article a { color: #6d28d9; text-decoration: underline; text-underline-offset: .2em; }
+.legal-page p, .legal-page dd { overflow-wrap: anywhere; }
+
+@theme { --text-hero-m: 2rem; --text-hero-m--line-height: 1.06; --text-hero-m--letter-spacing: -.035em; }
+@utility bg-hero-grid { background-image: linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px); }
+@utility bg-grid-28 { background-size: 28px 28px; }
+@utility bg-grid-40 { background-size: 40px 40px; }
+.marketing .header-logo { height: 28px; max-width: 100%; object-fit: contain; object-position: left center; }
+.configurator-option input:checked + span .option-number { color: #E4D9FF; }
+.project-image-pending { background: repeating-linear-gradient(135deg,#1A2030 0 10px,#151A27 10px 20px); }

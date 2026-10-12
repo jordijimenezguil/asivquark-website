@@ -14,6 +14,7 @@ import {
 } from "@/features/leads/schema";
 import { browserAttribution } from "@/features/leads/client-attribution";
 import type { PublicContactConfig } from "@/config/contact";
+import { PrivacyBasicInformation } from "@/components/legal/privacy-basic-information";
 import { FormField } from "./form-field";
 import { FormSuccess } from "./form-success";
 export function ContactForm({
@@ -189,6 +190,7 @@ export function ContactForm({
         <fieldset disabled={!config.enabled || pending}>
           <legend className="sr-only">Información de tu proyecto</legend>
           <fieldset className="mb-7"><legend className="form-label">¿Qué quieres desarrollar? *</legend><div className="grid grid-cols-2 gap-2">{projectOptions.map(service => <label key={service.value} className={`relative flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border px-3 py-3 text-sm font-semibold ${selected === service.value ? "border-violet bg-violet text-white" : "border-line-strong"}`}><input type="radio" name="projectType" value={service.value} aria-describedby={errors.projectType ? "projectType-error" : undefined} checked={selected === service.value} onChange={() => setSelected(service.value)} className="h-4 w-4 accent-violet" />{service.label}</label>)}</div>{errors.projectType && <p id="projectType-error" className="mt-2 text-sm text-red-700">{errors.projectType}</p>}</fieldset>
+          <p className="mb-4 font-mono text-xs text-ink-500">Paso 2 de 3 · Datos de contacto</p>
           <div className="grid gap-6 sm:grid-cols-2">
             <FormField name="name" label="Nombre" required error={errors.name}>
               <input
@@ -266,6 +268,7 @@ export function ContactForm({
             </FormField>
 </div></div></div>
             <div className="sm:col-span-2">
+              <PrivacyBasicInformation />
               <label
                 htmlFor="privacy"
                 className="flex items-start gap-3 text-sm leading-6"

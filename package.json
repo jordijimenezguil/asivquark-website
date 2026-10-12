@@ -30,7 +30,11 @@
     "test:automation": "node --conditions=react-server --import tsx --test tests/automation.test.ts",
     "test:automation:html": "node --import tsx --test tests/automation-html.test.ts",
     "test:web-design": "node --import tsx --test tests/web-design.test.ts",
-    "test:web-design:html": "node --import tsx --test tests/web-design-html.test.ts tests/blog-html.test.ts"
+    "test:web-design:html": "node --import tsx --test tests/web-design-html.test.ts tests/blog-html.test.ts",
+    "legal:check": "node --import tsx scripts/legal-readiness.ts",
+    "test:legal": "node --conditions=react-server --import tsx --test tests/legal.test.ts",
+    "test:legal:html": "node --import tsx --test tests/legal-html.test.ts",
+    "test:home": "node --import tsx --test tests/home-hero.test.ts"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "1.7.7",

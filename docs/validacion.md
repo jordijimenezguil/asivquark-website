@@ -384,3 +384,42 @@ Límites: el navegador rechazó el acceso a Chrome. No se han revisado visualmen
 Foto aportada por el propietario añadida al hero mediante `headerImage`, conservando composición 3:2 (1440×960), alt «Portátil con una web profesional de ASIVQUARK en pantalla, junto a un móvil con su versión responsive.» y carga eager/fetchPriority high. WebP de 129.182 bytes. Cover separado 1200×630 con encaje completo sobre navy para no cortar etiquetas, 73.534 bytes; listado, OG/Twitter y BlogPosting usan esta ruta. No se presenta el 98 visible dentro de la ilustración como una métrica real de la web.
 
 Guía editorial actualizada con campo `headerImage` y anatomía. HTTP del artículo devuelve la cabecera con dimensiones y alt correctos; meta tags comprobados mediante parser HTML: og:image, width/height/alt y twitter:image con su alt, todos asociados a la imagen aportada. `pnpm lint`, `pnpm typecheck` y 4 pruebas de contenido correctas. Prisma validate/generate y tests config/db reejecutados; sin migraciones. Build habitual reintentado, con el mismo bloqueo de puertos de Turbopack descrito arriba. Sin nueva revisión visual del navegador, que no autorizó acceso en la sesión anterior. Dev permanece activo en localhost:3000.
+
+## Iteración legal — 12/10/2026
+
+Ejecutado sobre repositorio existente, sin leer secretos, consultar bases externas, migrar ni enviar correo.
+
+| Comprobación | Resultado real |
+| --- | --- |
+| pnpm prisma validate | Correcto |
+| pnpm db:generate | Correcto, cliente Prisma 7.10.0 |
+| pnpm lint | Correcto, cero advertencias |
+| pnpm typecheck | Correcto, Next typegen y tsc |
+| pnpm test:config / test:db | Correctos |
+| pnpm test:leads / test:crm / test:cookies | Correctos, dobles/offline; bloqueo y retirada opcional comprobados por tests existentes |
+| pnpm test:legal | 4 pruebas correctas: configuración, cierre de captación, integración y metadata producción |
+| LEGAL_TEST_URL=http://localhost:3100 pnpm test:legal:html | 5 pruebas correctas tras permitir conexión local: cuatro respuestas 200 y contacto, H1 único, titles/descriptions, noindex, enlaces y anclas iniciales |
+| pnpm legal:check | Código 1 esperado: identidad, aplicabilidad y cuatro aprobaciones pendientes |
+| pnpm build | Falló: Turbopack no puede abrir puerto, Operation not permitted; mismo resultado en intento ampliado |
+| pnpm exec next build --webpack | Correcto: compilación, TypeScript, generación de 26 páginas y trazas; cuatro rutas legales estáticas |
+| git diff --check | Correcto tras retirar espacio sobrante |
+
+El primer intento HTTP Node falló por EPERM de conexión a localhost; reejecutado con permiso ampliado, pasó. Servidor local de prueba en puerto 3100, sin envíos ni consultas de datos. Build local no equivale a build desplegado de producción. Canonicals de producción verificados con proceso aislado y configuración de origen oficial; noindex del borrador permanece. No se afirma revisión remota, indexación ni métricas de rendimiento.
+
+Navegador: inventario sin navegadores conectados; intento Chrome devuelve `Browser is not available: chrome`. Por ello **no ejecutadas** pruebas visuales 320, 375, 768, 1024, 1440, zoom, teclado/foco reales, apertura del diálogo por interacción, overflow medido ni inspección de cookies de auth real. Diseño preparado con índice HTML, scroll-margin 7rem, lectura 72ch y tarjetas sin tabla ancha; esto no acredita WCAG 2.2 AA ni ausencia de overflow en navegador. Verificar manualmente antes de publicar. Modo oscuro alternativo no implementado por el sitio.
+
+Checklist jurídico y riesgos: docs/legal/compliance-checklist.md. Informe de cambios: docs/legal/implementation-report.md. No hay certificación jurídica ni aprobación definitiva.
+
+## Home / header — dirección 2a
+
+12/10/2026: aplicados hero compacto, retícula CSS Tailwind 4, cuatro radios GET y CTA blanco móvil, detalle y dos columnas lg, header global, paso 2/3 contacto y franja reciente basada en catálogo vacío real. Sin referencias handoff/PROMPT.md ni tailwind.config presentes; no hay barra flotante previa. Se preservan cambios legales pendientes.
+
+- Prisma validate/generate, test:config, test:db, test:automation, test:cookies, lint y typecheck: correctos.
+- test:home: 4 correctos, incluyendo HTML inicial con H1 único, opciones y destino real, y tipo app convertido a aplicacion.
+- test:leads: inicialmente 24/25. El test antiguo consideraba cualquier URL HTTPS como aviso aprobado, expectativa incompatible con el control jurídico añadido. Se corrigió la expectativa conservando el cierre seguro; reejecutado, 25/25 correctos. Esto corrige la afirmación anterior de test:leads íntegramente correcto en el informe legal, que se había basado en salida truncada.
+- Build webpack correcto antes del último añadido textual «Paso 3 de 3» en confirmación; lint/typecheck posteriores correctos. pnpm build estándar posterior no terminó y se interrumpió al solicitar el usuario arrancar dev; no se informa como correcto. El bloqueo Turbopack previo sigue documentado.
+- Navegador Chrome no disponible. No verificadas visualmente medidas 320/375/640/768/1024/1280/1440 ni presupuesto real 375×667. No ejecutados Lighthouse, CLS o LCP; no se garantizan métricas. El banner de cookies existente puede cubrir parte del hero hasta tomar una decisión, caso a revisar en primera visita.
+- Logo original de proporción 196:24 conservado: caja h28 con object-contain y reducción proporcional donde CTA/menú limitan espacio. El dibujo efectivo puede ser menor de 28px en móvil; no se deforma ni rediseña el SVG para forzar una combinación incompatible de anchos.
+- Carrusel preparado solo para proyectos publicados reales; actualmente estado vacío. Interacción táctil/teclado pendiente hasta disponer de contenido y navegador.
+
+Servidor dev iniciado por petición expresa mediante pnpm dev, localhost:3000. No desplegado, sin migraciones ni envíos.

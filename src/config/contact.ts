@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { legalDocuments, legalEntity, legalReadiness } from "@/config/legal";
 import { site } from "@/config/site";
 
 export function getContactConfig(
@@ -21,7 +22,10 @@ export function getContactConfig(
     new URL(noticeUrl.data).protocol === "https:" &&
     !new URL(noticeUrl.data).username &&
     !new URL(noticeUrl.data).password &&
-    noticeVersion.success;
+    noticeVersion.success &&
+    noticeUrl.data === `${legalEntity.website}/politica-privacidad/` &&
+    noticeVersion.data === legalDocuments.find(document => document.id === "privacy")?.version &&
+    legalReadiness().ready;
   const testMode = mode === "development";
   const retention = z.coerce
     .number()

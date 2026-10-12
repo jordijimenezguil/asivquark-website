@@ -1,33 +1,8 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { BrandLogo } from "@/components/branding/brand-logo";
-import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
 import { NavigationLinks } from "./navigation-links";
 import { MobileNavigation } from "./mobile-navigation";
-
+import { HeaderContactLink } from "./header-contact-link";
 export function SiteHeader() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-night text-white">
-      <Container className="flex h-16 items-center justify-between gap-6 lg:h-[90px]">
-        <Link href="/" aria-label="ASIVQUARK, inicio">
-          <BrandLogo />
-        </Link>
-        <nav
-          aria-label="Navegación principal"
-          className="hidden items-center gap-5 lg:flex"
-        >
-          <NavigationLinks />
-        </nav>
-        <Button
-          href="/contacto/"
-          variant="primary"
-          className="hidden min-h-10 px-4 lg:inline-flex"
-        >
-          Cuéntanos tu proyecto <ArrowUpRight size={16} aria-hidden="true" />
-        </Button>
-        <MobileNavigation />
-      </Container>
-    </header>
-  );
+  return <header className="sticky top-0 z-50 border-b border-white/10 bg-night text-white"><div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-3 pl-5 pr-4 lg:h-[90px] lg:gap-6 lg:px-16"><Link href="/" aria-label="ASIVQUARK, inicio" className="min-w-0 flex-1"><BrandLogo className="header-logo" /></Link><nav aria-label="Navegación principal" className="hidden items-center gap-5 lg:flex"><NavigationLinks /></nav><div className="flex shrink-0 items-center gap-2"><HeaderContactLink /><MobileNavigation /></div></div></header>;
 }

@@ -1,10 +1,10 @@
+import { HomeHero } from "@/components/marketing/home-hero";
 import { process } from "@/content/marketing";
 import { SiteFooter } from "@/components/layout/site-footer";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { services } from "@/content/services";
 import {
-  PageHero,
   ProcessSteps,
   FAQAccordion,
   ServiceCard,
@@ -36,14 +36,7 @@ export default function Home() {
           }}
         />
       )}
-      <PageHero
-        home
-        label="ESTUDIO DE DESARROLLO DIGITAL · BARCELONA"
-        title="Desarrollo de software y páginas web en Barcelona"
-        description="En ASIVQUARK transformamos ideas en soluciones digitales. Creamos páginas web, aplicaciones y software a medida para empresas y emprendedores."
-        cta="Cuéntanos tu proyecto"
-        href="/contacto/"
-      />
+      <HomeHero />
       <div className="border-b border-line bg-white"><Container className="grid sm:grid-cols-3">{[
         ["Precio cerrado por fase", "Cada fase se aprueba antes de empezar. Sin sorpresas."],
         ["Entregas cada dos semanas", "Ves el avance real y ajustas prioridades."],
@@ -55,6 +48,7 @@ export default function Home() {
             label="NUESTROS SERVICIOS"
             title="¿Qué necesitas desarrollar?"
           />
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-500">En ASIVQUARK transformamos ideas en soluciones digitales. Creamos páginas web, aplicaciones y software a medida para empresas y emprendedores.</p>
           <Link href="/servicios/" className="mt-5 inline-block text-sm font-semibold text-violet">Todos los servicios →</Link>
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (

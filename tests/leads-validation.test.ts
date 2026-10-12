@@ -88,7 +88,7 @@ test("attribution strips untrusted paths and referrer queries without inventing 
     undefined,
   );
 });
-test("public capture requires approved notice, explicit activation and server configuration", () => {
+test("public capture stays closed when environment flags point to an unapproved notice", () => {
   const environment = {
     LEADS_ENABLED: "true",
     VERCEL: "1",
@@ -106,7 +106,7 @@ test("public capture requires approved notice, explicit activation and server co
       },
       "production",
     ).enabled,
-    true,
+    false,
   );
   assert.equal(
     getContactConfig(

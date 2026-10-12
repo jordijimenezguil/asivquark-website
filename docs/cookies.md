@@ -47,3 +47,11 @@ Consultadas fuentes oficiales el 12/10/2026:
 - Better Auth: https://better-auth.com/docs/concepts/cookies; el código instalado prevalece para nombres/configuración.
 
 Pendiente: identificación jurídica/canal legal del responsable, revisión de clasificación/finalidades reales, infraestructura y cookies HTTP de autenticación en entorno real. La política es informativa con pendientes visibles, no texto legal aprobado ni garantía de cumplimiento. El acceso al navegador fue rechazado por la herramienta; WCAG y tamaños 320/375/768/1280 necesitan verificación visual/teclado real.
+
+## Iteración legal — 12/10/2026
+
+Cuatro rutas legales con trailing slash: `/aviso-legal/`, `/politica-privacidad/`, `/politica-de-cookies/` y `/condiciones-de-uso/`. Configuración central en `src/config/legal.ts`, con identidad pendiente, aplicabilidad explícita y versión/fechas de aprobación separadas de revisión técnica. Documentos en preparación: advertencia pública sin datos ficticios y `noindex`; canonical únicamente en producción. Sitemap incorpora legales solo tras preparación aprobada, sin fechas artificiales.
+
+Layout servidor compartido, Geist existente acotado a legal, hero compacto, índice HTML plegable móvil/lateral escritorio, lectura limitada y tarjetas de inventario de cookies. Footer enlaza los cuatro documentos y reutiliza el gestor. Contacto incorpora primera capa; casilla conserva reconocimiento de lectura, no consentimiento comercial. Producción/preview exigen preparación legal y URL/versión exactas del aviso aprobado además de requisitos operativos anteriores; desarrollo sigue siendo solo prueba.
+
+`pnpm legal:check` informa pendientes y falla intencionadamente mientras no se aprueben datos/documentos. Resolver [checklist jurídico](legal/compliance-checklist.md), [inventario](legal/data-processing-inventory.md), [retención](legal/data-retention-review.md) y [guía contractual interna](legal/contratacion-servicios.md) (en README: rutas bajo docs/legal). No se publica la guía, migra la DB ni despliega producción. No se acredita conformidad legal integral. Las notas anteriores corresponden a iteraciones históricas. Resultados reales y límites en docs/validacion.md.
