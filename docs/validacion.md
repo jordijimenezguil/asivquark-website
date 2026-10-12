@@ -231,3 +231,9 @@ A petición del usuario, creada su cuenta con nombre/email facilitados y rol adm
 Aviso React reproducido al renderizar `/contacto/` en desarrollo: las opciones iniciales de servicio y presupuesto carecían de key en la lista de opciones. Se añadieron claves estables y distintas a ambos placeholders; las opciones generadas ya tenían claves por valor. Sin cambios de valores/preselección/validación ni envíos de formularios.
 
 Verificado: nueva petición HTTP a `/contacto/` devuelve 200 sin reiterar el aviso en el render del servidor; lint, typecheck, 24 tests de leads y build correctos. No se realizó revisión de consola cliente en navegador; el servidor dev permanece iniciado.
+
+## Corrección 404 de login — 12/10/2026
+
+Reproducido con Better Auth 1.7.7 y adaptador en memoria: POST `sign-in/email/` devolvía 404 en vez de 401 para contraseña incorrecta. Activado `advanced.skipTrailingSlashes`; tests verifican login y logout con barra final y sesión/rate limit sin barra. El formulario clasifica 404 como error temporal.
+
+Comprobaciones correctas: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3) y test:crm (13). `pnpm build` intentado también con ejecución escalada, bloqueado por Turbopack al abrir puerto (`Operation not permitted`). Chrome denegado por Computer Use; revisión visual escritorio/móvil y login real en navegador pendientes. No se desplegó ni cambió DB en esta corrección.

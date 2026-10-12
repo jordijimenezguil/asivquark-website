@@ -107,3 +107,7 @@ No hay entorno Neon de pruebas configurado, por lo que no se creó administrador
 ## Activación local posterior
 
 Por petición del usuario, Prisma CLI usa DATABASE_URL pooled si DIRECT_URL no está configurada. Las tres migraciones se aplicaron a Neon tras verificar que la base estaba vacía. Secretos locales de auth/leads generados sin imprimir valores, .env.local ignorado con permisos 0600. Aprovisionamiento del administrador pendiente de identidad y credenciales elegidas por el usuario. Resend y captación pública permanecen sujetos a su configuración real.
+
+## Compatibilidad con barra final
+
+Better Auth configura `advanced.skipTrailingSlashes: true` para aceptar las rutas API con barra final que exige `trailingSlash: true` en Next.js. Se conservan controles de origen, CSRF y permisos. El login muestra error temporal para un 404, evitando atribuir un fallo de ruta a las credenciales.

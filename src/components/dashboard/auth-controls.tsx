@@ -17,7 +17,7 @@ export function LoginForm({ returnTo, expired }: {
             try {
                 const result = await authClient.signIn.email({ email: String(form.get("email")), password: String(form.get("password")) });
                 if (result.error)
-                    setMessage(result.error.status === 429 ? "Demasiados intentos. Espera unos minutos." : result.error.status >= 500 ? "Error temporal. Vuelve a intentarlo." : "Credenciales incorrectas.");
+                    setMessage(result.error.status === 429 ? "Demasiados intentos. Espera unos minutos." : (result.error.status >= 500 || result.error.status === 404) ? "Error temporal. Vuelve a intentarlo." : "Credenciales incorrectas.");
                 else
                     window.location.assign(safeReturnPath(returnTo));
             }

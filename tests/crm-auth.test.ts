@@ -17,12 +17,12 @@ test("Better Auth login, private role, cookies, expired session, logout and sign
     const auth = createAuthForDatabase(memoryAdapter(memory), randomUUID() + randomUUID());
     const request = (path: string, body: unknown, cookie = "") => new Request(`http://localhost:3000/api/auth/${path}`, { method: "POST", headers: { "Content-Type": "application/json", Origin: "http://localhost:3000", Cookie: cookie }, body: JSON.stringify(body) });
     assert.equal(await auth.api.getSession({ headers: new Headers() }), null);
-    const wrong = await auth.handler(request("sign-in/email", { email: "admin@example.test", password: "wrong-password" }));
+    const wrong = await auth.handler(request("sign-in/email/", { email: "admin@example.test", password: "wrong-password" }));
     assert.equal(wrong.status, 401);
     const signup = await auth.handler(request("sign-up/email", { email: "new@example.test", password, name: "New", role: "admin" }));
     assert.ok(signup.status >= 400);
     assert.equal(memory.user.length, 1);
-    const login = await auth.handler(request("sign-in/email", { email: "admin@example.test", password, role: "admin" }));
+    const login = await auth.handler(request("sign-in/email/", { email: "admin@example.test", password, role: "admin" }));
     assert.equal(login.status, 200);
     const setCookies = login.headers.getSetCookie();
     assert.ok(setCookies.some(c => /httponly/i.test(c)));
@@ -37,7 +37,7 @@ test("Better Auth login, private role, cookies, expired session, logout and sign
     assert.ok(ordinary);
     assert.equal(isAdmin(ordinary.user), false);
     memory.user[0].role = "admin";
-    const logout = await auth.handler(request("sign-out", {}, cookie));
+    const logout = await auth.handler(request("sign-out/", {}, cookie));
     assert.equal(logout.status, 200);
     assert.equal(await auth.api.getSession({ headers }), null);
     const login2 = await auth.handler(request("sign-in/email", { email: "admin@example.test", password }));

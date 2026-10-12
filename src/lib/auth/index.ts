@@ -27,6 +27,7 @@ export function createAuthForDatabase(database: BetterAuthOptions["database"], s
         },
         session: { expiresIn: 60 * 60 * 24 * 7, updateAge: 60 * 60 * 24 },
         advanced: {
+            skipTrailingSlashes: true,
             ipAddress: { ipAddressHeaders: process.env.VERCEL === "1" ? ["x-vercel-forwarded-for"] : ["x-asivquark-client-ip"] },
             defaultCookieAttributes: { httpOnly: true, sameSite: "lax" },
             useSecureCookies: new URL(site.authOrigin).protocol === "https:",
