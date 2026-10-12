@@ -241,3 +241,9 @@ Rutas `/login/`, `/admin/`, `/admin/leads/` y `/admin/leads/[id]/`. Dashboard re
 Migración aditiva `20261012120000_crm` preparada y revisada, **aplicada a la base Neon configurada por el usuario el 12/10/2026**. Añade LeadNote, RateLimit, versión de lead y actor de eventos. Primero configurar una rama autorizada y revisar baseline; después `pnpm db:deploy` y `pnpm db:generate`. Aprovisionamiento exclusivamente privado: `pnpm admin:account create < /ruta/privada/cuenta.json`. JSON privado con email/name/password propios, permisos 0600, contraseña >=12 sin defaults; nunca versionarlo. No promociona cuentas previas. Recuperación: `pnpm admin:account reset-password` con stdin privado; invalida sesiones. Comprobación nueva: `pnpm test:crm`.
 
 [Arquitectura, configuración, procedimientos y límites del CRM](docs/crm.md). [Resultados reales](docs/validacion.md). Las tres migraciones están aplicadas; todavía no se ha creado administrador ni desplegado producción. La iteración 5 no se implementa.
+
+## Rediseño público — 12/10/2026
+
+UI renovada conforme al [plan](docs/plans/2026-10-12-redisenio-ui-asivquark.md): nueve rutas públicas, índice `/servicios/` y cuatro detalles bajo `/servicios/[slug]/`, sin rutas antiguas ni redirecciones históricas. Configurador, menú móvil modal nativo, formulario con opcionales y portfolio único con filtros. Logos originales en `public/brand/`; fuentes públicas separadas del CRM.
+
+Contacto usa exclusivamente `?tipo=web|software|app|mvp`; `app` se adapta al contrato `aplicacion` al enviar. Presupuestos vigentes conservados (opción A del plan). No se activan captación, email, migraciones ni producción. `pnpm test:marketing` comprueba tipos comerciales, rutas y atribución. Véase [validación](docs/validacion.md) para resultados y bloqueos.

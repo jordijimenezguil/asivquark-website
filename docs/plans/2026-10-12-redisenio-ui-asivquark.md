@@ -1,6 +1,6 @@
 # Plan de rediseño ASIVQUARK — UI, conversión y arquitectura SEO
 
-Fecha: 12 de octubre de 2026. Estado: **plan para revisión; ejecución no autorizada**.
+Fecha: 12 de octubre de 2026. Estado: **implementación solicitada por el usuario el 12/10/2026; validación en docs/validacion.md**.
 
 ## 1. Encargo y decisiones confirmadas
 
@@ -428,3 +428,9 @@ Decisiones ya cerradas: email y cuatro compromisos comerciales; ausencia de prod
 ## 15. Evidencia de esta entrega de planificación
 
 Se han archivado cinco capturas y siete SVG originales, comprobando igualdad byte a byte y generando SHA-256. Se ha preparado este plan sobre la base actual y las instrucciones recibidas. No se han ejecutado comandos de validación de aplicación, build, migraciones, envíos o despliegues, porque no se ha implementado código. La fidelidad visual de la futura web y sus resultados SEO siguen sin comprobar hasta ejecución autorizada.
+
+## 16. Ejecución autorizada — 12/10/2026
+
+La petición «implementa el plan de redisenio ui» autoriza el rediseño. Se adoptan los slugs propuestos, opción A de presupuestos, CTA contextuales, portfolio vacío, marca sin equipo, omisión de LinkedIn/legales no aportados/barra móvil y eventos locales. Los textos históricos «ejecución no autorizada» de las secciones anteriores describen la entrega de planificación, ya superada por esta petición. Captación sigue respetando configuración legal; no se publican servicios externos.
+
+Revisión visual en navegador y build completo pendientes por límites del entorno detallados en validación. La incidencia reportada del + superpuesto en el dropdown Servicios se corrige acotando el pseudo-elemento de FAQ a `details[data-question]`.

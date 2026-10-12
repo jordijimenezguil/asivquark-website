@@ -34,3 +34,9 @@ La iteración 3 no añade URLs al sitemap ni páginas de agradecimiento indexabl
 ## Actualización — Iteración 4
 
 Login y todas las rutas admin dinámicas y noindex/nofollow con headers no-store. Ausentes del sitemap y navegación pública; metadata genérica sin datos personales. Robots excluye admin/login en producción. Véase [CRM](crm.md) para implementación, procedimientos y límites actuales. Las secciones anteriores describen la fase previa.
+
+## Rediseño público — 12/10/2026
+
+Nueve rutas en `publicPaths`, servicios bajo `/servicios/`: `diseno-web-barcelona`, `software-a-medida-barcelona`, `aplicaciones-web-barcelona`, `desarrollo-mvp`. Sin landings antiguas ni redirecciones históricas. Breadcrumbs de tres niveles en detalles, dos en índices; FAQPage refleja preguntas visibles en producción. Organization compartida se emite una vez por página e incorpora email confirmado y logo original, sin perfiles externos inventados. OG conserva 1200×630 y añade isotipo original; favicon SVG, PNG 32/512 y apple-icon 180 derivados del original.
+
+Contacto únicamente `tipo`, filtros de portfolio `cat`; canonical siempre sin parámetros. La separación de entornos y sitemap vacío local/preview se conserva. No hay rutas individuales de proyectos ni legales vacíos. Comprobaciones HTTP locales registradas en validación; inspección remota, artefactos completos de producción/preview y métricas visuales pendientes por bloqueo del build/navegador.

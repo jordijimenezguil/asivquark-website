@@ -1,12 +1,15 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { NavigationLinks } from "./navigation-links";
 export function MobileNavigation() {
+ const pathname = usePathname();
  const dialog = useRef<HTMLDialogElement>(null);
  const trigger = useRef<HTMLButtonElement>(null);
  const close = () => dialog.current?.close();
+ useEffect(() => { dialog.current?.close(); }, [pathname]);
  useEffect(() => {
  const media = window.matchMedia("(min-width: 1024px)");
  const resize = () => { if(media.matches) dialog.current?.close(); };

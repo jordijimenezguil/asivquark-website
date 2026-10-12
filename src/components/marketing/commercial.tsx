@@ -95,7 +95,7 @@ export function PageHero({
           }
         >
           <div>
-            <p className="eyebrow mb-7 text-violet-soft">{label}</p>
+            {home && <p className="eyebrow mb-7 text-violet-soft">{label}</p>}
             <h1 className="max-w-4xl text-[36px] font-bold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-[64px]">
               {title}
             </h1>

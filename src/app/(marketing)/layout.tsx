@@ -1,3 +1,5 @@
+import { JsonLd } from "@/components/marketing/commercial";
+import { site } from "@/config/site";
 import { EventObserver } from "@/components/marketing/event-observer";
 import { AttributionTracker } from "@/components/forms/attribution-tracker";
 import type { ReactNode } from "react";
@@ -11,6 +13,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
     <div className={`marketing ${sans.variable} ${brand.variable} ${mono.variable}`}>
       <AttributionTracker />
       <EventObserver />
+      {site.isProduction && <JsonLd data={{ "@context": "https://schema.org", "@type": "Organization", "@id": `${site.origin}/#organization`, name: site.name, url: `${site.origin}/`, email: site.email, logo: `${site.origin}/brand/asivquark-horizontal-dark.svg`, location: { "@type": "Place", name: "Barcelona, España" } }} />}
       <SiteHeader />
       <main id="contenido" tabIndex={-1}>
         {children}

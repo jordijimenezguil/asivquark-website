@@ -121,3 +121,9 @@ No ejecutar eliminación sin confirmar destino y autorización. Evita borrar lea
 Bloqueos de activación: base/rama configurada y migraciones revisadas/aplicadas, aviso de privacidad aprobado y versionado, política de retención y ejecución de mantenimiento, secreto de seguridad, remitente y destinatario reales, dominio Resend verificado, prueba integral autorizada y revisión visual/teclado. No se han comprobado conexiones, entrega real o concurrencia sobre PostgreSQL remoto. Las pruebas con dobles no sustituyen esas comprobaciones.
 
 Futuro: CRM/admin y gestión de estados, observabilidad operacional, entrega por webhooks y procesamiento durable si el volumen lo exige. No se implementa ninguna de esas interfaces o servicios en esta iteración.
+
+## UI pública — 12/10/2026
+
+URL comercial única `tipo=web|software|app|mvp`. Valores ausentes, inválidos o repetidos seleccionan web; query histórica `servicio` no se consume. Radios públicos usan esos cuatro valores y `app` se serializa como `aplicacion` en el payload vigente. Backend conserva `otro` para sus consumidores privados. Opcionales mantienen valores al cerrar y se abren antes de enfocar errores.
+
+Presupuestos: opción A del plan, claves y rangos existentes íntegros; no se renombran etiquetas engañosamente ni se cambian schema/CRM/emails. El reinicio desde éxito conserva tipo y elimina datos personales y clave del intento. Seguridad, endpoint, persistencia, outbox, permisos, configuración legal y operación externa se mantienen. Solo eventos locales sin PII; no se ha enviado correo real ni creado una solicitud remota para esta UI.

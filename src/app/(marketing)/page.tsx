@@ -25,15 +25,6 @@ export default function Home() {
             "@context": "https://schema.org",
             "@graph": [
               {
-                "@type": "Organization",
-                "@id": `${site.origin}/#organization`,
-                name: "ASIVQUARK",
-                url: `${site.origin}/`,
-                email: "hola@asivquark.com",
-                logo: `${site.origin}/brand/asivquark-horizontal-dark.svg`,
-                location: { "@type": "Place", name: "Barcelona, España" },
-              },
-              {
                 "@type": "WebSite",
                 "@id": `${site.origin}/#website`,
                 name: "ASIVQUARK",

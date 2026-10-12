@@ -45,3 +45,11 @@ LeadRateBucket utiliza PostgreSQL y hashes temporales para compartir límites. C
 ## Actualización — Iteración 4
 
 Layout administrativo separado, Server Actions y consultas protegidas en features/crm; notas/eventos transaccionales, concurrencia optimista y limitador de login PostgreSQL. Véase [CRM](crm.md) para implementación, procedimientos y límites actuales. Las secciones anteriores describen la fase previa.
+
+## Rediseño público — 12/10/2026
+
+Nueve rutas públicas: home, índice de servicios, cuatro detalles estáticos bajo `/servicios/[slug]/`, proyectos, nosotros y contacto. `generateStaticParams` fija los cuatro slugs y `dynamicParams=false`; desconocidos reciben 404. Retiradas las cuatro landings antiguas sin compatibilidad. `publicPaths` actualiza sitemap y lista de atribución admitida.
+
+Shell público con Manrope, Montserrat y JetBrains Mono mediante `next/font`, estilos bajo `.marketing` y Geist conservado para privado. El footer servidor se compone en cada página con prop `cta`; contacto usa `false`. Menú móvil con `dialog.showModal()`, bloqueo de scroll, aislamiento modal nativo, Escape/restauración y cierre al pasar a escritorio. Configurador, filtros y observador de eventos son fronteras cliente; eventos CustomEvent locales sin red ni almacenamiento.
+
+Servicios centralizan slug, tipo público, contrato, descripción, inclusiones y destinatarios. No hay CMS ni fichas de proyectos. El formulario mantiene API, validación Zod, idempotencia, timeout, reintento y controles legales. `projectTypeForContract()` adapta el tipo público solo al construir el payload.

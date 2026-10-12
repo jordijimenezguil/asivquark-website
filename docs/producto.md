@@ -35,3 +35,11 @@ Objetivos LCP ≤2,5 s, INP ≤200 ms y CLS ≤0,1 pendientes de medición. [Flu
 ## Actualización — Iteración 4
 
 CRM privado con resumen comercial, filtros, listado responsive, detalle, estados, notas y actividad. Sin estadísticas ficticias, borrado, exportación o fases futuras. Véase [CRM](crm.md) para implementación, procedimientos y límites actuales. Las secciones anteriores describen la fase previa.
+
+## Rediseño público — 12/10/2026
+
+Home con configurador de cuatro servicios, tres compromisos confirmados, cards numeradas, proceso, portfolio vacío honesto y FAQ. Índice editorial de servicios, detalles con situaciones específicas, inclusiones y FAQ, Nosotros con identidad de marca sin equipo inventado. Proyectos se mantiene en una única página con filtros `cat`, categorías cerradas y CTA; no hay casos ficticios ni fichas.
+
+Identidad original en SVG, fondos navy/blanco/lavanda y tipografía Manrope con etiquetas JetBrains Mono. Los SVG con texto siguen dependiendo de fuentes propias y necesitan exportación a contornos para garantía tipográfica. Tokens antiguos que usa CRM se conservan; los nuevos estilos públicos quedan acotados a marketing.
+
+Contacto presenta formulario primero en móvil, card superpuesta, radios nativos, opcionales plegables sin pérdida de valores, validación blur/submit y reinicio desde éxito conservando tipo y vaciando datos personales. Éxito confirma registro y respuesta en 24 h laborables, no entrega de email. Presupuestos actuales conservados; nuevos rangos pendientes de autorización explícita. Captación sigue condicionada al aviso aprobado y configuración. LinkedIn, equipo y legales no se inventan. No se añade barra CTA móvil opcional.

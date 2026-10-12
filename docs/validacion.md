@@ -248,3 +248,25 @@ Comprobaciones correctas: prisma validate, db:generate, lint, typecheck, test:co
 ### Ajuste del plan — Portfolio en página única
 
 - Por indicación del usuario, retiradas del plan las rutas y plantillas de fichas de proyectos. El portfolio se limita a `/proyectos/`, con cards informativas y estado vacío mientras no haya material real. Actualizados arquitectura, enlaces, componentes y criterios de aceptación. Sin cambios de aplicación.
+
+## Rediseño UI — 12/10/2026
+
+Solicitud de implementación recibida sobre árbol inicialmente limpio. Nueve rutas públicas, logos originales, configurador, índice/detalles, formulario, menú modal y footer con CTA condicional. Presupuesto opción A; sin migraciones, cambios de contrato backend, emails ni despliegue.
+
+Comprobaciones ejecutadas en Node v26.0.0 / pnpm 12.11.2:
+
+- `pnpm prisma validate`: correcto.
+- `pnpm db:generate`: cliente Prisma 7.10.0 generado correctamente; sin aplicar migraciones.
+- `pnpm lint`: correcto, sin advertencias en la última ejecución.
+- `pnpm typecheck`: correcto en la última ejecución. Se retiraron tipos generados obsoletos de `.next/dev/types` que referenciaban rutas eliminadas; también se corrigió una referencia TypeScript a una etiqueta retirada.
+- `pnpm test:config`: 6/6; `pnpm test:db`: 3/3; `pnpm test:leads`: 24/24; `pnpm test:crm`: 13/13. Son pruebas existentes con dobles y comprobaciones offline; no prueban persistencia ni envío remoto real.
+- `pnpm test:marketing`: 2/2, lista cerrada/repetidos/default de tipo, adaptación app→aplicacion, nueve rutas finales, atribución de servicios y ausencia de rutas individuales de casos. La primera ejecución directa con strip-types no resolvía alias; se incorporó script con tsx y condiciones react-server.
+- `git diff --check`: correcto.
+- `pnpm build`: bloqueado. La primera ejecución en sandbox se detuvo al no progresar; la segunda, solicitada con escalación, devolvió error de Turbopack al crear proceso/abrir puerto (`Operation not permitted`) en el procesamiento de `src/components/dashboard/auth-controls.tsx`. No se afirma build completo ni comprobación de artefactos de producción/preview.
+- `pnpm dev`: primer intento falló con EPERM en puerto 3000; arrancó mediante escalación y quedó activo en http://localhost:3000. Se añadieron `data-scroll-behavior="smooth"` al html siguiendo el aviso del servidor.
+
+Comprobación HTTP de solo lectura del servidor local: las nueve rutas responden 200, tienen exactamente un H1 y un footer, robots noindex, CTA final presente salvo en contacto y ningún enlace con query histórica `servicio`. Las cuatro rutas antiguas, `/servicios/desconocido/` y `/proyectos/caso/` responden 404. OG responde PNG 200; apple-icon 180 y favicon PNG 32 responden 200; sitemap local vacío. Los siete SVG copiados conservan originales; PNG 32/180/512 derivados mediante sharp ya disponible como dependencia de Next, tras fallar la conversión SVG de sips. Icono 180 inspeccionado visualmente.
+
+El usuario reportó un + y flecha superpuestos en Servicios. Se corrigió la regla CSS: el pseudo-elemento +/− solo se aplica a `details[data-question]`, nunca al dropdown de navegación.
+
+Revisión visual responsive y pruebas de teclado/formulario en navegador pendientes: la API de navegador no ofrecía Chrome y el acceso nativo devolvió «Computer Use was not approved to use Google Chrome». Se inspeccionaron las cinco referencias originales, pero no se afirma comparación visual de la aplicación, ausencia de overflow en todos los anchos, conformidad AA, foco modal probado, ni flujos UI de envío con dobles. Tampoco se midieron Lighthouse/CWV. SVG externos con texto siguen requiriendo exportación a contornos para garantizar tipografía; falta URL LinkedIn y contenido legal aprobado. La captación mantiene sus controles de disponibilidad.
