@@ -43,3 +43,11 @@ Home con configurador de cuatro servicios, tres compromisos confirmados, cards n
 Identidad original en SVG, fondos navy/blanco/lavanda y tipografía Manrope con etiquetas JetBrains Mono. Los SVG con texto siguen dependiendo de fuentes propias y necesitan exportación a contornos para garantía tipográfica. Tokens antiguos que usa CRM se conservan; los nuevos estilos públicos quedan acotados a marketing.
 
 Contacto presenta formulario primero en móvil, card superpuesta, radios nativos, opcionales plegables sin pérdida de valores, validación blur/submit y reinicio desde éxito conservando tipo y vaciando datos personales. Éxito confirma registro y respuesta en 24 h laborables, no entrega de email. Presupuestos actuales conservados; nuevos rangos pendientes de autorización explícita. Captación sigue condicionada al aviso aprobado y configuración. LinkedIn, equipo y legales no se inventan. No se añade barra CTA móvil opcional.
+
+## Iteración 6 — Privacidad
+
+Banner con aceptación/rechazo equivalentes, configuración analítica independiente y retirada desde footer. Solo atribución/eventos propios en memoria justifican opción Analíticas. Sin marketing ni funcionales opcionales reales. Política informativa con identificación jurídica pendiente; no se presenta como aprobación legal. [Detalle](cookies.md).
+
+## Iteración 7 — Automatización de procesos e IA
+
+La oferta pasa a cinco servicios. Automatización se orienta a operaciones existentes y conexiones; software a herramientas personalizadas, aplicaciones a plataformas de navegador y MVP a primeras versiones. Landing completa con hero, seis problemas, seis soluciones, comparación reglas/IA, beneficios potenciales, cinco aplicaciones ilustrativas, cinco pasos, tecnología, seguridad/supervisión, siete FAQ y CTA. Sin promesas de productividad, clientes o proyectos inventados. Home conserva hero/posicionamiento y adapta tarjetas/configurador; contacto incorpora automatizacion y muestra Otro proyecto ya admitido por el contrato. Se mantiene la tipografía real del rediseño, sin cambiar el sistema visual.

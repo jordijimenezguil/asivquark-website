@@ -56,7 +56,7 @@ export default function Home() {
             title="¿Qué necesitas desarrollar?"
           />
           <Link href="/servicios/" className="mt-5 inline-block text-sm font-semibold text-violet">Todos los servicios →</Link>
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
               <ServiceCard key={service.slug} service={service} index={index} />
             ))}
@@ -98,7 +98,7 @@ export default function Home() {
           {
             question: "¿Qué tipo de proyectos desarrolla ASIVQUARK?",
             answer:
-              "Páginas web profesionales, software a medida, aplicaciones web y MVP. El punto de partida es entender el problema y definir una solución con un alcance claro.",
+              "Páginas web profesionales, software a medida, aplicaciones web, MVP y automatización de procesos e IA. El punto de partida es entender el problema y definir una solución con un alcance claro.",
           },
           {
             question: "¿Desarrolláis páginas web para pequeños negocios?",

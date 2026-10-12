@@ -40,3 +40,17 @@ Login y todas las rutas admin dinámicas y noindex/nofollow con headers no-store
 Nueve rutas en `publicPaths`, servicios bajo `/servicios/`: `diseno-web-barcelona`, `software-a-medida-barcelona`, `aplicaciones-web-barcelona`, `desarrollo-mvp`. Sin landings antiguas ni redirecciones históricas. Breadcrumbs de tres niveles en detalles, dos en índices; FAQPage refleja preguntas visibles en producción. Organization compartida se emite una vez por página e incorpora email confirmado y logo original, sin perfiles externos inventados. OG conserva 1200×630 y añade isotipo original; favicon SVG, PNG 32/512 y apple-icon 180 derivados del original.
 
 Contacto únicamente `tipo`, filtros de portfolio `cat`; canonical siempre sin parámetros. La separación de entornos y sitemap vacío local/preview se conserva. No hay rutas individuales de proyectos ni legales vacíos. Comprobaciones HTTP locales registradas en validación; inspección remota, artefactos completos de producción/preview y métricas visuales pendientes por bloqueo del build/navegador.
+
+## Iteración 6 — Política de cookies
+
+`/politica-de-cookies/` con metadata propia, canonical únicamente en producción y noindex en preview/local. Tabla y contenido inicial SSR; enlaces HTML desde footer. Sitemap comercial conservado sin cambios.
+
+## Iteración 7 — Mapa de URL y semántica del nuevo servicio
+
+URL única: `/automatizacion-procesos-ia/`. Canonical producción: `https://asivquark.com/automatizacion-procesos-ia/`. Title: «Automatización de Procesos e IA en Barcelona | ASIVQUARK». Description: «Automatizamos procesos, conectamos herramientas e integramos inteligencia artificial para mejorar la eficiencia de empresas en Barcelona y toda España». H1: «Automatización de procesos e inteligencia artificial para empresas». OG propio 1200×630 con logo original y mensaje «IA cuando aporta valor».
+
+publicPaths/sitemap comercial ahora tienen diez rutas: home, índice servicios, cuatro detalles existentes, automatización, proyectos, nosotros y contacto. Política cookies conserva la estrategia previa. No hay `/servicios/automatizacion-procesos-ia/`, variantes ni duplicados; robots sin cambios. Local/preview conservan noindex/no canonical y sitemap vacío.
+
+Intención distinta: mejorar procesos existentes, automatización de tareas y conexiones; IA opcional según problema. «Automatización de procesos Barcelona» y variantes son hipótesis sin volúmenes/dificultades medidos. Enlaces de home/menú/footer/índice y referencias contextuales desde software, aplicaciones y nosotros. CTA `?servicio=automatizacion` no cambia canonical de contacto.
+
+JSON-LD Service con nombre/finalidad/ámbito España y provider por @id de Organization compartida; BreadcrumbList coherente con ruta raíz. Sin precios, reviews ni duplicación del proveedor. FAQ visible sin nuevo FAQPage: no se promete resultado enriquecido. Fuentes consultadas: https://schema.org/Service y documentación oficial Google https://developers.google.com/search/updates (la URL histórica de FAQPage redirige allí). Se verifican JSON y contenido del artefacto local; no se afirma validación remota en Google/Schema.org.

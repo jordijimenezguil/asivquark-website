@@ -1,3 +1,4 @@
+import { CookiePreferencesTrigger } from "@/components/cookies/cookie-preferences-trigger";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BrandLogo } from "@/components/branding/brand-logo";
@@ -26,7 +27,7 @@ export function SiteFooter({ cta = true }: { cta?: boolean }) {
                 href={item.href}
                 className="block min-h-11 py-3 text-sm text-secondary hover:text-white"
               >
-                {item.label}
+                {item.footerLabel}
               </Link>
             ))}
           </nav>
@@ -65,7 +66,7 @@ export function SiteFooter({ cta = true }: { cta?: boolean }) {
             © {new Date().getFullYear()} ASIVQUARK. Todos los derechos
             reservados.
           </p>
-          {/* Incorporar enlaces legales solo cuando existan contenidos aprobados. */}
+          <div className="flex flex-wrap items-center gap-x-6"><Link href="/politica-de-cookies/" className="min-h-11 py-3 text-sm underline underline-offset-4">Política de cookies</Link><CookiePreferencesTrigger /></div>
         </div>
       </Container>
     </footer>

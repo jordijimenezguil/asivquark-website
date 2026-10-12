@@ -1,3 +1,4 @@
+import { CookieConsentProvider } from "@/components/cookies/cookie-consent-provider";
 import { JsonLd } from "@/components/marketing/commercial";
 import { site } from "@/config/site";
 import { EventObserver } from "@/components/marketing/event-observer";
@@ -11,6 +12,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], displa
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
     <div className={`marketing ${sans.variable} ${brand.variable} ${mono.variable}`}>
+      <CookieConsentProvider>
       <AttributionTracker />
       <EventObserver />
       {site.isProduction && <JsonLd data={{ "@context": "https://schema.org", "@type": "Organization", "@id": `${site.origin}/#organization`, name: site.name, url: `${site.origin}/`, email: site.email, logo: `${site.origin}/brand/asivquark-horizontal-dark.svg`, location: { "@type": "Place", name: "Barcelona, España" } }} />}
@@ -18,6 +20,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
       <main id="contenido" tabIndex={-1}>
         {children}
       </main>
+      </CookieConsentProvider>
 
     </div>
   );

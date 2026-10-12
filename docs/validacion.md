@@ -277,3 +277,52 @@ Revisión visual responsive y pruebas de teclado/formulario en navegador pendien
 Sustituido el correo público por `proyectos@asivquark.com` en configuración (incluidos datos estructurados), contacto, enlaces mailto y footer; actualizado el plan de rediseño. Búsqueda en `src` y `docs`: sin referencias al correo anterior.
 
 Comprobaciones ejecutadas: `pnpm prisma validate`, `pnpm db:generate`, `pnpm lint`, `pnpm typecheck`, `pnpm test:config` (6/6), `pnpm test:db` (3/3) y `git diff --check` correctos. No se aplicaron migraciones. `pnpm build` llegó a «Creating an optimized production build» sin resultado durante la comprobación; no se afirma build completado. El servidor local no respondió en localhost:3000; no se verificó HTML servido ni vista escritorio/móvil en esta tarea.
+
+## Iteración 6 — Cookies y ajuste del desplegable (12/10/2026)
+
+- Auditoría de código/dependencias: inventario en `src/config/cookies.ts`; no trackers externos instalados. Atribución/eventos propios en memoria ahora sujetos a consentimiento analítico; auth/CRM necesarios preservados. Detalle y fuentes oficiales en `docs/cookies.md`.
+- `pnpm prisma validate`: esquema válido. `pnpm db:generate`: generado Prisma 7.10.0, sin migrar/conectar base externa.
+- `pnpm lint` y `pnpm typecheck`: correctos, repetidos después del ajuste del formulario y navegación.
+- `pnpm test:cookies`: 4/4, validación estricta, fechas/expiración, versionado/rechazo anterior, categorías reales, bloqueo de atribución y eventos antes de decisión, activación y retirada con dobles del dispositivo. No equivalen a ejecución de un navegador.
+- `pnpm test:config`: 6/6; `pnpm test:db`: 3/3; `pnpm test:leads`: 24/24; `pnpm test:crm`: 13/13 (incluye auth con DB de prueba); `pnpm test:marketing`: 2/2. Total 52 pruebas automatizadas correctas; sin consultas a Neon ni envío Resend reales.
+- `pnpm build`: falla en Turbopack al abrir puertos internos (`Operation not permitted`), también en intento escalado. No se afirma build de Turbopack correcto.
+- `pnpm dev --hostname 127.0.0.1`: arrancado y mantenido activo a petición; HTTP local escalado de `/politica-de-cookies/` devuelve 200. HTML contiene título, tabla/inventario, acceso al gestor y pendientes legales. No se instala cookie de consentimiento desde SSR.
+- Navegador: inventario de Computer Use sin navegador conectado; intento de acceso nativo a Chrome rechazado por herramienta (`Computer Use was not approved to use Google Chrome`). No se ejecutaron pruebas visuales de 320/375/768/1280, teclado/foco/Escape ni solicitudes/almacenamiento en navegador real. Pendientes expresamente, sin afirmar WCAG 2.2 AA validado.
+- Menú Servicios: cierre delegado al seleccionar cualquier enlace, incluido índice; cierre por salida de foco mediante relatedTarget y pointerdown fuera; Escape/restauración existente conservados. Lint/tipos correctos; revisión interactiva pendiente por bloqueo navegador.
+- `git diff --check`: correcto. No cambios Prisma, migraciones, emails, DNS ni publicación.
+- Alternativa `pnpm exec next build --webpack`: correcta, compilación, TypeScript y prerenderizado de 18 páginas; `/politica-de-cookies` estática. No se cambia el script build habitual ni la configuración de bundler.
+
+## Iteración 7 — Automatización de procesos e IA (12/10/2026)
+
+Alcance: quinto servicio comercial, landing, rutas/enlaces, captación y etiquetas. Se conservaron los cambios pendientes de cookies y navegación de la iteración anterior. Sin motores IA, proveedores nuevos, trackers, migraciones, emails reales, DNS o despliegues.
+
+### Archivos de esta iteración
+
+Creados:
+
+- `src/config/services.ts`: catálogo mínimo compartido, separado del copy extenso.
+- `src/content/automation.ts`: contenido, SEO y proceso del servicio.
+- `src/app/(marketing)/automatizacion-procesos-ia/page.tsx`: landing servidor completa.
+- `src/app/(marketing)/automatizacion-procesos-ia/opengraph-image.tsx`: imagen social generada con next/og existente.
+- `tests/automation.test.ts` y `tests/automation-html.test.ts`.
+
+Modificados: `src/content/services.ts`, `src/content/project-type.ts`, `src/config/navigation.ts`; home, nosotros, índice servicios y página dinámica existente; `commercial.tsx`, `configurator.tsx`, `service-page.tsx`, `events.ts`, `site-footer.tsx`; `contact-form.tsx`, `contact-form-with-service.tsx`, `features/leads/schema.ts`; `tests/marketing.test.ts`, `tests/leads-endpoint.test.ts`; package.json, README y documentos arquitectura/producto/SEO/validación. `sitemap.ts`, CRM y plantillas Resend no necesitan cambios de lógica: consumen las rutas y etiquetas compartidas actualizadas.
+
+### Resultados ejecutados
+
+- `pnpm prisma validate`: válido; `pnpm db:generate`: cliente generado 7.10.0. Lead.service sigue String/VarChar(20); no cambio de esquema, migración creada ni migración ejecutada.
+- `pnpm lint` y `pnpm typecheck`: correctos después del catálogo final. `git diff --check`: correcto.
+- `pnpm test:automation`: 6/6. Ruta única, orden del menú, contenido/configuración, preselección y rechazo de valores repetidos/desconocidos/ambiguos, Zod y contratos antiguos, transacción Prisma/outbox con dobles, filtro y conteos CRM, plantilla transaccional sin envío, metadata/reglas de entorno.
+- `pnpm test:leads`: 25/25, incluyendo petición de automatización al handler sin atribución opcional y éxito después de persistencia con doble. `pnpm test:crm`: 13/13. `pnpm test:cookies`: 4/4. `pnpm test:config`: 6/6. `pnpm test:db`: 3/3. `pnpm test:marketing`: 2/2.
+- `pnpm build`: falla por restricciones del entorno al abrir puertos internos Turbopack (`Operation not permitted`), incluso con ejecución escalada. Se mantiene el script habitual, sin ocultar este resultado.
+- Alternativa local `VERCEL_ENV=production NEXT_PUBLIC_SITE_URL=https://asivquark.com BETTER_AUTH_URL=https://asivquark.com pnpm exec next build --webpack`: correcta, compilación, TypeScript, 20 páginas generadas. Repetida correctamente tras centralización final. Landing y OG prerenderizados; cuatro rutas antiguas de servicios conservadas. No publicación ni consultas Neon al generar la landing.
+- `pnpm test:automation:html`: 3/3 sobre el artefacto final de producción. Title/description exactos, canonical `https://asivquark.com/automatizacion-procesos-ia/`, H1 único, secciones y siete FAQ en HTML inicial, CTA, OG, sitemap y enlaces públicos. JSON-LD parseado: Service/BreadcrumbList/una sola Organization; sin precios, ratings ni nuevo FAQPage. Esta comprobación no es validación remota Google/Schema.org.
+- Total: **62 pruebas automatizadas correctas** (6 + 25 + 13 + 4 + 6 + 3 + 2 + 3). Los intentos iniciales detectaron un supuesto obsoleto del test marketing sobre Otro proyecto y la normalización de atribución ausente; corregidos y suites reejecutadas. El test de CRM evita importar next/link bajo react-server y verifica el contrato compartido y consultas reales con dobles.
+- HTTP local: `/automatizacion-procesos-ia/` 200; `/contacto/?servicio=automatizacion` 200; `/servicios/automatizacion-procesos-ia/` 404. HTML local: H1 único, noindex y ausencia de canonical de producción. Preselección verificada en utilidades, no mediante navegador hidratado.
+- OG generado: PNG 1200×630, 51.194 bytes, inspeccionado visualmente; logo original, texto legible y sin recorte.
+
+### Límites
+
+No se ejecutan envíos Resend ni persistencia en Neon reales; tests usan dobles y conservan la operación principal transaccional y controles existentes. Activación del formulario/privacidad siguen sujetas a la configuración previa; no se desbloquean comercialmente como efecto de añadir el servicio. CMS/blog no existen en el repositorio; no se crearon.
+
+El acceso a Chrome fue rechazado en esta sesión por Computer Use y no hay navegador conectado disponible. No se afirman revisión visual de home/landing/contacto a 320/375/768/1280, interacción móvil, teclado, foco ni WCAG 2.2 AA comprobado. Solo se inspeccionó el PNG de OG. Core Web Vitals no medidos. Fuentes y sistema visual reales del rediseño conservados, sin sustituirlos ni añadir dependencias. Dev permanece disponible en 127.0.0.1:3000 como solicitado previamente.

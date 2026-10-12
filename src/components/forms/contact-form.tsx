@@ -1,5 +1,6 @@
 "use client";
-import { projectTypeForContract } from "@/content/project-type";
+import { hasConsent } from "@/features/cookies/consent";
+import { projectOptions, projectTypeForContract, type PublicProjectType } from "@/content/project-type";
 import { services, type Service } from "@/content/services";
 import { emitMarketingEvent } from "@/components/marketing/events";
 import { useEffect, useRef, useState, type FormEvent } from "react";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import {
   leadSchema,
   budgetLabels,
+  serviceLabels,
   type FieldErrors,
   type Attribution,
 } from "@/features/leads/schema";
@@ -19,7 +21,7 @@ export function ContactForm({
   initialService,
 }: {
   config: PublicContactConfig;
-  initialService?: Service["query"];
+  initialService?: Service["query"] | "otro";
 }) {
   const form = useRef<HTMLFormElement>(null);
   const submitting = useRef(false);
@@ -27,7 +29,7 @@ export function ContactForm({
   const attribution = useRef<Attribution | null>(null);
   const [optional, setOptional] = useState(false);
   const started = useRef(false);
-  const [selected, setSelected] = useState<Service["uiType"]>(services.find(item => item.query === initialService)?.uiType ?? "web");
+  const [selected, setSelected] = useState<PublicProjectType>(initialService === "otro" ? "otro" : services.find(item => item.query === initialService)?.uiType ?? "web");
   const [confirmed, setConfirmed] = useState("web");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState("");
@@ -75,6 +77,7 @@ export function ContactForm({
       requestAnimationFrame(() => form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus());
       return;
     }
+    if (!hasConsent("analytics")) attribution.current = null;
     attribution.current ??= browserAttribution();
     const payload = JSON.stringify({
       ...parsed.data,
@@ -105,7 +108,7 @@ export function ContactForm({
       )
         throw new Error("INVALID_RESPONSE");
       if (response.status === 201 && result.success === true) {
-        setConfirmed(services.find(item => item.uiType === selected)!.title);
+        setConfirmed(serviceLabels[projectTypeForContract(selected)]);
         emitMarketingEvent("form_success");
         setSuccess(true);
         return;
@@ -185,7 +188,7 @@ export function ContactForm({
       >
         <fieldset disabled={!config.enabled || pending}>
           <legend className="sr-only">Información de tu proyecto</legend>
-          <fieldset className="mb-7"><legend className="form-label">¿Qué quieres desarrollar? *</legend><div className="grid grid-cols-2 gap-2">{services.map(service => <label key={service.uiType} className={`relative flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border px-3 py-3 text-sm font-semibold ${selected === service.uiType ? "border-violet bg-violet text-white" : "border-line-strong"}`}><input type="radio" name="projectType" value={service.uiType} aria-describedby={errors.projectType ? "projectType-error" : undefined} checked={selected === service.uiType} onChange={() => setSelected(service.uiType)} className="h-4 w-4 accent-violet" />{service.title}</label>)}</div>{errors.projectType && <p id="projectType-error" className="mt-2 text-sm text-red-700">{errors.projectType}</p>}</fieldset>
+          <fieldset className="mb-7"><legend className="form-label">¿Qué quieres desarrollar? *</legend><div className="grid grid-cols-2 gap-2">{projectOptions.map(service => <label key={service.value} className={`relative flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border px-3 py-3 text-sm font-semibold ${selected === service.value ? "border-violet bg-violet text-white" : "border-line-strong"}`}><input type="radio" name="projectType" value={service.value} aria-describedby={errors.projectType ? "projectType-error" : undefined} checked={selected === service.value} onChange={() => setSelected(service.value)} className="h-4 w-4 accent-violet" />{service.label}</label>)}</div>{errors.projectType && <p id="projectType-error" className="mt-2 text-sm text-red-700">{errors.projectType}</p>}</fieldset>
           <div className="grid gap-6 sm:grid-cols-2">
             <FormField name="name" label="Nombre" required error={errors.name}>
               <input

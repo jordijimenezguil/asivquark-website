@@ -247,3 +247,21 @@ Migración aditiva `20261012120000_crm` preparada y revisada, **aplicada a la ba
 UI renovada conforme al [plan](docs/plans/2026-10-12-redisenio-ui-asivquark.md): nueve rutas públicas, índice `/servicios/` y cuatro detalles bajo `/servicios/[slug]/`, sin rutas antiguas ni redirecciones históricas. Configurador, menú móvil modal nativo, formulario con opcionales y portfolio único con filtros. Logos originales en `public/brand/`; fuentes públicas separadas del CRM.
 
 Contacto usa exclusivamente `?tipo=web|software|app|mvp`; `app` se adapta al contrato `aplicacion` al enviar. Presupuestos vigentes conservados (opción A del plan). No se activan captación, email, migraciones ni producción. `pnpm test:marketing` comprueba tipos comerciales, rutas y atribución. Véase [validación](docs/validacion.md) para resultados y bloqueos.
+
+## Iteración 6 — Cookies
+
+Gestor propio, consentimiento versionado de 365 días, bloqueo de atribución/eventos analíticos propios y `/politica-de-cookies/` con inventario real y pendientes legales visibles. No hay trackers externos nuevos ni cambios Prisma. `pnpm test:cookies` comprueba validación, caducidad y bloqueo/revocación. Detalle y límites: [Cookies](docs/cookies.md).
+
+## Iteración 7 — Automatización de procesos e IA
+
+Quinto servicio comercial en `/automatizacion-procesos-ia/`: optimizar procesos existentes, conectar herramientas y reducir tareas manuales; la IA se valora cuando aporta utilidad. No se implementan motores, agentes ni integraciones reales. Catálogo mínimo en `src/config/services.ts`, contenido extenso en `src/content/automation.ts`, composición servidor con los componentes comerciales actuales.
+
+Home: cinco tarjetas (tres columnas en escritorio, automatización ocupa dos en la segunda fila), icono Workflow y quinta opción en configurador. Menú desktop/móvil y footer derivados del catálogo, con automatización antes de MVP en navegación. Índice de servicios y enlaces contextuales desde software, aplicaciones y nosotros actualizados. Rutas y fuentes anteriores conservadas; no se cambia la identidad tipográfica actual.
+
+Contacto admite `?servicio=automatizacion` y `?tipo=automatizacion`. Se conserva `tipo=app` → contrato `aplicacion`; `servicio=aplicacion` y `otro` también funcionan. Valores desconocidos, repetidos o parámetros `tipo`/`servicio` simultáneos vuelven a web sin aceptar valores arbitrarios. El formulario incluye los cinco servicios y Otro proyecto. Zod reconoce `automatizacion`, sin cambios ajenos al tipo de proyecto. Privacidad, cookies, antispam, límites, idempotencia y outbox conservados.
+
+Prisma: `Lead.service` es String/VarChar(20), admite `automatizacion` sin cambio de esquema ni migración. CRM reutiliza etiquetas y enum Zod compartidos para filtros/listado/detalle; groupBy existente incluye el servicio en estadísticas. Resend reutiliza la plantilla transaccional: «Nuevo lead ASIVQUARK — Automatización e IA». No hay emails enviados, datos remotos escritos ni nuevas funcionalidades administrativas.
+
+SEO: title y description específicos, canonical de producción `https://asivquark.com/automatizacion-procesos-ia/`, Service enlazado al proveedor Organization compartido, BreadcrumbList, OG propio 1200×630 y contenido inicial estático. Sitemap deriva de publicPaths (diez rutas comerciales); preview/local siguen sin canonical público y con sitemap vacío. No hay ruta duplicada bajo `/servicios/`; enlace final a software usa la ruta real `/servicios/software-a-medida-barcelona/`. Keywords son hipótesis sin métricas inventadas.
+
+Pruebas: `pnpm test:automation` verifica configuración, preselección, validación, persistencia con doble Prisma, CRM y email sin envíos. `pnpm test:automation:html` requiere un build local de producción y comprueba HTML, SEO, JSON-LD, sitemap y enlaces. Ejecutar el build de comprobación con `VERCEL_ENV=production NEXT_PUBLIC_SITE_URL=https://asivquark.com BETTER_AUTH_URL=https://asivquark.com pnpm exec next build --webpack` (no publica). Tests de regresión, resultados y límites de navegador/build: [validación](docs/validacion.md).

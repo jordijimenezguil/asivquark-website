@@ -1,9 +1,5 @@
-export const serviceNavigation = [
-  { label: "Diseño web", href: "/servicios/diseno-web-barcelona/" },
-  { label: "Software a medida", href: "/servicios/software-a-medida-barcelona/" },
-  { label: "Aplicaciones web", href: "/servicios/aplicaciones-web-barcelona/" },
-  { label: "Desarrollo MVP", href: "/servicios/desarrollo-mvp/" },
-] as const;
+import { serviceDefinitions } from "./services.ts";
+export const serviceNavigation = Object.values(serviceDefinitions).map(service => ({ label: service.navigationLabel, footerLabel: service.footerLabel, href: service.href }));
 export const navigation = [
     { label: "Servicios", href: "/servicios/" },
   { label: "Proyectos", href: "/proyectos/" },

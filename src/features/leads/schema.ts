@@ -1,13 +1,15 @@
+import { serviceDefinitions } from "../../config/services.ts";
 import { z } from "zod";
 export const serviceSchema = z.enum(
-  ["web", "software", "aplicacion", "mvp", "otro"],
+  ["web", "software", "aplicacion", "mvp", "automatizacion", "otro"],
   { error: "Selecciona un tipo de proyecto válido." },
 );
 export const serviceLabels = {
-  web: "Página web",
-  software: "Software a medida",
-  aplicacion: "Aplicación web",
-  mvp: "Desarrollo MVP",
+  web: serviceDefinitions.web.title,
+  software: serviceDefinitions.software.title,
+  aplicacion: serviceDefinitions.app.title,
+  mvp: serviceDefinitions.mvp.title,
+  automatizacion: serviceDefinitions.automatizacion.navigationLabel,
   otro: "Otro proyecto",
 } as const;
 export const budgetLabels = {

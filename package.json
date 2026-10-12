@@ -25,7 +25,10 @@
     "leads:process": "node --conditions=react-server --import tsx scripts/leads-maintenance.ts process",
     "leads:cleanup": "node --conditions=react-server --import tsx scripts/leads-maintenance.ts cleanup",
     "admin:account": "node --conditions=react-server --import tsx scripts/admin-account.ts",
-    "test:crm": "node --conditions=react-server --import tsx --test tests/crm*.test.ts"
+    "test:crm": "node --conditions=react-server --import tsx --test tests/crm*.test.ts",
+    "test:cookies": "node --import tsx --test tests/cookies.test.ts",
+    "test:automation": "node --conditions=react-server --import tsx --test tests/automation.test.ts",
+    "test:automation:html": "node --import tsx --test tests/automation-html.test.ts"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "1.7.7",

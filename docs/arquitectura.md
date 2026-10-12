@@ -53,3 +53,11 @@ Nueve rutas públicas: home, índice de servicios, cuatro detalles estáticos ba
 Shell público con Manrope, Montserrat y JetBrains Mono mediante `next/font`, estilos bajo `.marketing` y Geist conservado para privado. El footer servidor se compone en cada página con prop `cta`; contacto usa `false`. Menú móvil con `dialog.showModal()`, bloqueo de scroll, aislamiento modal nativo, Escape/restauración y cierre al pasar a escritorio. Configurador, filtros y observador de eventos son fronteras cliente; eventos CustomEvent locales sin red ni almacenamiento.
 
 Servicios centralizan slug, tipo público, contrato, descripción, inclusiones y destinatarios. No hay CMS ni fichas de proyectos. El formulario mantiene API, validación Zod, idempotencia, timeout, reintento y controles legales. `projectTypeForContract()` adapta el tipo público solo al construir el payload.
+
+## Iteración 6 — Consentimiento
+
+Provider cliente acotado al shell público; páginas siguen servidor. Inventario central y Zod en features/cookies; cookie host-only de decisión, sin DB. Atribución y eventos verifican permiso antes de operar. Diálogo nativo y trigger en footer; política SSR. [Arquitectura y límites](cookies.md).
+
+## Iteración 7 — Quinto servicio
+
+Catálogo breve en `config/services.ts` compartido por navegación y etiquetas de leads, separado del contenido extenso de `content/automation.ts`. `Service.href` permite la nueva landing raíz sin alterar las cuatro rutas anteriores; generateStaticParams y búsqueda bajo `/servicios/[slug]` excluyen servicios de otra ubicación. Página de automatización servidor, estática y sin consultas a Neon; reutiliza primitivas comerciales. Formulario adapta tipo público/contrato mediante project-type y reconoce ambos parámetros documentados. CRM y emails consumen las mismas etiquetas; Lead.service String no requiere migración. Cookies y fronteras servidor/cliente existentes conservadas.

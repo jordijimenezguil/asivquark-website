@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Check,
+  Workflow,
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -124,7 +125,7 @@ export function PageHero({
   );
 }
 export function ServiceHero({ service }: { service: Service }) {
- return <section className="bg-night pb-16 pt-12 text-white lg:pb-24 lg:pt-16"><Container><Breadcrumbs label={service.title} path={`/servicios/${service.slug}/`} /><div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14"><div><h1 className="text-[36px] font-bold leading-[1.05] tracking-[-.035em] sm:text-5xl lg:text-[64px]">{service.h1}</h1><p className="mt-7 text-lg leading-relaxed text-secondary">{service.intro}</p><div className="mt-8 flex flex-wrap gap-4"><Button href={`/contacto/?tipo=${service.uiType}&origen=/servicios/${service.slug}/`} data-location="service">{service.cta} →</Button><Button href="/proyectos/" variant="outline">Ver proyectos</Button></div></div><div className="rounded-2xl border border-white/10 bg-navy-800 p-7"><h2 className="eyebrow text-violet-200">Ideal para</h2><p className="mt-3 leading-relaxed text-secondary">{service.idealFor}</p><h2 className="eyebrow mt-7 text-violet-200">Forma de trabajo</h2><p className="mt-3 leading-relaxed text-secondary">Fases con precio cerrado y entregas cada dos semanas.</p><h2 className="eyebrow mt-7 text-violet-200">Primer paso</h2><p className="mt-3 leading-relaxed text-secondary">Llamada de 30 minutos, sin compromiso.</p></div></div></Container></section>;
+ return <section className="bg-night pb-16 pt-12 text-white lg:pb-24 lg:pt-16"><Container><Breadcrumbs label={service.title} path={service.href} /><div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14"><div><h1 className="text-[36px] font-bold leading-[1.05] tracking-[-.035em] sm:text-5xl lg:text-[64px]">{service.h1}</h1><p className="mt-7 text-lg leading-relaxed text-secondary">{service.intro}</p><div className="mt-8 flex flex-wrap gap-4"><Button href={`/contacto/?tipo=${service.uiType}&origen=/servicios/${service.slug}/`} data-location="service">{service.cta} →</Button><Button href="/proyectos/" variant="outline">Ver proyectos</Button></div></div><div className="rounded-2xl border border-white/10 bg-navy-800 p-7"><h2 className="eyebrow text-violet-200">Ideal para</h2><p className="mt-3 leading-relaxed text-secondary">{service.idealFor}</p><h2 className="eyebrow mt-7 text-violet-200">Forma de trabajo</h2><p className="mt-3 leading-relaxed text-secondary">Fases con precio cerrado y entregas cada dos semanas.</p><h2 className="eyebrow mt-7 text-violet-200">Primer paso</h2><p className="mt-3 leading-relaxed text-secondary">Llamada de 30 minutos, sin compromiso.</p></div></div></Container></section>;
 }
 export function BenefitCard({ item }: { item: ContentItem }) {
   return (
@@ -140,17 +141,19 @@ export function FeatureGrid({
   intro,
   items,
   tinted = false,
+  id,
 }: {
   title: string;
   intro?: string;
   items: ContentItem[];
   tinted?: boolean;
+  id?: string;
 }) {
   return (
-    <Section className={tinted ? "bg-white" : undefined}>
+    <Section id={id} className={tinted ? "bg-white" : undefined}>
       <Container>
         <SectionHeading title={title} description={intro} />
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-10 grid gap-5 md:grid-cols-2 ${items.length === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
           {items.map((item) => (
             <BenefitCard key={item.title} item={item} />
           ))}
@@ -159,12 +162,12 @@ export function FeatureGrid({
     </Section>
   );
 }
-export function ProcessSteps({ items }: { items: ContentItem[] }) {
+export function ProcessSteps({ items, title = "De la primera llamada al lanzamiento" }: { items: ContentItem[]; title?: string }) {
   return (
     <Section id="proceso" className="bg-white">
       <Container>
-        <SectionHeading label="CÓMO TRABAJAMOS" title="De la primera llamada al lanzamiento" />
-        <ol className="mt-12 grid gap-9 md:grid-cols-2 lg:grid-cols-4">
+        <SectionHeading label="CÓMO TRABAJAMOS" title={title} />
+        <ol className={`mt-12 grid gap-9 md:grid-cols-2 ${items.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4"}`}>
           {items.map((item, index) => (
             <li key={item.title} className="border-t border-line pt-6">
               <span className="font-mono text-sm text-violet">
@@ -181,11 +184,11 @@ export function ProcessSteps({ items }: { items: ContentItem[] }) {
     </Section>
   );
 }
-export function FAQAccordion({ items }: { items: FAQ[] }) {
+export function FAQAccordion({ items, structuredData = true }: { items: FAQ[]; structuredData?: boolean }) {
   return (
     <Section className="bg-paper-soft">
       <Container>
-        {site.isProduction && <JsonLd data={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map(item => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) }} />}
+        {site.isProduction && structuredData && <JsonLd data={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map(item => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) }} />}
         <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr]">
           <SectionHeading
             label="RESOLVEMOS DUDAS"
@@ -250,8 +253,9 @@ export function ServiceCard({
   index: number;
 }) {
   return (
-    <Link href={`/servicios/${service.slug}/`} className="group flex min-w-0 flex-col rounded-[14px] border border-line p-6 transition-colors hover:border-violet hover:bg-violet-25 lg:min-h-[250px] lg:p-7">
+    <Link href={service.href} className={`group flex min-w-0 flex-col rounded-[14px] border border-line p-6 transition-colors hover:border-violet hover:bg-violet-25 lg:min-h-[250px] lg:p-7 ${service.uiType === "automatizacion" ? "md:col-span-2 lg:col-span-2" : ""}`}>
       <span className="mb-5 font-mono text-xs text-violet">0{index + 1}</span>
+      {service.uiType === "automatizacion" && <Workflow className="mb-4 text-violet" size={24} aria-hidden="true" />}
       <h3 className="text-lg font-bold">{service.title}</h3>
       <p className="mb-7 mt-4 text-[15px] leading-relaxed text-ink-500">{service.description}</p>
       <span className="mt-auto text-sm font-semibold text-violet">Ver servicio →</span>

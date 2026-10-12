@@ -1,11 +1,14 @@
 "use client";
 import { allowedPath, attributionFromUrl } from "./attribution";
 import type { Attribution } from "./schema";
+import { hasConsent } from "@/features/cookies/consent";
+export function clearAttribution() { entry = null; currentPath = undefined; previousPath = undefined; }
 let entry: Attribution | null = null;
 let currentPath: string | undefined;
 let previousPath: string | undefined;
 // Tab memory only. No cookies, storage, fingerprinting or external tracking.
 export function recordNavigation(path: string) {
+  if (!hasConsent("analytics")) { clearAttribution(); return; }
   if (!entry) {
     entry = {
       ...attributionFromUrl(
@@ -21,6 +24,7 @@ export function recordNavigation(path: string) {
   }
 }
 export function browserAttribution(): Attribution {
+  if (!hasConsent("analytics")) { clearAttribution(); return {}; }
   recordNavigation(window.location.pathname);
   const query = attributionFromUrl(new URLSearchParams(window.location.search));
   return {

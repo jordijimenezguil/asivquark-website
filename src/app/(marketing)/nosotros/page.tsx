@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BrandLogo } from "@/components/branding/brand-logo";
 import { Principles } from "@/components/marketing/principles";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -37,6 +38,7 @@ export default function Page() {
               web, con empresas que buscan herramientas propias y con
               emprendedores que quieren dar forma a una primera versión.
             </p>
+            <p>También abordamos <Link href="/automatizacion-procesos-ia/" className="text-violet underline underline-offset-4">automatización de procesos e IA</Link> para conectar herramientas y simplificar operaciones existentes.</p>
             <Button
               href="/servicios/"
               variant="ghost"

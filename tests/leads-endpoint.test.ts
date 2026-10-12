@@ -168,3 +168,18 @@ test("client-provided forwarded headers are ignored outside Vercel", () => {
   assert.equal(trustedClientKey(req, true, true), "1.2.3.4");
   assert.throws(() => trustedClientKey(request(), true, true));
 });
+
+test("automation request uses the existing endpoint without optional attribution", async () => {
+  const deps = dependencies();
+  let persisted = false;
+  deps.create = async command => {
+    assert.equal(command.input.projectType, "automatizacion");
+    assert.ok(Object.values(command.input.attribution ?? {}).every(value => value === undefined));
+    persisted = true;
+    return { id: randomUUID(), created: true };
+  };
+  const { attribution: _attribution, ...withoutAttribution } = input;
+  void _attribution;
+  const response = await handleLead(request({ ...withoutAttribution, projectType: "automatizacion" }), deps);
+  assert.equal(response.status, 201); assert.equal(persisted, true);
+});

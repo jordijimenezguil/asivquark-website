@@ -1,9 +1,13 @@
+import { serviceDefinitions } from "../config/services.ts";
+import { automationService } from "./automation.ts";
 export type ContentItem = { title: string; description: string };
 export type FAQ = { question: string; answer: string };
 export type Service = {
   slug: string;
+  href: string;
+  navigationLabel: string;
   title: string;
-  uiType: "web" | "software" | "app" | "mvp";
+  uiType: "web" | "software" | "app" | "mvp" | "automatizacion";
   includes: string[];
   idealFor: string;
   description: string;
@@ -12,7 +16,7 @@ export type Service = {
   h1: string;
   intro: string;
   cta: string;
-  query: "web" | "software" | "aplicacion" | "mvp";
+  query: "web" | "software" | "aplicacion" | "mvp" | "automatizacion";
   sections: { title: string; intro?: string; items: ContentItem[] }[];
   process: ContentItem[];
   faqs: FAQ[];
@@ -20,11 +24,10 @@ export type Service = {
 };
 export const services: Service[] = [
   {
+    ...serviceDefinitions.web,
     slug: "diseno-web-barcelona",
-    uiType: "web",
     includes: ["Diseño a medida", "Gestor de contenidos", "SEO técnico", "Formulario conectado"],
     idealFor: "Empresas, profesionales y negocios que necesitan una presencia digital sólida.",
-    title: "Página web",
     description:
       "Una presencia digital clara, rápida y diseñada para explicar tu negocio.",
     seoTitle: "Diseño Web en Barcelona para Empresas | ASIVQUARK",
@@ -34,7 +37,6 @@ export const services: Service[] = [
     intro:
       "Tu web debe ayudar a entender qué haces y facilitar el siguiente paso. Diseñamos sitios para empresas, profesionales y pequeños negocios que necesitan comunicar con claridad.",
     cta: "Solicitar presupuesto web",
-    query: "web",
     sections: [
       {
         title: "Una web pensada para tu negocio",
@@ -203,11 +205,10 @@ export const services: Service[] = [
     related: "aplicaciones-web-barcelona",
   },
   {
+    ...serviceDefinitions.software,
     slug: "software-a-medida-barcelona",
-    uiType: "software",
     includes: ["Análisis de procesos", "Integraciones", "Roles y permisos", "Mantenimiento"],
     idealFor: "Empresas con hojas de cálculo o herramientas que no encajan con sus procesos.",
-    title: "Software a medida",
     description:
       "Herramientas adaptadas a tus procesos y a la forma de trabajar de tu empresa.",
     seoTitle: "Desarrollo de Software a Medida en Barcelona | ASIVQUARK",
@@ -217,7 +218,6 @@ export const services: Service[] = [
     intro:
       "Cuando las herramientas disponibles no encajan, conviene entender el proceso antes de escribir código. Desde Barcelona, diseñamos soluciones ajustadas a las necesidades de cada empresa.",
     cta: "Cuéntanos qué software necesitas",
-    query: "software",
     sections: [
       {
         title: "Cuando el proceso necesita otra herramienta",
@@ -377,11 +377,10 @@ export const services: Service[] = [
     related: "aplicaciones-web-barcelona",
   },
   {
+    ...serviceDefinitions.app,
     slug: "aplicaciones-web-barcelona",
-    uiType: "app",
     includes: ["UX de producto", "Área de usuarios", "Panel de administración", "API"],
     idealFor: "Servicios digitales para clientes o equipos que trabajan desde el navegador.",
-    title: "Aplicación web",
     description:
       "Plataformas accesibles desde el navegador, con flujos y permisos bien definidos.",
     seoTitle: "Desarrollo de Aplicaciones Web en Barcelona | ASIVQUARK",
@@ -391,7 +390,6 @@ export const services: Service[] = [
     intro:
       "Una aplicación web permite realizar tareas desde el navegador: gestionar información, colaborar o prestar un servicio digital. Construimos la experiencia y la arquitectura alrededor de esos usos.",
     cta: "Hablemos de tu aplicación",
-    query: "aplicacion",
     sections: [
       {
         title: "Más allá de una página informativa",
@@ -523,11 +521,10 @@ export const services: Service[] = [
     related: "software-a-medida-barcelona",
   },
   {
+    ...serviceDefinitions.mvp,
     slug: "desarrollo-mvp",
-    uiType: "mvp",
     includes: ["Definición de alcance", "Prototipo", "Primera versión", "Métricas"],
     idealFor: "Emprendedores que necesitan poner a prueba una primera versión de su producto.",
-    title: "Desarrollo MVP",
     description:
       "Una primera versión útil para poner a prueba la propuesta de tu producto.",
     seoTitle: "Desarrollo de MVP para Startups y Emprendedores | ASIVQUARK",
@@ -537,7 +534,6 @@ export const services: Service[] = [
     intro:
       "Convertimos una idea en una primera versión con un propósito concreto. Definimos contigo qué necesitas aprender y qué recorrido debe funcionar para poder probarlo con usuarios.",
     cta: "Cuéntanos tu idea",
-    query: "mvp",
     sections: [
       {
         title: "Qué es un producto mínimo viable",
@@ -678,4 +674,5 @@ export const services: Service[] = [
     ],
     related: "aplicaciones-web-barcelona",
   },
+  automationService,
 ];

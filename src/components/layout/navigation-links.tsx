@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { navigation, serviceNavigation } from "@/config/navigation";
 export function NavigationLinks({
@@ -10,6 +11,16 @@ export function NavigationLinks({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const servicesMenu = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const closeOutside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !servicesMenu.current?.contains(event.target)) {
+        servicesMenu.current?.removeAttribute("open");
+      }
+    };
+    document.addEventListener("pointerdown", closeOutside);
+    return () => document.removeEventListener("pointerdown", closeOutside);
+  }, []);
   const active = (href: string) =>
     pathname === href ||
     (href !== "/" && `${pathname.replace(/\/$/, "")}/` === href);
@@ -40,6 +51,13 @@ export function NavigationLinks({
             </div>
           ) : (
             <details
+              ref={servicesMenu}
+              onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false;
+              }}
+              onClick={(event) => {
+                if (event.target instanceof Element && event.target.closest("a")) event.currentTarget.open = false;
+              }}
               key={item.label}
               className="relative"
               onKeyDown={(event) => {
