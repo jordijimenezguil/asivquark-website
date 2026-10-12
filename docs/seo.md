@@ -151,3 +151,9 @@ Franja reciente solo móvil consume hasta cuatro proyectos publicados del mismo 
 ## Contacto 4a
 
 Title: «Contacto | ASIVQUARK — Desarrollo web y software en Barcelona». Description: «Cuéntanos tu proyecto de web, aplicación o software a medida. Respuesta en 24 h laborables, sin compromiso.» Canonical de producción limpio /contacto/, también para variantes tipo/origen. ContactPage con Organization (email hola@asivquark.com aportado por propietario y areaServed Barcelona) y BreadcrumbList en producción. Local/preview conservan noindex y ausencia de canonical. Sin nuevas rutas de página en sitemap; /api/contacto/ es POST y respuestas noindex/no-store.
+
+## Sitemap XML — Revisión 12/10/2026
+
+`src/app/sitemap.ts` conserva la serialización nativa Next.js y el namespace estándar `http://www.sitemaps.org/schemas/sitemap/0.9`. Producción: 13 URLs únicas actualmente, con origen `https://asivquark.com`, barra final y sin parámetros. Incluye ambos artículos descubiertos desde MDX. Local y preview siguen con sitemap vacío. Legales en borrador y rutas privadas/API excluidos.
+
+Por petición del propietario, se incorporan `changefreq` y `priority`: home weekly/1; índice blog weekly/0.5; servicios monthly/0.8; artículos monthly/0.6; demás páginas monthly/0.5. Son indicaciones editoriales, no garantías de frecuencia de rastreo ni de posicionamiento. `lastmod` solo para artículos con fecha de frontmatter (updatedAt o publishedAt); no se inventan fechas de páginas corporativas. El texto del navegador sobre ausencia de estilos es normal: no se añade XSL ni se copia esa frase al XML.

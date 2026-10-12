@@ -483,3 +483,9 @@ A petición del propietario, reducido el cuerpo a exactamente seis párrafos (in
 Pruebas de contenido: 5/5, incluida comprobación de seis párrafos. ESLint y TypeScript correctos. HTTP local del artículo resumido correcto antes del ajuste final de Lead y título Conclusión; comprobación final registrada a continuación. Sin nuevo build: bloqueo previo de permisos Turbopack documentado. Sin deploy ni modificación de otros artículos.
 
 HTML final servido por dev comprobado: seis párrafos editoriales (sin contar shell/CTA), cinco H2 numerados, Lead compartido y un H1.
+
+## 2026-10-12 — Revisión y formato del sitemap
+
+Leída guía sitemap de Next.js instalada. Añadidos changefreq/priority y lastModified para artículos según frontmatter, conservando dominio, trailing slash, deduplicación y separación de entornos. XML generado invocando función real de sitemap con entorno producción y serializador `resolveSitemap` instalado; parseado con ElementTree: namespace y estructura válidos, 13 URLs únicas, loc/changefreq/priority en cada entrada. Ambos artículos presentes, lastmod digitalización 2026-10-12 y diseño web 2026-09-14. Sin parámetros/fragmentos, dominios alternativos, rutas privadas, API ni legales en borrador. Robots anuncia URL correcta de producción.
+
+GET local de sitemap: éxito, XML válido y vacío. Función real ejecutada con entorno preview: []. Todas las 13 rutas del sitemap comprobadas por HTTP contra dev local. `pnpm lint`, `pnpm typecheck` y `pnpm test:config` (6/6) correctos. No se consulta sitio desplegado, Search Console ni se repite build bloqueado por permisos Turbopack; no se despliega producción. La validación de producción es del generador real y su serializador, no de un endpoint remoto.
