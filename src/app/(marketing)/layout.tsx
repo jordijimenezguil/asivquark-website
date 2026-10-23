@@ -4,14 +4,11 @@ import { site } from "@/config/site";
 import { EventObserver } from "@/components/marketing/event-observer";
 import { AttributionTracker } from "@/components/forms/attribution-tracker";
 import type { ReactNode } from "react";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { Manrope, Montserrat, JetBrains_Mono } from "next/font/google";
-const sans = Manrope({ subsets: ["latin"], display: "swap", variable: "--font-marketing" });
-const brand = Montserrat({ subsets: ["latin"], weight: "600", display: "swap", variable: "--font-brand" });
-const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], display: "swap", variable: "--font-label" });
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
-    <div className={`marketing ${sans.variable} ${brand.variable} ${mono.variable}`}>
+    <div className="marketing">
       <CookieConsentProvider>
       <AttributionTracker />
       <EventObserver />
@@ -20,6 +17,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
       <main id="contenido" tabIndex={-1}>
         {children}
       </main>
+      <SiteFooter />
       </CookieConsentProvider>
 
     </div>

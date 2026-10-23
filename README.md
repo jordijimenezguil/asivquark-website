@@ -1,14 +1,14 @@
 # ASIVQUARK
 
-Web corporativa de un estudio de desarrollo de software y productos digitales en Barcelona. Cuarta iteración: ocho páginas públicas, captación y CRM privado implementados, pendientes de activar con base y credenciales reales. Dominio público: **https://asivquark.com**, sin `www`.
+Web corporativa de un estudio de desarrollo de software y productos digitales en Barcelona. Sitio público con servicios, proyectos, nosotros, contacto, blog y documentos legales; captación y CRM privado implementados. Rediseño global Foco aplicado en octubre de 2026. Dominio público: **https://asivquark.com**, sin `www`.
 
 ## Stack
 
-Next.js 16.4 (App Router), React 19.3, TypeScript estricto, Tailwind CSS 4, Geist mediante `next/font`, Lucide React, Neon PostgreSQL, **Prisma ORM y Prisma Migrate 7.10.0**, Better Auth, Resend y Zod. Gestor: pnpm 12.11.2. Preparada para Vercel, sin despliegue realizado. Prisma 7.10.0 es estable; no instalar la release candidate de Prisma 8 actualmente etiquetada como `latest`.
+Next.js 16.4 (App Router), React 19.3, TypeScript estricto, Tailwind CSS 4, Manrope y JetBrains Mono mediante `next/font`, Lucide React, Neon PostgreSQL, **Prisma ORM y Prisma Migrate 7.10.0**, Better Auth, Resend y Zod. Gestor: pnpm 12.11.2. Preparada para Vercel, sin despliegue realizado. Prisma 7.10.0 es estable; no instalar la release candidate de Prisma 8 actualmente etiquetada como `latest`.
 
 ## Inicio rápido
 
-Requisitos: Node.js >=22.12 (recomendado Node 22 LTS), pnpm 12.11.2 y conexión para instalar y descargar Geist durante el build inicial.
+Requisitos: Node.js >=22.12 (recomendado Node 22 LTS), pnpm 12.11.2 y conexión para instalar y descargar las fuentes durante el build inicial.
 
 ```bash
 npm install -g pnpm@12.11.2
@@ -294,3 +294,9 @@ Intro compacta y hoja blanca con chips, opcionales nativos y footer legal mínim
 ### Cambio de activación del formulario — 22/10/2026
 
 Por petición expresa del propietario, la captación ya no depende de la aprobación editorial de los documentos legales. Se habilita automáticamente cuando dispone de plataforma, base de datos, secreto y aviso válidos. La URL de privacidad y su versión se obtienen del documento actual sin configuración adicional. Resend sigue siendo opcional para persistir leads. Los pendientes legales permanecen en legal:check. Véase docs/leads.md; esta decisión sustituye las condiciones históricas de aprobación para activar el formulario.
+
+## Estilo global Foco — 23/10/2026
+
+El sitio público comparte fondo oscuro, morado eléctrico y tipografía Manrope/JetBrains Mono, incluidos servicios, proyectos, nosotros, contacto, blog/artículos, legales y 404. [Sistema visual](docs/diseno-foco.md), [contrato del blog](docs/BLOG-DESIGN.md) y [comprobaciones reales](docs/validacion.md). Los apartados anteriores de iteraciones describen su estado histórico; esta dirección sustituye la combinación de lectura clara y heroes oscuros.
+
+Tailwind 4 usa configuración CSS-first (`@theme` y `@layer components` en `src/app/globals.css`); no existe un tailwind.config separado. Las fuentes se cargan una vez en el layout raíz. Header y footer públicos se montan en el layout marketing, con excepción de la 404 raíz que los compone expresamente. No se añaden rutas, proyectos ficticios ni servicios externos.

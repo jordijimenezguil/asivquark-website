@@ -19,9 +19,8 @@ test("selector remains a native GET form without JavaScript and shares consent-g
 });
 test("portfolio uses authorized published content and global header keeps contact hidden on contact", () => {
   assert.equal(publishedProjects.length, 0);
-  const hero = readFileSync("src/components/marketing/home-hero.tsx", "utf8");
-  assert.match(hero, /publishedProjects.slice\(0, 4\)/);
-  assert.match(hero, /Publicaremos proyectos reales/);
+  const home = readFileSync("src/app/(marketing)/page.tsx", "utf8");
+  assert.match(home, /Publicaremos proyectos reales/);
   assert.match(readFileSync("src/components/layout/header-contact-link.tsx", "utf8"), /=== "\/contacto"\) return null/);
 });
 
@@ -37,5 +36,4 @@ test("initial hero HTML has one H1, four native choices and a real contact actio
   for (const type of ["web", "software", "app", "mvp"]) assert.ok(html.includes(`value="${type}"`));
   assert.match(html, /Sin compromiso/);
   assert.match(html, /Respuesta en 24 h/);
-  assert.match(html, /Publicaremos proyectos reales/);
 });

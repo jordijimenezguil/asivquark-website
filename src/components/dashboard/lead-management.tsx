@@ -16,5 +16,5 @@ export function LeadNotes({ id }: {
     id: string;
 }) {
     const [state, action, pending] = useActionState(addNote, { message: "" });
-    return <form action={action} className="space-y-3"><input type="hidden" name="id" value={id}/><label htmlFor="note" className="form-label">Nueva nota interna</label><textarea id="note" name="content" className="form-input" rows={5} required maxLength={5000}/><p className="text-sm text-slate-600">Texto privado. Máximo 5.000 caracteres.</p><button className="crm-button" disabled={pending}>{pending ? "Guardando nota…" : "Añadir nota"}</button><p role="status">{state.message}</p></form>;
+    return <form action={action} className="space-y-3"><input type="hidden" name="id" value={id}/><label htmlFor="note" className="form-label">Nueva nota interna</label><textarea id="note" name="content" className="form-input" rows={5} required maxLength={5000}/><p className="text-sm text-fg-muted">Texto privado. Máximo 5.000 caracteres.</p><button className="crm-button" disabled={pending}>{pending ? "Guardando nota…" : "Añadir nota"}</button><p role="status">{state.message}</p></form>;
 }

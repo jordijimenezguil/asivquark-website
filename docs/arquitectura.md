@@ -99,3 +99,8 @@ Banner cliente acotado a /contacto, antes del header, desactivado con NEXT_PUBLI
 Sin interruptor manual de captación: getContactConfig calcula disponibilidad a partir de aviso configurado, plataforma Vercel, base de datos y secreto de seguridad. La página y ambos endpoints comparten esta configuración; el runtime comprueba de nuevo los requisitos para persistir. Desarrollo conserva modo de prueba. La entrega de correo depende de API key y remitente válidos, sin interruptor manual.
 
 URL y versión del aviso de privacidad se obtienen exclusivamente de la configuración legal interna. No hay overrides de entorno ni validación de variables alternativas para estos valores.
+
+
+## Rediseño global Foco — 23/10/2026
+
+El sistema global Foco sustituye las superficies claras de las iteraciones anteriores. Configuración CSS-first de Tailwind 4 en globals.css, tipografía cargada en layout raíz y aliases de compatibilidad para plantillas existentes. Header y footer compartidos en el layout marketing; 404 raíz los compone expresamente. Componentes servidor conservan contenido inicial; fronteras cliente pequeñas para Spotlight, Marquee, ServiceExplorer y ProcessPanels. Spotlight usa requestAnimationFrame, IntersectionObserver y detección de puntero fino/movimiento reducido; marquee se pausa fuera de viewport. No se modifican DB, auth, envío de leads ni contratos de API. Véase [sistema visual](diseno-foco.md).

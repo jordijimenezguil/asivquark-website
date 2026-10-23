@@ -22,7 +22,7 @@ export function FormField({
       </label>
       {children}
       {error && (
-        <p id={`${name}-error`} className="mt-2 text-sm text-red-700">
+        <p id={`${name}-error`} className="mt-2 text-sm text-red-300">
           {error}
         </p>
       )}

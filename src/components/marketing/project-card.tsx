@@ -14,7 +14,7 @@ export function ProjectCard({ project }: { project: PublicProject }) {
       )}
       <p className="eyebrow text-violet">{project.category}</p>
       <h3 className="mt-4 text-2xl font-medium">{project.title}</h3>
-      <p className="mt-4 leading-7 text-slate-600">{project.summary}</p>
+      <p className="mt-4 leading-7 text-fg-muted">{project.summary}</p>
     </Card>
   );
 }

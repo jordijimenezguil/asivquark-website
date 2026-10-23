@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 const variants = {
-  primary: "bg-violet text-white hover:bg-[#6d28d9]",
-  secondary: "bg-white text-ink hover:bg-[#eee9fa]",
-  outline: "border border-current/25 bg-transparent hover:bg-current/5",
+  primary: "btn-primary",
+  secondary: "btn-inverse",
+  outline: "btn-secondary",
   ghost: "bg-transparent hover:bg-current/5",
 };
 type Shared = {
@@ -25,7 +25,7 @@ type Props = Shared &
 export function Button(props: Props) {
   const { children, variant = "primary", className, ...rest } = props;
   const styles = cn(
-    "inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] px-6 py-3 text-[15px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-45",
+    "inline-flex min-h-12 items-center justify-center gap-3 rounded-full px-6 py-3 text-[15px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-45",
     variants[variant],
     className,
   );

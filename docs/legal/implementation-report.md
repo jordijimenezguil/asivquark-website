@@ -29,3 +29,8 @@
 25. **Antes de producción:** resolver checklist de compliance completo, evidencias/aprobación/versiones y fechas reales, canal operativo y retención, proveedores/transferencias, prueba visual/teclado/cookies real y revisión jurídica final; ejecutar legal:check y validaciones del entorno de despliegue. Obtener autorización de despliegue por separado.
 
 Fuentes y decisiones: compliance-checklist.md. Resultados reales: ../validacion.md. La implementación no es certificación de cumplimiento ni asesoramiento jurídico certificado.
+
+
+## Rediseño global Foco — 23/10/2026
+
+Los documentos legales heredan el sistema [Foco](../diseno-foco.md), incluida tipografía Manrope, superficies oscuras, enlaces claros e índice lateral/plegable. El pie único procede del layout público. Se conserva íntegro el texto jurídico, fechas, preparación pendiente y controles de publicación; el rediseño no implica aprobación jurídica.

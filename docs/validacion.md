@@ -541,3 +541,48 @@ prisma validate y db:generate correctos; lint y typecheck correctos tras adaptar
 Eliminado el interruptor manual de correo de código, entorno local (también asignaciones comentadas), ejemplo y documentación. getLeadEmailConfig deriva enabled de API key y remitente válidos, sin alias ni compatibilidad. Destinatario interno validado por separado: su ausencia mantiene la notificación pendiente y no bloquea la confirmación al visitante. Persistencia del lead y recuperación del outbox mantienen su comportamiento. No se han enviado correos reales.
 
 Nueva prueba de configuración sin flag: credenciales válidas habilitan entrega; API key/remitente vacíos o inválidos la deshabilitan; destinatario interno ausente no bloquea configuración de confirmaciones. prisma validate, db:generate, lint y typecheck correctos; test:config 6/6, test:db 3/3, test:leads 30/30 y test:legal 4/4. Build vuelve a fallar por permisos internos de Turbopack al abrir puertos. Búsqueda sin referencias a variable retirada fuera de Git/dependencias/build/generados. Sin revisión visual, migración externa, envío real ni despliegue. Cambios locales sin commit/push.
+
+## 2026-10-23 — Corrección del 503: migración aplicada con autorización
+
+Tras captura de 503 en /api/leads/, migrate status remoto confirma pendiente 20261023080000_remove_lead_expiration. El código actualizado omite la antigua columna obligatoria, incompatible con el esquema anterior. Usuario confirma misma base en Vercel y autoriza la operación. prisma migrate deploy aplica únicamente la migración pendiente correctamente. migrate status posterior: cuatro migraciones, esquema actualizado. Consulta de catálogo read-only confirma expiration_column_exists=false y expiration_index_exists=false. Sin borrado de leads, reset, db push, envío de formulario o correo real. El recorrido público de envío queda pendiente de reintento: no se afirma probado mediante consulta de esquema.
+
+
+## Rediseño global Foco — 23/10/2026
+
+Implementación y contrato visual en [diseno-foco.md](diseno-foco.md). Se conservan las notas y cambios previos de validación y Prisma. Guías locales Next.js consultadas: Server and Client Components, CSS y Fonts. Sin migraciones, envío de formularios, emails ni despliegue.
+
+### Comprobaciones ejecutadas
+
+| Comando/comprobación | Resultado |
+| --- | --- |
+| pnpm prisma validate | Correcto |
+| pnpm db:generate | Correcto, Prisma Client 7.10.0; sin conexión/migraciones |
+| pnpm lint | Correcto, cero advertencias |
+| pnpm typecheck | Correcto |
+| pnpm test:config | 6/6 |
+| pnpm test:db | 3/3, comparación offline |
+| pnpm test:home | 4/4; actualizado el test del estado vacío trasladado fuera del hero |
+| pnpm test:marketing | 2/2 |
+| pnpm test:automation | 6/6 |
+| pnpm test:legal | 4/4 |
+| pnpm test:cookies | 4/4 |
+| pnpm test:web-design | 3 correctos, 1 fallo: prueba antigua espera un artículo y el catálogo existente tiene dos; no se modifica catálogo ni prueba ajena al rediseño |
+| pnpm build --webpack | Correcto, salida 0; 28 páginas generadas |
+| git diff --check | Sin espacios finales ni errores |
+| HTTP local, 17 rutas públicas | Todas 200; un H1 y un footer por documento |
+| HTTP local, ruta inexistente | 404 con un H1 y un footer; corregido proveedor de consentimiento de la 404 |
+
+HTTP incluye home, índice servicios, cuatro detalles, automatización, proyectos, nosotros, contacto, índice blog, dos artículos y cuatro legales. Los headers adicionales de blog/legales son cabeceras de contenido dentro de main, no una segunda navegación global. Servidor de prueba en 127.0.0.1:3000; no se envían datos de contacto.
+
+### Responsive y accesibilidad
+
+- Revisado en código: base móvil, contenedor 20/32/64px, min-w-0, selector 2/4 columnas, acordeón móvil de servicios y proceso apilado. No se afirma medición de overflow.
+- HTML comprobado: un H1, footer único, contenido comercial en respuesta inicial; selector GET conserva radios y destino real sin JS.
+- Revisado en código: foco visible, radios con etiqueta, tabs con aria-selected/controls y navegación por flechas, proceso con aria-expanded, FAQ nativa exclusiva, menú dialog con Escape y bloqueo de scroll.
+- Revisado en código: reduced motion, detección de puntero fino, Spotlight con requestAnimationFrame y pausa por IntersectionObserver, marquee decorativo pausado fuera de viewport.
+- Pendiente: inspección visual en 360, 390, 768, 1024, 1280 y 1440px, prueba de teclado/lector de pantalla y auditoría AA integral. CUA no tiene navegadores disponibles (inventario vacío); el intento adicional de usar la aplicación Google Chrome no fue aprobado. No se generaron capturas.
+- Lighthouse móvil y Core Web Vitals no ejecutados; no se acredita puntuación ≥90. CRM privado requiere sesión real para revisión visual.
+
+### Build y entorno
+
+`pnpm build` se ejecutó: el primer intento quedó bloqueado y se detuvo después de más de siete minutos. Los reintentos de Turbopack fallaron al crear workers por `binding to a port / Operation not permitted`, incluso con ejecución ampliada. El servidor dev sí compila y sirve las rutas indicadas. `pnpm build --webpack` completó compilación, tipos, generación de 28 páginas y trazas; el primer intento terminó con el recordatorio de seguridad, y el segundo finalizó correctamente con salida 0. No se cambia la configuración del proyecto. Next.js 16.4.0 muestra además un aviso de vulnerabilidad conocida; no se actualizan dependencias dentro del rediseño.

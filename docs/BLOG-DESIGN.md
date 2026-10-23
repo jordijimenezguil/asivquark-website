@@ -7,33 +7,18 @@ Resumen, fecha, tiempo de lectura e índice para orientar.
 Conversión contextual mediante card lateral o móvil, servicio y footer.
 HTML inicial completo, componentes reutilizables y contenido MDX local.
 
-## 2. Tokens usados en el blog
-Tailwind 4 usa tokens y `prose-asiv` en `src/app/globals.css`; `--container-prose` y el alias de compatibilidad `--max-width-prose` fijan la columna en 720 px.
+## 2. Tokens usados en el blog — Foco, 23/10/2026
 
-| Token | Valor | Uso |
-| --- | --- | --- |
-| navy | #0B0F17 | Hero y shell |
-| navy-700 | #1A2030 | Avatar provisional |
-| violet | #7C3AED | CTA, números y enlaces |
-| violet-600 / 800 | #6D28D9 / #5B21B6 | Hover CTA / enlaces |
-| violet-300 | #9F75FF | Foco sobre navy |
-| violet-50 / 25 | #F1EBFF / #FBFAFF | CTA / código |
-| ink | #111827 | Encabezados |
-| ink-700 / 600 | #2A2F3A / #454956 | Lead / cuerpo |
-| ink-500 | #5B5F6B | Metadatos secundarios sobre blanco |
-| mist / mist-500 | #B9BDC9 / #9BA1AE | Lead / metadatos sobre navy |
-| line / line-strong | #E3E5EB / #DADDE4 | Bordes |
+El blog comparte el sistema global descrito en [diseno-foco.md](diseno-foco.md). Tailwind 4 se configura en `src/app/globals.css` mediante `@theme`; no se añade una configuración JavaScript duplicada.
 
-`mist` del shell se conserva; `blog-mist` es su alias de lectura sobre navy. El fondo de las imágenes pendientes es #EEF0F4; el texto de autor y categoría sobre navy es #D7DAE2.
+- Fondo ink-950 #07090f; tarjetas ink-900 #0d1019; código y superficies elevadas ink-800 #141826.
+- Texto blanco; cuerpo fg-muted #b8bccb; metadatos fg-subtle #a3a7b7. Enlaces brand-300 #c4b5fd; acentos brand-400 #a78bfa. Botones sólidos brand-600 #7c3aed con texto blanco.
+- Manrope global y JetBrains Mono para etiquetas. `article-h1` referencia `h1` global; article-h2 conserva clamp(1.625rem, 1.2rem + 1.6vw, 2.125rem); lead 19–21px; cuerpo 17–18px con interlineado 1.75.
+- Lectura limitada a 68ch; índice lateral 260px. Contenedor 1280px con padding 20/32/64px.
+- `prose-asiv` adapta Typography al fondo oscuro; citas con borde brand-500 y código sobre ink-800. Bordes blancos al 10%; foco brand-400.
+- `navy`, `ink`, `paper`, `violet`, `line` y sus variantes son alias de compatibilidad del mismo sistema, no una segunda paleta. `ink-700` se reserva para bordes; no se usa como texto sobre oscuro.
 
-| Tamaño | Valor | Interlineado |
-| --- | --- | --- |
-| article-h1 | clamp(2.25rem, 1.2rem + 4.2vw, 4rem) | 1.04 |
-| article-h2 | clamp(1.625rem, 1.2rem + 1.6vw, 2.125rem) | 1.15 |
-| article-lead | clamp(1.1875rem, 1.05rem + .5vw, 1.3125rem) | 1.65 |
-| article-body | clamp(1.0625rem, 1rem + .25vw, 1.125rem) | 1.75 |
-
-Manrope existente, pesos 400 y 700; mono JetBrains Mono. `max-w-prose`: 720 px; `spacing.toc`: 260 px. Contenedor: 1280 px, padding 20/32/64 px. Cuerpo: padding vertical 48/64 px, desktop 80/104 px; separación de columnas 80 px. Párrafos largos siempre ink-600 a 400; nunca ink-500 ni pesos inferiores. #454956 sobre blanco da 8,97:1 según el cálculo WCAG (aproximadamente 9:1), por encima de AA y AAA para texto normal. Foco visible violeta; movimiento reducido sin escalado ni scroll suave.
+Se conserva la anatomía, el frontmatter y el registro de componentes MDX. El footer se renderiza una vez desde el layout público, fuera de main; CTA contextual dentro del artículo se mantiene. No se modifican artículos ni fechas editoriales.
 
 ## 3. Anatomía del artículo
 Móvil:
@@ -202,3 +187,7 @@ El contrato admite ahora `seoTitle` opcional (máximo 70 caracteres), usado en m
 La imagen facilitada por el propietario se convierte a WebP: cabecera 1440 px de ancho con proporción original y cover 1200×630 con ajuste contain sobre navy, sin recortar contenido. Alt describe una ilustración de documentos, escáner y portátil, sin presentarla como cliente o software real. El hero y los CTA conservan sus componentes y estilos existentes.
 
 Rutas de enlaces: `/automatizacion-procesos-ia/`, `/servicios/software-a-medida-barcelona/` y `/contacto/?servicio=automatizacion`. Canonical propio en producción: `https://asivquark.com/blog/digitalizacion-empresas/`. Descubrimiento automático del artículo en catálogo, RSS y sitemap de producción; local/preview siguen noindex y sin canonical.
+
+### Primitivas compartidas Foco
+
+La etiqueta de categoría puede usar `Badge` (`components/ui/badge.tsx`): píldora brand-600/15, texto brand-300 y cuerpo de 12px. `Eyebrow` comparte etiqueta mono global. Estas primitivas no alteran frontmatter ni contenido MDX.

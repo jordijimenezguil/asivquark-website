@@ -5,7 +5,6 @@ import { Breadcrumbs, ContactCTA, FAQAccordion, FeatureGrid, JsonLd, ProcessStep
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { site } from "@/config/site";
 const contactHref = "/contacto/?servicio=automatizacion";
@@ -28,6 +27,6 @@ export default function AutomationPage() {
     <Section space="sm"><Container><p className="max-w-2xl leading-7 text-ink-500">Para valorar tu proyecto, cuéntanos qué tarea se repite, qué herramientas utilizas, con qué frecuencia y dónde necesitas revisión humana. No incluyas documentos ni información empresarial confidencial en el formulario.</p></Container></Section>
     <ContactCTA title="¿Qué proceso te gustaría automatizar?" description="Cuéntanos qué tareas consumen tiempo en tu empresa. Analizaremos contigo qué opciones técnicas pueden ayudarte a simplificarlas." label={service.cta} href={contactHref} />
     <Section space="sm"><Container><Link href="/servicios/software-a-medida-barcelona/" className="inline-flex min-h-11 items-center font-semibold text-violet underline underline-offset-4">Ver desarrollo de software a medida →</Link></Container></Section>
-    <SiteFooter cta={false} />
+
   </>;
 }

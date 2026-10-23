@@ -5,7 +5,6 @@ import { ContactCTA, FAQAccordion, FeatureGrid, JsonLd, ProcessSteps, ServiceHer
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { site } from "@/config/site";
 const contactHref = "/contacto/?servicio=web";
 export function WebDesignPage() {
@@ -25,6 +24,6 @@ export function WebDesignPage() {
     <FAQAccordion items={service.faqs} title="Preguntas frecuentes sobre diseño web profesional" structuredData={false} />
     <ContactCTA title="Hablemos de tu nueva página web" description="Si necesitas una página web profesional para tu negocio, cuéntanos tu proyecto. Podemos ayudarte a definir una solución adaptada a tus necesidades." label={service.cta} href={contactHref} />
     <Section space="sm"><Container><p className="leading-7 text-ink-500">Si necesitas que los usuarios realicen operaciones desde el navegador, explora también nuestro <Link href="/servicios/aplicaciones-web-barcelona/" className="font-semibold text-violet underline underline-offset-4">servicio de desarrollo de aplicaciones web</Link>.</p></Container></Section>
-    <SiteFooter cta={false} />
+
   </>;
 }

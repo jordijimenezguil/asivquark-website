@@ -111,3 +111,8 @@ Por petición del usuario, Prisma CLI usa DATABASE_URL pooled si DIRECT_URL no e
 ## Compatibilidad con barra final
 
 Better Auth configura `advanced.skipTrailingSlashes: true` para aceptar las rutas API con barra final que exige `trailingSlash: true` en Next.js. Se conservan controles de origen, CSRF y permisos. El login muestra error temporal para un 404, evitando atribuir un fallo de ruta a las credenciales.
+
+
+## Rediseño global Foco — 23/10/2026
+
+La fuente raíz y las primitivas de formularios/tarjetas adoptan [Foco](diseno-foco.md); se ajustan textos y bordes heredados para lectura sobre fondo oscuro. Se conservan los indicadores semánticos de estado. No cambian permisos, sesiones, consultas, acciones ni persistencia. La interfaz privada requiere una sesión real para completar QA visual.

@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Manrope, JetBrains_Mono } from "next/font/google";
 import { pageMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
-const sans = Geist({
-  variable: "--font-geist-sans",
+const sans = Manrope({
+  variable: "--font-marketing",
   subsets: ["latin"],
   display: "swap",
 });
-const mono = Geist_Mono({
-  variable: "--font-geist-mono",
+const mono = JetBrains_Mono({
+  variable: "--font-label",
   subsets: ["latin"],
   display: "swap",
 });

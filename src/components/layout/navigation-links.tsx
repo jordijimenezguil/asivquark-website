@@ -75,7 +75,7 @@ export function NavigationLinks({
                   ⌄
                 </span>
               </summary>
-              <div className="absolute left-0 top-full w-64 rounded-lg border border-white/15 bg-surface p-3 shadow-xl">
+              <div className="absolute left-0 top-full w-64 rounded-lg border border-white/15 bg-surface p-3 shadow-card">
                 <Link href="/servicios/" aria-current={active("/servicios/") ? "page" : undefined} className="block px-3 py-3 text-sm text-white">Todos los servicios →</Link>
                 {serviceNavigation.map((service) => (
                   <Link

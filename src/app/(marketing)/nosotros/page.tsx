@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/branding/brand-logo";
 import { Principles } from "@/components/marketing/principles";
-import { SiteFooter } from "@/components/layout/site-footer";
 import {
   PageHero,
 } from "@/components/marketing/commercial";
@@ -24,10 +23,10 @@ export default function Page() {
         title="Un estudio de desarrollo digital en Barcelona"
         description="ASIVQUARK desarrolla páginas web, aplicaciones y software a medida. Nos interesa construir herramientas que encajen con las personas y los procesos que las utilizan."
       />
-      <Section className="bg-white">
+      <Section className="bg-ink-900">
         <Container className="grid gap-10 lg:grid-cols-2">
           <h2 className="section-title">Entender antes de construir</h2>
-          <div className="space-y-5 text-lg leading-8 text-slate-600">
+          <div className="space-y-5 text-lg leading-8 text-fg-muted">
             <p>
               La tecnología es una parte de la solución. La otra es comprender
               qué necesita el negocio, quién va a utilizar el producto y qué
@@ -50,7 +49,7 @@ export default function Page() {
         </Container>
       </Section>
       <Section className="bg-night text-white"><Container className="grid items-center gap-10 lg:grid-cols-[1fr_2fr]"><BrandLogo variant="compact" size="lg" className="h-24" /><div><h2 className="section-title">Software con propósito. Desde Barcelona.</h2><p className="mt-5 text-secondary">Trabajamos con proyectos de toda España.</p></div></Container></Section><Principles />
-      <SiteFooter />
+
     </>
   );
 }

@@ -157,3 +157,8 @@ Title: «Contacto | ASIVQUARK — Desarrollo web y software en Barcelona». Desc
 `src/app/sitemap.ts` conserva la serialización nativa Next.js y el namespace estándar `http://www.sitemaps.org/schemas/sitemap/0.9`. Producción: 13 URLs únicas actualmente, con origen `https://asivquark.com`, barra final y sin parámetros. Incluye ambos artículos descubiertos desde MDX. Local y preview siguen con sitemap vacío. Legales en borrador y rutas privadas/API excluidos.
 
 Por petición del propietario, se incorporan `changefreq` y `priority`: home weekly/1; índice blog weekly/0.5; servicios monthly/0.8; artículos monthly/0.6; demás páginas monthly/0.5. Son indicaciones editoriales, no garantías de frecuencia de rastreo ni de posicionamiento. `lastmod` solo para artículos con fecha de frontmatter (updatedAt o publishedAt); no se inventan fechas de páginas corporativas. El texto del navegador sobre ausencia de estilos es normal: no se añade XSL ni se copia esa frase al XML.
+
+
+## Rediseño global Foco — 23/10/2026
+
+Rediseño exclusivamente visual con el sistema [Foco](diseno-foco.md). Se conserva metadata, JSON-LD, rutas, canonicals, sitemap, RSS, textos y separación por entornos. Hero mantiene un H1 y texto indexable inicial; los servicios y pasos se renderizan en HTML aunque la presentación cambie al interactuar. Cinta decorativa aria-hidden, con los servicios disponibles en contenido real. Header/footer compartidos fuera de main. El blog mantiene frontmatter y anatomía, con lectura oscura y columna 68ch. No se han medido Lighthouse ni Core Web Vitals y no se afirma mejora de posiciones o rendimiento.

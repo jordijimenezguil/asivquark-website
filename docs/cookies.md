@@ -55,3 +55,8 @@ Cuatro rutas legales con trailing slash: `/aviso-legal/`, `/politica-privacidad/
 Layout servidor compartido, Geist existente acotado a legal, hero compacto, índice HTML plegable móvil/lateral escritorio, lectura limitada y tarjetas de inventario de cookies. Footer enlaza los cuatro documentos y reutiliza el gestor. Contacto incorpora primera capa; casilla conserva reconocimiento de lectura, no consentimiento comercial. Producción/preview exigen preparación legal y URL/versión exactas del aviso aprobado además de requisitos operativos anteriores; desarrollo sigue siendo solo prueba.
 
 `pnpm legal:check` informa pendientes y falla intencionadamente mientras no se aprueben datos/documentos. Resolver [checklist jurídico](legal/compliance-checklist.md), [inventario](legal/data-processing-inventory.md), [retención](legal/data-retention-review.md) y [guía contractual interna](legal/contratacion-servicios.md) (en README: rutas bajo docs/legal). No se publica la guía, migra la DB ni despliega producción. No se acredita conformidad legal integral. Las notas anteriores corresponden a iteraciones históricas. Resultados reales y límites en docs/validacion.md.
+
+
+## Rediseño global Foco — 23/10/2026
+
+Las superficies del banner y del diálogo usan los tokens oscuros globales de [Foco](diseno-foco.md), Manrope y controles de al menos 44px. No cambia el modelo de consentimiento, almacenamiento, categorías, activación de scripts ni contenido jurídico.

@@ -6,16 +6,16 @@ export function formatDate(value: Date) { return new Intl.DateTimeFormat("es-ES"
 export function LeadStatusBadge({ status }: {
     status: keyof typeof statusLabels;
 }) {
-    const colors = { NEW: "bg-violet-100 text-violet-900", CONTACTED: "bg-blue-100 text-blue-900", QUALIFIED: "bg-cyan-100 text-cyan-900", PROPOSAL_SENT: "bg-amber-100 text-amber-900", WON: "bg-emerald-100 text-emerald-900", LOST: "bg-slate-200 text-slate-800", SPAM: "bg-red-100 text-red-900" };
+    const colors = { NEW: "bg-violet-100 text-violet-900", CONTACTED: "bg-blue-100 text-blue-900", QUALIFIED: "bg-cyan-100 text-cyan-900", PROPOSAL_SENT: "bg-amber-100 text-amber-900", WON: "bg-emerald-100 text-emerald-900", LOST: "bg-slate-200 text-fg-muted", SPAM: "bg-red-100 text-red-900" };
     return <span className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${colors[status]}`}>{statusLabels[status]}</span>;
 }
 export function EmptyState({ message = "Todavía no has recibido solicitudes." }: {
     message?: string;
-}) { return <p className="rounded-xl border border-dashed border-slate-300 p-8 text-center text-slate-600">{message}</p>; }
+}) { return <p className="rounded-xl border border-dashed border-white/10 p-8 text-center text-fg-muted">{message}</p>; }
 export function StatCard({ label, value }: {
     label: string;
     value: number;
-}) { return <div className="crm-card"><p className="text-sm text-slate-600">{label}</p><p className="mt-3 text-3xl font-semibold">{value}</p></div>; }
+}) { return <div className="crm-card"><p className="text-sm text-fg-muted">{label}</p><p className="mt-3 text-3xl font-semibold">{value}</p></div>; }
 type Row = {
     id: string;
     name: string;
@@ -30,7 +30,7 @@ export function LeadsTable({ leads }: {
 }) {
     if (!leads.length)
         return <EmptyState message="No hay solicitudes para mostrar con estos filtros."/>;
-    return <><div className="hidden md:block"><table className="w-full text-left text-sm"><caption className="sr-only">Solicitudes comerciales recibidas</caption><thead><tr>{["Nombre / empresa", "Servicio", "Estado", "Entrada", "Origen", "Detalle"].map(label => <th scope="col" className="border-b p-3 font-medium text-slate-600" key={label}>{label}</th>)}</tr></thead><tbody>{leads.map(lead => <tr key={lead.id} className="border-b border-slate-100"><td className="p-3"><span className="font-medium">{lead.name}</span><span className="block text-slate-600">{lead.company ?? "—"}</span></td><td className="p-3">{labelService(lead.service)}</td><td className="p-3"><LeadStatusBadge status={lead.status}/></td><td className="p-3">{formatDate(lead.createdAt)}</td><td className="p-3">{lead.source === "contact_form" ? "Formulario web" : lead.source}</td><td className="p-3"><Link className="crm-link" href={`/admin/leads/${lead.id}/`} aria-label={`Abrir solicitud de ${lead.name}`}>Abrir</Link></td></tr>)}</tbody></table></div><ul className="space-y-3 md:hidden">{leads.map(lead => <li className="rounded-lg border border-slate-200 p-4" key={lead.id}><div className="flex flex-wrap justify-between gap-2"><h3 className="font-medium">{lead.name}</h3><LeadStatusBadge status={lead.status}/></div><p className="mt-2">{lead.company ?? "Sin empresa"} · {labelService(lead.service)}</p><p className="my-2 text-sm text-slate-600">{formatDate(lead.createdAt)}</p><Link className="crm-link inline-flex min-h-11 items-center" href={`/admin/leads/${lead.id}/`}>Abrir solicitud</Link></li>)}</ul></>;
+    return <><div className="hidden md:block"><table className="w-full text-left text-sm"><caption className="sr-only">Solicitudes comerciales recibidas</caption><thead><tr>{["Nombre / empresa", "Servicio", "Estado", "Entrada", "Origen", "Detalle"].map(label => <th scope="col" className="border-b p-3 font-medium text-fg-muted" key={label}>{label}</th>)}</tr></thead><tbody>{leads.map(lead => <tr key={lead.id} className="border-b border-white/10"><td className="p-3"><span className="font-medium">{lead.name}</span><span className="block text-fg-muted">{lead.company ?? "—"}</span></td><td className="p-3">{labelService(lead.service)}</td><td className="p-3"><LeadStatusBadge status={lead.status}/></td><td className="p-3">{formatDate(lead.createdAt)}</td><td className="p-3">{lead.source === "contact_form" ? "Formulario web" : lead.source}</td><td className="p-3"><Link className="crm-link" href={`/admin/leads/${lead.id}/`} aria-label={`Abrir solicitud de ${lead.name}`}>Abrir</Link></td></tr>)}</tbody></table></div><ul className="space-y-3 md:hidden">{leads.map(lead => <li className="rounded-lg border border-white/10 p-4" key={lead.id}><div className="flex flex-wrap justify-between gap-2"><h3 className="font-medium">{lead.name}</h3><LeadStatusBadge status={lead.status}/></div><p className="mt-2">{lead.company ?? "Sin empresa"} · {labelService(lead.service)}</p><p className="my-2 text-sm text-fg-muted">{formatDate(lead.createdAt)}</p><Link className="crm-link inline-flex min-h-11 items-center" href={`/admin/leads/${lead.id}/`}>Abrir solicitud</Link></li>)}</ul></>;
 }
 export function ActivityTimeline({ events }: {
     events: {
@@ -47,6 +47,6 @@ export function ActivityTimeline({ events }: {
     return <ol className="space-y-4">{events.map(event => {
             const m = event.metadata && typeof event.metadata === "object" ? event.metadata as Record<string, unknown> : {};
             const statusLabel = (v: unknown) => typeof v === "string" && v in statusLabels ? statusLabels[v as keyof typeof statusLabels] : "";
-            return <li key={event.id} className="border-l-2 border-violet-200 pl-4"><p className="font-medium">{labels[event.type] ?? "Actividad"}</p>{event.type === "STATUS_CHANGED" && <p>{statusLabel(m.previous)} → {statusLabel(m.next)}</p>}<p className="text-sm text-slate-600">{formatDate(event.createdAt)}{event.actor && ` · ${event.actor.name}`}</p></li>;
+            return <li key={event.id} className="border-l-2 border-violet-200 pl-4"><p className="font-medium">{labels[event.type] ?? "Actividad"}</p>{event.type === "STATUS_CHANGED" && <p>{statusLabel(m.previous)} → {statusLabel(m.next)}</p>}<p className="text-sm text-fg-muted">{formatDate(event.createdAt)}{event.actor && ` · ${event.actor.name}`}</p></li>;
         })}</ol>;
 }

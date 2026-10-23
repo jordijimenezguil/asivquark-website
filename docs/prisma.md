@@ -102,3 +102,7 @@ Tras consulta read-only se confirmó public vacío. Se aplicaron mediante `pnpm 
 ## Solicitudes sin caducidad — 23/10/2026
 
 Migración versionada 20261023080000_remove_lead_expiration, generada mediante diff offline: elimina únicamente el índice lead_expiresAt_idx y la columna lead.expiresAt. No borra solicitudes ni modifica expiraciones de autenticación o rate limiting. No se reescriben migraciones ya aplicadas. Aplicar esta migración antes de ejecutar el código actualizado contra la base real, mediante el procedimiento autorizado habitual. No se aplica en esta tarea.
+
+### Aplicación autorizada — 23/10/2026
+
+El propietario confirma que Vercel utiliza la base configurada localmente y autoriza aplicar la migración pendiente. Ejecutado prisma migrate deploy: 20261023080000_remove_lead_expiration aplicada correctamente. migrate status confirma cuatro migraciones y esquema actualizado. Consulta read-only al catálogo PostgreSQL confirma ausencia de columna e índice de expiración en lead. No se borran solicitudes ni se ejecuta reset/db push.

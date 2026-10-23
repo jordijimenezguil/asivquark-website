@@ -20,7 +20,7 @@ Leer `README.md`, `docs/arquitectura.md`, `docs/producto.md` y `docs/seo.md` ant
 - Código en `src/`, alias `@/`, App Router y TypeScript estricto. Sin `any`, carpetas vacías ni capas anticipadas.
 - Server Components por defecto; menú móvil es frontera cliente. Contenido SEO en HTML inicial.
 - Primitivas en `components/ui`, marca en `branding`, shell en `layout`, secciones en `marketing`.
-- Tokens en `globals.css`, Geist vía `next/font`, iconos Lucide. Respetar teclado, focus, contraste y movimiento reducido.
+- Tokens en `globals.css`, Manrope y JetBrains Mono vía `next/font`, iconos Lucide. Respetar teclado, focus, contraste y movimiento reducido.
 - BrandLogo es texto provisional: reutilizar el original cuando se facilite, sin rediseñar identidad.
 - No inventar proyectos, métricas, testimonios, contactos ni contenido legal.
 
