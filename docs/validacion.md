@@ -507,3 +507,11 @@ Comprobaciones ejecutadas: prisma validate y db:generate correctos; lint y typec
 El propietario pide habilitar el formulario sin esperar a completar preparación documental. getContactConfig deja de consultar legalReadiness y obtiene URL/versión por defecto del aviso real actual; overrides incorrectos siguen rechazados. Se mantienen opt-in, plataforma, DB, secreto y retención. Documentos siguen draft. Pruebas actualizadas para comprobar activación independiente de aprobación y cierre ante requisitos operativos ausentes. La prueba legal obsoleta de integración se ajusta al enlace de privacidad que realmente renderiza el formulario, sin afirmar presencia del componente retirado.
 
 Verificación real: prisma validate, db:generate, lint, typecheck correctos; test:config 6/6, test:db 3/3, test:leads 29/29 y test:legal 4/4. Build intentado con ejecución ampliada: falla por Operation not permitted al abrir puerto interno de Turbopack. Sin build completo, prueba visual, envío real a DB/correo ni despliegue. Variables privadas de producción no verificadas. La disponibilidad pública actual no cambia hasta reconstruir/desplegar con requisitos operativos presentes.
+
+## 2026-10-23 — Formulario oculto tras el push
+
+Captura del usuario y GET público actual de /contacto/ (HTTP 200) confirman que sigue sin botón de envío y serializa enabled:false. No se conocen variables ni commit desplegado en Vercel. Acceso a Google Chrome no autorizado por la herramienta de ordenador; no se inspecciona dashboard.
+
+Corregido caso reproducible de configuración: overrides opcionales de URL/versión del aviso vacíos (incluidos espacios) impedían usar defaults con el operador ??; ahora se normalizan y aplican defaults. Prueba de regresión verifica enabled:true con requisitos operativos presentes y overrides vacíos. Configuraciones erróneas explícitas siguen cerradas. .env.example y docs/leads.md actualizados.
+
+prisma validate, db:generate, lint, typecheck correctos. test:config 6/6, test:db 3/3, test:leads 29/29, test:legal 4/4. Build falla por permisos de Turbopack al abrir puertos internos. No se confirma funcionamiento público ni se crean leads/envían correos. Pendiente comprobar variables Production y despliegue; cambio local adicional sin publicar.

@@ -133,3 +133,7 @@ Presupuestos: opción A del plan, claves y rangos existentes íntegros; no se re
 Por instrucción expresa del propietario, la captación deja de depender de legalReadiness(). Los documentos conservan su estado editorial real. El aviso utiliza por defecto la URL de privacidad del dominio oficial y la versión actual de legalDocuments; overrides de entorno deben coincidir con ambos. Se registra esa versión con cada lead, sin afirmar aprobación documental.
 
 Producción y preview mantienen LEADS_ENABLED=true, VERCEL=1, DATABASE_URL, LEADS_SECURITY_SECRET de al menos 32 caracteres y LEADS_RETENTION_DAYS válido como requisitos. Desarrollo mantiene su modo de prueba y runtime exige base y secreto para persistir. Resend es independiente: su ausencia no impide guardar solicitudes. Reconstruir y desplegar para actualizar la disponibilidad prerenderizada. Esta decisión sustituye el requisito de aprobación legal para captación descrito en las secciones históricas.
+
+### Overrides vacíos — 23/10/2026
+
+LEADS_PRIVACY_NOTICE_URL y LEADS_PRIVACY_NOTICE_VERSION vacíos o compuestos solo por espacios utilizan los valores del documento actual. Esto permite copiar .env.example sin que las variables opcionales vacías bloqueen la captación. Los requisitos operativos obligatorios se mantienen. Cambios en variables de producción requieren reconstrucción/despliegue porque la página de contacto se prerenderiza.

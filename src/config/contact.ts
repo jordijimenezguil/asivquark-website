@@ -11,13 +11,13 @@ export function getContactConfig(
   const noticeUrl = z
     .url()
     .max(300)
-    .safeParse(environment.LEADS_PRIVACY_NOTICE_URL ?? `${legalEntity.website}/politica-privacidad/`);
+    .safeParse(environment.LEADS_PRIVACY_NOTICE_URL?.trim() || `${legalEntity.website}/politica-privacidad/`);
   const noticeVersion = z
     .string()
     .trim()
     .min(1)
     .max(100)
-    .safeParse(environment.LEADS_PRIVACY_NOTICE_VERSION ?? privacy?.version);
+    .safeParse(environment.LEADS_PRIVACY_NOTICE_VERSION?.trim() || privacy?.version);
   const noticeConfigured =
     noticeUrl.success &&
     new URL(noticeUrl.data).protocol === "https:" &&
