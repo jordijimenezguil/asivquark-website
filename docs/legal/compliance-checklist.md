@@ -4,7 +4,7 @@ Revisión técnica: 12/10/2026. **No aprobado para publicación como documentos 
 
 | Área | Evidencia / estado | Acción requerida | Validación |
 | --- | --- | --- | --- |
-| A. Titular | Marca y Barcelona; legalName/taxId/address/email null | Aportar identidad documental, identificación fiscal, domicilio exigible, email controlado; no asumir sociedad | Titular real por identificar |
+| A. Titular | DNI y email aportados por el titular el 22/10/2026; apartado de correos en Sabadell registrado como correspondencia; nombre legal ASIVQUARK indicado por el titular; domicilio legal pendiente | Aportar identidad documental, identificación fiscal, domicilio exigible, email controlado; no asumir sociedad | Titular real por identificar |
 | A. Aplicabilidad | Registro/autorización/DPD pending | Determinar si aplican y proporcionar datos o justificar no aplicabilidad | Titular / asesor por designar |
 | B. Proveedores | Integraciones técnicas identificadas, activación sin comprobar | Inventario operativo y documentación de cuentas | Persona responsable por designar |
 | C. Bases | Precontractual candidato, seguridad/otras consultas pendientes | Ponderación, representantes empresariales, notas/seguimiento, información admins y art. 14 si datos indirectos | Asesor por designar |
@@ -45,3 +45,7 @@ Las cuatro páginas son accesibles con advertencia honesta y noindex mientras no
 12/10/2026: [LSSI consolidada](https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758) (arts. 10 y 22.2), [LOPDGDD](https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673), [RGPD](https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32016R0679), [información AEPD](https://www.aepd.es/derechos-y-deberes/conoce-tus-derechos/derecho-de-informacion), [guía cookies AEPD](https://www.aepd.es/guias/guia-cookies.pdf). El visor EUR-Lex inicial no extrajo texto completo; no se afirma lectura íntegra. Bases, información arts. 12–14, derechos 15–22, encargos 28 y seguridad 32 requieren aplicación al contexto real y revisión final.
 
 Se accedió también al [RGPD publicado en DOUE/BOE](https://www.boe.es/doue/2016/119/L00001-00088.pdf), cuyo texto sí fue extraído, y al [TRLGDCU consolidado](https://www.boe.es/buscar/act.php?id=BOE-A-2007-20555).
+
+## Cambio de activación — 22/10/2026
+
+El propietario solicita expresamente habilitar el formulario sin esperar a completar este checklist. Se retira la dependencia técnica de legalReadiness para captación; se conservan los pendientes y el estado draft de los documentos. legal:check continúa informando preparación documental por separado. No se registra aprobación ni publicación de los textos como definitivos.

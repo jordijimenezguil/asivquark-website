@@ -297,3 +297,7 @@ Franja reciente solo móvil consume hasta cuatro proyectos publicados del mismo 
 ### Contacto mobile-first 4a
 
 Intro compacta y hoja blanca con chips, opcionales nativos y footer legal mínimo. POST nativo /api/contacto/ adapta al handler seguro existente; con JS, confirmación dentro de la misma hoja. Captación pública conserva bloqueo hasta privacidad y configuración aprobadas. NEXT_PUBLIC_ENV=production oculta aviso de pruebas; VERCEL_ENV sigue gobernando los entornos. Ver dirección y límites en docs/producto.md y docs/validacion.md.
+
+### Cambio de activación del formulario — 22/10/2026
+
+Por petición expresa del propietario, la captación ya no depende de la aprobación editorial de los documentos legales. Conserva los requisitos operativos de entorno, base de datos, secreto y retención. La URL de privacidad y su versión se obtienen del documento actual salvo overrides coincidentes. Resend sigue siendo opcional para persistir leads. Los pendientes legales permanecen en legal:check. Véase docs/leads.md; esta decisión sustituye las condiciones históricas de aprobación para activar el formulario.

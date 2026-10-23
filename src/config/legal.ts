@@ -4,7 +4,7 @@ const optionalText = z.string().trim().min(1).max(1000).nullable();
 const applicability = z.enum(["pending", "not-applicable", "applicable"]);
 export const legalEntitySchema = z.object({
   brandName: z.string().min(1), website: z.url(), location: z.string().min(1),
-  legalName: optionalText, taxId: optionalText, legalAddress: optionalText,
+  legalName: optionalText, taxId: optionalText, legalAddress: optionalText, postalAddress: optionalText,
   legalEmail: z.email().nullable(), privacyEmail: z.email().nullable(),
   registry: z.object({ status: applicability, information: optionalText }),
   authorization: z.object({ status: applicability, information: optionalText }),
@@ -13,7 +13,9 @@ export const legalEntitySchema = z.object({
 export type LegalEntity = z.infer<typeof legalEntitySchema>;
 export const legalEntity: LegalEntity = legalEntitySchema.parse({
   brandName: "ASIVQUARK", website: "https://asivquark.com", location: "Barcelona, España",
-  legalName: null, taxId: null, legalAddress: null, legalEmail: null, privacyEmail: null,
+  legalName: "ASIVQUARK", taxId: "47163794V", legalAddress: null,
+  postalAddress: "Apartado de correos 12453, Sabadell",
+  legalEmail: "hola@asivquark.com", privacyEmail: null,
   registry: { status: "pending", information: null },
   authorization: { status: "pending", information: null },
   dpo: { status: "pending", information: null },

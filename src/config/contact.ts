@@ -1,31 +1,31 @@
 import "server-only";
 import { z } from "zod";
-import { legalDocuments, legalEntity, legalReadiness } from "@/config/legal";
+import { legalDocuments, legalEntity } from "@/config/legal";
 import { site } from "@/config/site";
 
 export function getContactConfig(
   environment: Record<string, string | undefined> = process.env,
   mode: string = site.mode,
 ) {
+  const privacy = legalDocuments.find(document => document.id === "privacy");
   const noticeUrl = z
     .url()
     .max(300)
-    .safeParse(environment.LEADS_PRIVACY_NOTICE_URL);
+    .safeParse(environment.LEADS_PRIVACY_NOTICE_URL ?? `${legalEntity.website}/politica-privacidad/`);
   const noticeVersion = z
     .string()
     .trim()
     .min(1)
     .max(100)
-    .safeParse(environment.LEADS_PRIVACY_NOTICE_VERSION);
-  const legalReady =
+    .safeParse(environment.LEADS_PRIVACY_NOTICE_VERSION ?? privacy?.version);
+  const noticeConfigured =
     noticeUrl.success &&
     new URL(noticeUrl.data).protocol === "https:" &&
     !new URL(noticeUrl.data).username &&
     !new URL(noticeUrl.data).password &&
     noticeVersion.success &&
     noticeUrl.data === `${legalEntity.website}/politica-privacidad/` &&
-    noticeVersion.data === legalDocuments.find(document => document.id === "privacy")?.version &&
-    legalReadiness().ready;
+    noticeVersion.data === privacy?.version;
   const testMode = mode === "development";
   const retention = z.coerce
     .number()
@@ -36,7 +36,7 @@ export function getContactConfig(
   const enabled =
     testMode ||
     (environment.LEADS_ENABLED === "true" &&
-      legalReady &&
+      noticeConfigured &&
       retention.success &&
       environment.VERCEL === "1" &&
       Boolean(environment.DATABASE_URL) &&
@@ -44,8 +44,8 @@ export function getContactConfig(
   return {
     enabled,
     testMode,
-    noticeUrl: legalReady ? noticeUrl.data : null,
-    noticeVersion: legalReady
+    noticeUrl: noticeConfigured ? noticeUrl.data : null,
+    noticeVersion: noticeConfigured
       ? noticeVersion.data
       : testMode
         ? "development-test-only"

@@ -88,7 +88,7 @@ test("attribution strips untrusted paths and referrer queries without inventing 
     undefined,
   );
 });
-test("public capture stays closed when environment flags point to an unapproved notice", () => {
+test("public capture uses the current notice and rejects mismatched notice configuration", () => {
   const environment = {
     LEADS_ENABLED: "true",
     VERCEL: "1",
@@ -96,7 +96,10 @@ test("public capture stays closed when environment flags point to an unapproved 
     LEADS_SECURITY_SECRET: "s".repeat(32),
     LEADS_RETENTION_DAYS: "90",
   };
-  assert.equal(getContactConfig(environment, "production").enabled, false);
+  assert.equal(getContactConfig(environment, "production").enabled, true);
+  for (const key of ["DATABASE_URL", "LEADS_SECURITY_SECRET", "LEADS_RETENTION_DAYS", "LEADS_ENABLED", "VERCEL"]) {
+    assert.equal(getContactConfig({ ...environment, [key]: "" }, "production").enabled, false);
+  }
   assert.equal(
     getContactConfig(
       {

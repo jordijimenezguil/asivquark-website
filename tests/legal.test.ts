@@ -6,14 +6,14 @@ import { getContactConfig } from "../src/config/contact";
 
 test("legal readiness reports identity, applicability and approval independently from build", () => {
   assert.equal(legalReadiness().ready, false);
-  assert.ok(legalReadiness().missing.includes("legalName"));
+  assert.ok(legalReadiness().missing.includes("legalAddress"));
   assert.ok(legalReadiness().missing.includes("approval:privacy"));
   assert.equal(legalEntitySchema.safeParse({ ...legalEntity, legalEmail: "invalid" }).success, false);
 });
-test("environment flags cannot activate capture with an unapproved notice", () => {
+test("capture can use the current notice independently of editorial approval", () => {
   const config = getContactConfig({ LEADS_ENABLED: "true", LEADS_PRIVACY_NOTICE_URL: "https://asivquark.com/politica-privacidad/", LEADS_PRIVACY_NOTICE_VERSION: legalDocuments[1].version, LEADS_RETENTION_DAYS: "90", VERCEL: "1", DATABASE_URL: "test-only", LEADS_SECURITY_SECRET: "x".repeat(32) }, "production");
-  assert.equal(config.enabled, false);
-  assert.equal(config.noticeUrl, null);
+  assert.equal(config.enabled, true);
+  assert.equal(config.noticeUrl, "https://asivquark.com/politica-privacidad/");
   assert.equal(getContactConfig({}, "development").testMode, true);
 });
 test("four canonical routes, shared layout and cookie manager are connected", () => {
@@ -26,7 +26,7 @@ test("four canonical routes, shared layout and cookie manager are connected", ()
   }
   assert.match(readFileSync("src/components/layout/site-footer.tsx", "utf8"), /legalDocuments\.map/);
   assert.match(readFileSync("src/app/(marketing)/politica-de-cookies/page.tsx", "utf8"), /CookiePreferencesTrigger/);
-  assert.match(readFileSync("src/components/forms/contact-form.tsx", "utf8"), /PrivacyBasicInformation/);
+  assert.match(readFileSync("src/components/forms/contact-form.tsx", "utf8"), /política de privacidad/);
 });
 
 test("production metadata retains official canonicals but drafts stay noindex", async () => {
