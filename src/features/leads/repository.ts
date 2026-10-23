@@ -11,7 +11,6 @@ export type CreateLeadCommand = {
   clientKey: string;
   secret: string;
   noticeVersion: string;
-  retentionDays: number;
   notificationRecipient: string | null;
 };
 export async function createLead(
@@ -58,9 +57,6 @@ export async function createLead(
             ...input.attribution,
             privacyNoticeVersion: command.noticeVersion,
             privacyAcknowledgedAt: now,
-            expiresAt: new Date(
-              now.getTime() + command.retentionDays * 86400000,
-            ),
             events: {
               create: [
                 { type: "LEAD_CREATED" },

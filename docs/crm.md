@@ -27,7 +27,7 @@ Migración `20261012120000_crm` generada offline mediante Prisma Migrate diff en
 - LeadNote: UUID, leadId, authorId, content (5.000), createdAt, updatedAt, índice leadId/createdAt, FK cascade para retención del lead y restrict para conservar autor.
 - RateLimit: id, key único, count, lastRequest BigInt; tabla privada del limitador oficial.
 
-No cambia columnas de auth existentes, no elimina tablas ni datos. La FK del actor usa SET NULL si posteriormente se elimina una cuenta; notas conservan su autor mediante RESTRICT. Ninguna eliminación de cuentas/leads se añade al CRM. El cleanup privado anterior conserva su política de expiración y cascada incluye notas. Revisión jurídica de retención permanece pendiente; no se automatizan derechos ni exportaciones.
+No cambia columnas de auth existentes, no elimina tablas ni datos. La FK del actor usa SET NULL si posteriormente se elimina una cuenta; notas conservan su autor mediante RESTRICT. Ninguna eliminación de cuentas/leads se añade al CRM. Las solicitudes y sus notas no caducan y no hay comando de borrado por antigüedad. Revisión jurídica de retención permanece pendiente; no se automatizan derechos ni exportaciones.
 
 **Migración aplicada el 12/10/2026**, junto con baseline y leads, a la base vacía configurada por el usuario en .env.local. No se ha designado una rama para pruebas destructivas. Aplicar solo tras revisar rama/destino, copias y baseline según [Prisma](prisma.md). No ejecutar reset ni db push.
 

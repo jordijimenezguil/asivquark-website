@@ -193,8 +193,6 @@ Notificaciones mediante Resend después de responder con `after()`. Reservas y c
 ```bash
 pnpm test:leads
 pnpm leads:process                 # Intentar hasta 20 emails vencidos; envíos con opt-in
-pnpm leads:cleanup                 # Contar datos vencidos sin eliminarlos
-pnpm leads:cleanup --execute       # Eliminar solo con destino y autorización confirmados
 ```
 
 `tsx` es la única nueva dependencia, exclusivamente de desarrollo para pruebas y comandos privados. La aplicación utiliza Prisma 7.10.0 y mantiene Better Auth sin cambios de tablas existentes. Migración aditiva preparada en `prisma/migrations/20261012070000_leads/`, no aplicada. Antes de migrar una base existente, verificar baseline según [Prisma](docs/prisma.md). No hay conexión Neon ni entrega Resend comprobadas en esta sesión.
@@ -208,10 +206,8 @@ Variables adicionales documentadas en `.env.example`:
 | `LEADS_NOTIFICATION_EMAIL` | Buzón comercial real, exclusivamente servidor |
 | `LEADS_EMAIL_ENABLED` | Opt-in para envíos reales; false por defecto |
 | `LEADS_SECURITY_SECRET` | Secreto independiente de al menos 32 caracteres para HMAC de límites |
-| `LEADS_ENABLED` | Opt-in de captación pública en el entorno específico |
 | `LEADS_PRIVACY_NOTICE_URL` | HTTPS de información legal real aprobada |
 | `LEADS_PRIVACY_NOTICE_VERSION` | Versión registrada con cada lectura |
-| `LEADS_RETENTION_DAYS` | Vencimiento de leads según política configurada; obligatorio fuera de local |
 
 Local funciona sin servicios y permite comprobar errores; no simula registro. Sin DATABASE_URL o secreto de seguridad, enviar devuelve 503. Sin Resend activado, los emails quedan pendientes. Producción/preview exige configuración de captación, Vercel, DB, secreto, aviso y retención; en ausencia de requisitos el formulario y endpoint permanecen cerrados. No existe política de privacidad aprobada ni se ha publicado una ficticia. Reconstruir el despliegue al cambiar configuración del formulario.
 
@@ -219,7 +215,7 @@ Atribución de entrada, página anterior y UTM en memoria de pestaña; CTA de se
 
 Para Resend, configurar dominio/remitente verificado y buzón interno reales. Obtener registros SPF/DKIM exactos de la consola y aplicarlos únicamente con autorización; consultar [dominios de Resend](https://resend.com/docs/dashboard/domains/introduction). No se modificó DNS.
 
-Antes de activar producción: verificar/aplicar migraciones en rama autorizada, configurar servicios, aprobar información legal y retención, programar mantenimiento privado de pendientes/vencidos, realizar prueba integral con destinatarios controlados y revisar visualmente el formulario. `after()` no es un worker durable y no se ha activado cron ni servicio adicional. La retención requiere ejecutar cleanup; el vencimiento no borra por sí solo.
+Antes de activar producción: verificar/aplicar migraciones en rama autorizada, configurar servicios, revisar información legal, programar procesamiento privado de correos pendientes, realizar prueba integral con destinatarios controlados y revisar visualmente el formulario. `after()` no es un worker durable y no se ha activado cron ni servicio adicional. Las solicitudes se conservan sin caducidad ni borrado por antigüedad.
 
 Detalle de arquitectura, seguridad, límites, reintentos, modelo de datos y operaciones: [sistema de leads](docs/leads.md). Resultados reales: [validación](docs/validacion.md).
 
@@ -300,4 +296,4 @@ Intro compacta y hoja blanca con chips, opcionales nativos y footer legal mínim
 
 ### Cambio de activación del formulario — 22/10/2026
 
-Por petición expresa del propietario, la captación ya no depende de la aprobación editorial de los documentos legales. Conserva los requisitos operativos de entorno, base de datos, secreto y retención. La URL de privacidad y su versión se obtienen del documento actual salvo overrides coincidentes. Resend sigue siendo opcional para persistir leads. Los pendientes legales permanecen en legal:check. Véase docs/leads.md; esta decisión sustituye las condiciones históricas de aprobación para activar el formulario.
+Por petición expresa del propietario, la captación ya no depende de la aprobación editorial de los documentos legales. Se habilita automáticamente cuando dispone de plataforma, base de datos, secreto y aviso válidos. La URL de privacidad y su versión se obtienen del documento actual salvo overrides coincidentes. Resend sigue siendo opcional para persistir leads. Los pendientes legales permanecen en legal:check. Véase docs/leads.md; esta decisión sustituye las condiciones históricas de aprobación para activar el formulario.

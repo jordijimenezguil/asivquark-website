@@ -504,7 +504,7 @@ Comprobaciones ejecutadas: prisma validate y db:generate correctos; lint y typec
 
 ## 2026-10-22 — Desbloqueo de captación autorizado
 
-El propietario pide habilitar el formulario sin esperar a completar preparación documental. getContactConfig deja de consultar legalReadiness y obtiene URL/versión por defecto del aviso real actual; overrides incorrectos siguen rechazados. Se mantienen opt-in, plataforma, DB, secreto y retención. Documentos siguen draft. Pruebas actualizadas para comprobar activación independiente de aprobación y cierre ante requisitos operativos ausentes. La prueba legal obsoleta de integración se ajusta al enlace de privacidad que realmente renderiza el formulario, sin afirmar presencia del componente retirado.
+El propietario pide habilitar el formulario sin esperar a completar preparación documental. getContactConfig deja de consultar legalReadiness y obtiene URL/versión por defecto del aviso real actual; overrides incorrectos siguen rechazados. En esa revisión se mantenían activación manual, plataforma, DB, secreto y retención. Documentos siguen draft. Pruebas actualizadas para comprobar activación independiente de aprobación y cierre ante requisitos operativos ausentes. La prueba legal obsoleta de integración se ajusta al enlace de privacidad que realmente renderiza el formulario, sin afirmar presencia del componente retirado.
 
 Verificación real: prisma validate, db:generate, lint, typecheck correctos; test:config 6/6, test:db 3/3, test:leads 29/29 y test:legal 4/4. Build intentado con ejecución ampliada: falla por Operation not permitted al abrir puerto interno de Turbopack. Sin build completo, prueba visual, envío real a DB/correo ni despliegue. Variables privadas de producción no verificadas. La disponibilidad pública actual no cambia hasta reconstruir/desplegar con requisitos operativos presentes.
 
@@ -515,3 +515,17 @@ Captura del usuario y GET público actual de /contacto/ (HTTP 200) confirman que
 Corregido caso reproducible de configuración: overrides opcionales de URL/versión del aviso vacíos (incluidos espacios) impedían usar defaults con el operador ??; ahora se normalizan y aplican defaults. Prueba de regresión verifica enabled:true con requisitos operativos presentes y overrides vacíos. Configuraciones erróneas explícitas siguen cerradas. .env.example y docs/leads.md actualizados.
 
 prisma validate, db:generate, lint, typecheck correctos. test:config 6/6, test:db 3/3, test:leads 29/29, test:legal 4/4. Build falla por permisos de Turbopack al abrir puertos internos. No se confirma funcionamiento público ni se crean leads/envían correos. Pendiente comprobar variables Production y despliegue; cambio local adicional sin publicar.
+
+## 2026-10-23 — Eliminación del interruptor manual de captación
+
+Eliminado el flag de configuración, tests, .env.example, .env.local y documentación; sin alias, fallback ni rama de compatibilidad. Se mantiene enabled como resultado calculado compartido por página y endpoints, y requisitos de persistencia. El flag independiente de correo permanece.
+
+prisma validate, db:generate, lint y typecheck correctos. test:config 6/6, test:db 3/3, test:leads 29/29, test:legal 4/4. Las pruebas activan captación con configuración operativa sin flag, y verifican cierre al faltar DB, secreto, retención o plataforma. Build ejecutado: falla por permisos de Turbopack al abrir puertos internos. Sin prueba visual (acceso al navegador rechazado anteriormente), persistencia externa, correos ni despliegue. Cambios locales aún sin commit/push.
+
+## 2026-10-23 — Leads sin caducidad ni borrado por antigüedad
+
+Por instrucción del propietario se elimina el requisito de días de conservación, su variable en configuración/entornos/pruebas, Lead.expiresAt, cálculo en persistencia, filtro de edad en outbox y comando leads:cleanup con su implementación de borrado. Se actualizan política visible y documentación. Expiraciones de sesiones, verificaciones y contadores de seguridad permanecen independientes.
+
+Migración 20261023080000_remove_lead_expiration generada offline con Prisma migrate diff entre esquemas; SQL revisado: DROP INDEX del índice de expiración y DROP COLUMN lead.expiresAt, sin DELETE ni DROP TABLE. No aplicada a Neon. Es necesaria antes de ejecutar este código contra la base existente, cuya columna anterior era NOT NULL sin default. Las migraciones aplicadas se conservan intactas.
+
+prisma validate, db:generate, lint y typecheck correctos; test:config 6/6, test:db 3/3, test:leads 29/29, test:legal 4/4, test:automation 6/6, test:crm 13/13. Prueba de persistencia verifica ausencia de expiración en la solicitud creada. Build falla por permisos de Turbopack para abrir puertos internos. No se realiza prueba remota, revisión visual (navegador no autorizado anteriormente), eliminación, envío de correo ni despliegue. Cambios aún sin commit/push.

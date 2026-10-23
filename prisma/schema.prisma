@@ -130,7 +130,6 @@ model Lead {
   utmTerm               String?       @db.VarChar(150)
   privacyNoticeVersion  String        @db.VarChar(100)
   privacyAcknowledgedAt DateTime      @db.Timestamptz(6)
-  expiresAt             DateTime      @db.Timestamptz(6)
   createdAt             DateTime      @default(now()) @db.Timestamptz(6)
   updatedAt             DateTime      @updatedAt @db.Timestamptz(6)
   version               Int           @default(0)
@@ -141,7 +140,6 @@ model Lead {
   @@index([createdAt, id])
   @@index([status, createdAt])
   @@index([service, createdAt])
-  @@index([expiresAt])
   @@map("lead")
 }
 

@@ -19,7 +19,7 @@
 15. **Tratamientos:** consultas/presupuestos, oportunidades/notas/historial, correo transaccional, atribución autorizada, preferencias, prevención de abuso y cuentas administrativas. Inventario detallado separado.
 16. **Identidad pendiente:** nombre/razón social, NIF, domicilio y email legal; privacidad si difiere; aplicabilidad registro/autorización/DPD. No se asume sociedad.
 17. **Bases pendientes:** confirmar medidas precontractuales según interesado, otras consultas/representantes, seguridad y ponderación, seguimiento/notas y administración; art. 14 si datos indirectos. Sin marketing/newsletter añadidos.
-18. **Retención pendiente:** plazo comercial y clientes, CRM, correo, cuentas/tokens, logs/copia y operación real. expiresAt no implica borrado automático; limpieza manual no ejecutada.
+18. **Retención pendiente:** plazo comercial y clientes, CRM, correo, cuentas/tokens, logs/copia y operación real. Desde el 23/10/2026, leads sin expiración y sin comando de borrado por antigüedad.
 19. **Contratos/garantías:** DPA art. 28, regiones/subencargados, adecuación/SCC si procede; permisos/licencias de contenidos; contratos específicos IP/soporte/IA y obligaciones consumidores.
 20. **Riesgos de publicación:** no puede presentarse documento definitivo ni activarse captación pública con identidad/garantías pendientes. Advertencia y noindex evitan confundir borrador con aprobación; noindex no satisface obligaciones legales. No publicar como definitivo hasta revisión jurídica y operativa.
 21. **Tests:** prisma validate/generate, config, db, leads, CRM, cookies, 4 pruebas legales y 5 HTTP; pasaron. HTTP inicial bloqueado por sandbox, reejecución local autorizada pasó. Sin pruebas de bases reales.

@@ -90,15 +90,13 @@ test("attribution strips untrusted paths and referrer queries without inventing 
 });
 test("public capture uses the current notice and rejects mismatched notice configuration", () => {
   const environment = {
-    LEADS_ENABLED: "true",
     VERCEL: "1",
     DATABASE_URL: "postgresql://configured-test-only",
     LEADS_SECURITY_SECRET: "s".repeat(32),
-    LEADS_RETENTION_DAYS: "90",
   };
   assert.equal(getContactConfig(environment, "production").enabled, true);
   assert.equal(getContactConfig({ ...environment, LEADS_PRIVACY_NOTICE_URL: "", LEADS_PRIVACY_NOTICE_VERSION: "  " }, "production").enabled, true);
-  for (const key of ["DATABASE_URL", "LEADS_SECURITY_SECRET", "LEADS_RETENTION_DAYS", "LEADS_ENABLED", "VERCEL"]) {
+  for (const key of ["DATABASE_URL", "LEADS_SECURITY_SECRET", "VERCEL"]) {
     assert.equal(getContactConfig({ ...environment, [key]: "" }, "production").enabled, false);
   }
   assert.equal(

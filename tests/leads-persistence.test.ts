@@ -23,7 +23,6 @@ const command: CreateLeadCommand = {
   clientKey: "test-client",
   secret: "s".repeat(32),
   noticeVersion: "test",
-  retentionDays: 90,
   notificationRecipient: null,
 };
 test("lead, creation events and two outbox rows are created in the same transaction", async () => {
@@ -41,7 +40,7 @@ test("lead, creation events and two outbox rows are created in the same transact
         assert.equal(data.landingPath, "/desarrollo-mvp/");
         assert.equal(data.utmSource, "test");
         assert.ok(data.privacyAcknowledgedAt instanceof Date);
-        assert.ok(data.expiresAt instanceof Date);
+        assert.equal("expiresAt" in data, false);
         assert.deepEqual(data.events, {
           create: [{ type: "LEAD_CREATED" }, { type: "NOTIFICATION_QUEUED" }],
         });

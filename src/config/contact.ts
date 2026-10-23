@@ -27,17 +27,9 @@ export function getContactConfig(
     noticeUrl.data === `${legalEntity.website}/politica-privacidad/` &&
     noticeVersion.data === privacy?.version;
   const testMode = mode === "development";
-  const retention = z.coerce
-    .number()
-    .int()
-    .min(1)
-    .max(730)
-    .safeParse(environment.LEADS_RETENTION_DAYS || (testMode ? 90 : undefined));
   const enabled =
     testMode ||
-    (environment.LEADS_ENABLED === "true" &&
-      noticeConfigured &&
-      retention.success &&
+    (noticeConfigured &&
       environment.VERCEL === "1" &&
       Boolean(environment.DATABASE_URL) &&
       (environment.LEADS_SECURITY_SECRET?.length ?? 0) >= 32);
@@ -50,7 +42,6 @@ export function getContactConfig(
       : testMode
         ? "development-test-only"
         : null,
-    retentionDays: retention.success ? retention.data : null,
   };
 }
 export type PublicContactConfig = Pick<
@@ -66,7 +57,6 @@ export function getLeadRuntimeConfig() {
     .safeParse(process.env.LEADS_SECURITY_SECRET);
   if (
     !contact.enabled ||
-    !contact.retentionDays ||
     !contact.noticeVersion ||
     !process.env.DATABASE_URL ||
     !secret.success
@@ -74,7 +64,6 @@ export function getLeadRuntimeConfig() {
     return null;
   return {
     ...contact,
-    retentionDays: contact.retentionDays,
     noticeVersion: contact.noticeVersion,
     secret: secret.data,
   };

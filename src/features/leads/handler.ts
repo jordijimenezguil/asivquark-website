@@ -100,7 +100,6 @@ export async function handleLead(
       clientKey,
       secret: config.secret,
       noticeVersion: config.noticeVersion,
-      retentionDays: config.retentionDays,
       notificationRecipient: deps.notificationRecipient,
     });
     if (result.created) leadLog("lead.created", result.id);

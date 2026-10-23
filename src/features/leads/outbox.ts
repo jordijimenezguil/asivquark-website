@@ -63,7 +63,6 @@ export async function processLeadOutbox({
   const candidates = await db.emailOutbox.findMany({
     where: {
       ...(leadId ? { leadId } : {}),
-      lead: { expiresAt: { gt: now } },
       OR: [
         { status: "PENDING", nextAttemptAt: { lte: now } },
         { status: "SENDING", lockedUntil: { lte: now } },

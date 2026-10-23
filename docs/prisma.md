@@ -97,3 +97,8 @@ Migración 20261012120000_crm generada offline con Prisma diff y revisada, no ap
 El usuario solicitó prescindir de DIRECT_URL. Se conserva como override opcional; .env.local la tiene comentada y Prisma CLI usa DATABASE_URL pooled. [Neon documenta soporte de migraciones pooled](https://neon.com/blog/better-postgres-with-prisma-experience). No se construyeron hostnames ni se cambiaron credenciales. La conexión directa continúa siendo una alternativa para herramientas/proveedores que la requieran; el soporte de Neon no se generaliza a todos los poolers.
 
 Tras consulta read-only se confirmó public vacío. Se aplicaron mediante `pnpm db:deploy`, con autorización del usuario: 0_init, 20261012070000_leads y 20261012120000_crm. No se ejecutó reset, db push ni se borraron datos. Las secciones anteriores conservan el contexto histórico de preparación offline.
+
+
+## Solicitudes sin caducidad — 23/10/2026
+
+Migración versionada 20261023080000_remove_lead_expiration, generada mediante diff offline: elimina únicamente el índice lead_expiresAt_idx y la columna lead.expiresAt. No borra solicitudes ni modifica expiraciones de autenticación o rate limiting. No se reescriben migraciones ya aplicadas. Aplicar esta migración antes de ejecutar el código actualizado contra la base real, mediante el procedimiento autorizado habitual. No se aplica en esta tarea.

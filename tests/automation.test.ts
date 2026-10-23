@@ -46,7 +46,7 @@ test("automation persists through the existing transactional lead/outbox reposit
     } },
   };
   const db = { lead: { findUnique: async () => null }, $transaction: async (fn: (value: typeof tx) => Promise<unknown>) => fn(tx) } as unknown as PrismaClient;
-  const result = await createLead({ input: leadRequestSchema.parse(input), idempotencyKey: randomUUID(), requestHash: "a".repeat(64), clientKey: "test", secret: "s".repeat(32), noticeVersion: "test", retentionDays: 90, notificationRecipient: null }, db);
+  const result = await createLead({ input: leadRequestSchema.parse(input), idempotencyKey: randomUUID(), requestHash: "a".repeat(64), clientKey: "test", secret: "s".repeat(32), noticeVersion: "test", notificationRecipient: null }, db);
   assert.equal(written, true); assert.deepEqual(result, { id: "saved", created: true });
 });
 test("CRM recognizes label, passes exact service filter and preserves grouped service counts", async () => {

@@ -36,7 +36,7 @@ Build por entorno, ramas Neon separadas, sin disco persistente ni migraciones al
 
 Marketing conserva ocho rutas estáticas, contenido local y SEO. `features/leads` separa contrato, atribución, seguridad, repositorio y procesamiento. Formularios en `components/forms`, plantillas en `emails`, configuración privada en `config/contact.ts`. No hay consultas DB al renderizar las páginas.
 
-`POST /api/leads/` ejecuta controles de origen, cuerpo, admisión, Zod, honeypot e idempotencia. Una transacción crea lead, eventos y outbox. La respuesta solo confirma persistencia; `after()` intenta efectos secundarios. Un comando privado procesa pendientes con reservas e idempotencia del proveedor. Otro ejecuta retención explícita según vencimiento. No se crean endpoints administrativos ni cron público.
+`POST /api/leads/` ejecuta controles de origen, cuerpo, admisión, Zod, honeypot e idempotencia. Una transacción crea lead, eventos y outbox. La respuesta solo confirma persistencia; `after()` intenta efectos secundarios. Un comando privado procesa pendientes con reservas e idempotencia del proveedor. No existe caducidad ni borrado de solicitudes por antigüedad. No se crean endpoints administrativos ni cron público.
 
 LeadRateBucket utiliza PostgreSQL y hashes temporales para compartir límites. Captura pública bloqueada sin aviso real/versionado y configuración operativa. Local solo para pruebas cuando falta información legal. Sin tracking persistente de navegador ni logs de datos personales.
 
@@ -93,3 +93,7 @@ Página servidor con intro y JSON-LD público; ContactForm mantiene frontera cli
 POST /api/contacto/ acepta únicamente formulario URL-encoded del mismo origen, limita cuerpo a 32 KiB y convierte nombres españoles al contrato de leads. Delega persistencia, rate limit y gates al mismo handler mediante la ruta existente; respuesta HTML sin JS, con datos escapados conservados para reintento y noindex/no-store. Éxito con JS permanece dentro de la hoja y enfoca el h2; pasos solo móvil porque escritorio ya los muestra a la izquierda. generate_lead y form_error {campo} son eventos locales sujetos al consentimiento. Campos origen/utm y atribución nativa también requieren permiso analítico.
 
 Banner cliente acotado a /contacto, antes del header, desactivado con NEXT_PUBLIC_ENV=production y siempre excluido por site.isProduction. Esta variable solo controla el aviso; VERCEL_ENV conserva autoridad para dominio, indexación y gates.
+
+## Disponibilidad de captación — 23/10/2026
+
+Sin interruptor manual de captación: getContactConfig calcula disponibilidad a partir de aviso configurado, plataforma Vercel, base de datos y secreto de seguridad. La página y ambos endpoints comparten esta configuración; el runtime comprueba de nuevo los requisitos para persistir. Desarrollo conserva modo de prueba. El interruptor de correo es independiente y solo controla entregas mediante Resend.

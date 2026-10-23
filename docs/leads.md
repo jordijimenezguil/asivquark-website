@@ -6,7 +6,7 @@ Implementados formulario, endpoint, contratos, repositorio Prisma, límites comp
 
 En local el formulario es interactivo para comprobar validaciones y errores; sin DATABASE_URL y LEADS_SECURITY_SECRET devuelve 503, nunca una persistencia simulada. Sin información legal muestra modo de prueba y requiere usar solo datos de prueba. No publicar ese modo: producción y previews se bloquean por defecto.
 
-Para habilitar captación pública deben existir una rama/base preparada, secreto de seguridad, política de retención, información de privacidad real accesible mediante HTTPS y su versión, además de `LEADS_ENABLED=true` en el entorno concreto de Vercel. La existencia y adecuación legal del aviso no pueden certificarse mediante estas variables: requieren revisión del responsable. No se publica ninguna página legal ficticia. El formulario se prerenderiza con la configuración de build; reconstruir al cambiar su disponibilidad o aviso. El endpoint vuelve a comprobar configuración en runtime.
+Para habilitar captación pública deben existir una rama/base preparada, secreto de seguridad, información de privacidad real accesible mediante HTTPS y su versión en el entorno concreto de Vercel. La existencia y adecuación legal del aviso no pueden certificarse mediante estas variables: requieren revisión del responsable. No se publica ninguna página legal ficticia. El formulario se prerenderiza con la configuración de build; reconstruir al cambiar su disponibilidad o aviso. El endpoint vuelve a comprobar configuración en runtime.
 
 ## Arquitectura y archivos
 
@@ -20,14 +20,14 @@ Para habilitar captación pública deben existir una rama/base preparada, secret
 - `src/app/api/leads/route.ts`: únicamente POST, runtime Node.js, duración máxima 60 s.
 - `src/components/forms/`: formulario, preselección bajo Suspense, campos, éxito y tracker sin almacenamiento persistente.
 - `src/emails/lead-emails.ts`: HTML escapado y texto plano.
-- `scripts/leads-maintenance.ts`: procesamiento privado y retención.
+- `scripts/leads-maintenance.ts`: procesamiento privado de correo.
 - `tests/leads-*.test.ts`: validación, endpoint, repositorio, límites y emails con dobles.
 
 Cambios sobre la base: `prisma/schema.prisma`, migración aditiva, `package.json`/lockfile, `.env.example`, página de contacto, layout de marketing, CTA de `commercial.tsx` y `service-page.tsx`, contrato compatible `lib/validations/contact.ts`, pruebas de esquema y documentación. Se retiraron los dos componentes de previsualización reemplazados por el formulario real. Las tablas de auth, integración Better Auth, dominio e identidad se conservan. Única dependencia añadida: `tsx` de desarrollo, para pruebas y comandos TypeScript privados; no React Hook Form, React Email ni servicios adicionales.
 
 ## Datos y migración
 
-`Lead` almacena identidad de contacto, servicio, presupuesto opcional, mensaje, procedencia, UTM, versión/fecha de lectura, fechas, estado NEW y vencimiento. `idempotencyKey` UUID única y `requestHash` SHA-256 del contenido normalizado son internos. `source`, estado, fechas, versión de aviso y vencimiento se asignan en servidor; no pueden enviarse como campos arbitrarios del cliente.
+`Lead` almacena identidad de contacto, servicio, presupuesto opcional, mensaje, procedencia, UTM, versión/fecha de lectura, fechas, estado NEW. `idempotencyKey` UUID única y `requestHash` SHA-256 del contenido normalizado son internos. `source`, estado, fechas, versión de aviso se asignan en servidor; no pueden enviarse como campos arbitrarios del cliente.
 
 `LeadEvent` registra creación, puesta en cola y éxito/fallo de emails. Metadata solo contiene IDs y códigos técnicos. `EmailOutbox` mantiene un registro único por lead/tipo, destinatario y remitente congelados al iniciar envío, intentos, reserva temporal, siguiente intento, errores codificados e ID del proveedor. `LeadRateBucket` mantiene exclusivamente hashes temporales y contadores. Ningún modelo expone una lectura pública.
 
@@ -63,13 +63,13 @@ Honeypot fuera de pantalla, excluido del foco y del árbol accesible. No se simu
 
 Son ventanas fijas: puede haber ráfagas junto a sus límites temporales. Límites por IP pueden afectar redes compartidas; ajustar tras observar uso. IP solo se obtiene de `x-vercel-forwarded-for` cuando el proceso corre en Vercel. No se confía en X-Forwarded-For arbitrario. Fuera de Vercel solo se admite el modo local, con un bucket de cliente común; producción en otro proxy exige un diseño de confianza revisado antes de activar.
 
-Los valores de IP/email de los contadores se transforman con HMAC y secreto separado de auth; jamás se persisten como texto ni en logs. Los buckets tienen vencimiento y se eliminan con mantenimiento. Los límites no sustituyen protecciones de infraestructura frente a ataques volumétricos; no se añadió CAPTCHA ni un proveedor adicional.
+Los valores de IP/email de los contadores se transforman con HMAC y secreto separado de auth; jamás se persisten como texto ni en logs. Los buckets tienen ventanas temporales de seguridad y se reutilizan al vencer. Los límites no sustituyen protecciones de infraestructura frente a ataques volumétricos; no se añadió CAPTCHA ni un proveedor adicional.
 
 ## Idempotencia y estados de formulario
 
 El navegador bloquea dobles pulsaciones de manera síncrona y deshabilita campos/botón al enviar. Conserva datos tras errores y mantiene la misma UUID para reintentar el mismo contenido. Si cambia el contenido genera otro intento; permite proyectos legítimos del mismo email. La clave vive en memoria del formulario, no en una URL ni almacenamiento con datos personales.
 
-PostgreSQL decide mediante restricción única; la colisión concurrente se resuelve leyendo el resultado ya confirmado. Misma clave con hash distinto da 409. El hash no incluye Referer ni versión de aviso derivados del servidor, para conservar coherencia de reintentos. Idempotencia de lead dura mientras se conserve su registro; el vencimiento/retención puede eliminarlo.
+PostgreSQL decide mediante restricción única; la colisión concurrente se resuelve leyendo el resultado ya confirmado. Misma clave con hash distinto da 409. El hash no incluye Referer ni versión de aviso derivados del servidor, para conservar coherencia de reintentos. Idempotencia de lead dura mientras se conserve su registro; no tiene vencimiento.
 
 La UI muestra errores junto a campos, foco en el primer error de validación, alertas de servidor, espera con Retry-After y éxito únicamente tras 201. Éxito recibe foco y ofrece volver al inicio. No pone datos en la URL ni interpreta visitas como conversiones.
 
@@ -105,20 +105,13 @@ Referencias técnicas: [idempotencia Resend](https://resend.com/docs/dashboard/e
 
 Datos de contacto/proyecto viajan al servidor y a Neon. Resend recibe los necesarios para notificación interna y confirmación, solo al activar envíos. No se añaden sistemas de marketing, CRM externo ni herramientas de seguimiento. La información legal debe reflejar los flujos, responsable, base jurídica, plazos y demás requisitos revisados por su responsable; la casilla registra lectura, no consentimiento de newsletter ni prueba automática de cumplimiento.
 
-`LEADS_RETENTION_DAYS` fija vencimiento al crear cada lead. En local sin política, 90 días exclusivamente para datos de prueba; en captura pública no hay valor predeterminado y se exige configuración explícita. Retención de leads elimina por cascada eventos/outbox. Contadores caducados se eliminan también. Mensajes en emails, buzones y copias de Neon/Resend requieren medidas propias fuera de esta aplicación.
-
-```bash
-pnpm leads:cleanup              # Solo cuenta vencidos, sin exponer datos
-pnpm leads:cleanup --execute    # Eliminación explícita según vencimiento
-```
-
-No ejecutar eliminación sin confirmar destino y autorización. Evita borrar leads cuya notificación tiene reserva activa. No se ha ejecutado cleanup conectado ni configurado una tarea recurrente. La retención requiere programar este comando privado; marcar expiresAt no elimina datos por sí solo. Antes de producción deben acordarse política, responsable, mantenimiento y tratamiento de backups/proveedores.
+Las solicitudes se conservan sin caducidad ni borrado por antigüedad. No existe comando de eliminación de leads. Notas, actividad y cola de correo permanecen asociadas. La expiración de sesiones y ventanas del limitador sigue siendo independiente. Las copias de correo y backups pertenecen a sus proveedores.
 
 ## Pruebas y pendientes
 
 `pnpm test:leads` ejecuta pruebas con dobles; `test:config` cubre entornos; `test:db` compara esquema/migración offline. No envían emails ni utilizan producción. Los comandos de mantenimiento fallan con mensaje controlado si falta configuración. El registro exacto está en [validación](validacion.md).
 
-Bloqueos de activación: base/rama configurada y migraciones revisadas/aplicadas, aviso de privacidad aprobado y versionado, política de retención y ejecución de mantenimiento, secreto de seguridad, remitente y destinatario reales, dominio Resend verificado, prueba integral autorizada y revisión visual/teclado. No se han comprobado conexiones, entrega real o concurrencia sobre PostgreSQL remoto. Las pruebas con dobles no sustituyen esas comprobaciones.
+Bloqueos de activación: base/rama configurada y migraciones revisadas/aplicadas, aviso de privacidad aprobado y versionado, secreto de seguridad, remitente y destinatario reales, dominio Resend verificado, prueba integral autorizada y revisión visual/teclado. No se han comprobado conexiones, entrega real o concurrencia sobre PostgreSQL remoto. Las pruebas con dobles no sustituyen esas comprobaciones.
 
 Futuro: CRM/admin y gestión de estados, observabilidad operacional, entrega por webhooks y procesamiento durable si el volumen lo exige. No se implementa ninguna de esas interfaces o servicios en esta iteración.
 
@@ -132,8 +125,14 @@ Presupuestos: opción A del plan, claves y rangos existentes íntegros; no se re
 
 Por instrucción expresa del propietario, la captación deja de depender de legalReadiness(). Los documentos conservan su estado editorial real. El aviso utiliza por defecto la URL de privacidad del dominio oficial y la versión actual de legalDocuments; overrides de entorno deben coincidir con ambos. Se registra esa versión con cada lead, sin afirmar aprobación documental.
 
-Producción y preview mantienen LEADS_ENABLED=true, VERCEL=1, DATABASE_URL, LEADS_SECURITY_SECRET de al menos 32 caracteres y LEADS_RETENTION_DAYS válido como requisitos. Desarrollo mantiene su modo de prueba y runtime exige base y secreto para persistir. Resend es independiente: su ausencia no impide guardar solicitudes. Reconstruir y desplegar para actualizar la disponibilidad prerenderizada. Esta decisión sustituye el requisito de aprobación legal para captación descrito en las secciones históricas.
+Producción y preview requieren VERCEL=1, DATABASE_URL, LEADS_SECURITY_SECRET de al menos 32 caracteres y configuración del aviso como requisitos. Desarrollo mantiene su modo de prueba y runtime exige base y secreto para persistir. Resend es independiente: su ausencia no impide guardar solicitudes. Reconstruir y desplegar para actualizar la disponibilidad prerenderizada. Esta decisión sustituye el requisito de aprobación legal para captación descrito en las secciones históricas.
 
 ### Overrides vacíos — 23/10/2026
 
 LEADS_PRIVACY_NOTICE_URL y LEADS_PRIVACY_NOTICE_VERSION vacíos o compuestos solo por espacios utilizan los valores del documento actual. Esto permite copiar .env.example sin que las variables opcionales vacías bloqueen la captación. Los requisitos operativos obligatorios se mantienen. Cambios en variables de producción requieren reconstrucción/despliegue porque la página de contacto se prerenderiza.
+
+## Configuración operativa actual — 23/10/2026
+
+Se elimina por completo el interruptor manual de captación por petición del propietario, sin alias ni compatibilidad. La disponibilidad de formulario y endpoints se deriva únicamente de los requisitos operativos. El correo conserva su activación independiente.
+
+En Vercel Production: NEXT_PUBLIC_SITE_URL=https://asivquark.com; BETTER_AUTH_URL=https://asivquark.com; DATABASE_URL pooled de Neon; BETTER_AUTH_SECRET y LEADS_SECURITY_SECRET aleatorios, distintos y de al menos 32 caracteres. Para correo: LEADS_EMAIL_ENABLED=true, RESEND_API_KEY real, RESEND_FROM_EMAIL de dominio verificado y LEADS_NOTIFICATION_EMAIL del buzón comercial. URL y versión del aviso son opcionales: se obtienen del documento actual. Vercel proporciona sus variables de plataforma automáticamente. Reconstruir/desplegar tras cambios. No existe una cuenta admin predeterminada.

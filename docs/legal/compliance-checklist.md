@@ -8,7 +8,7 @@ Revisión técnica: 12/10/2026. **No aprobado para publicación como documentos 
 | A. Aplicabilidad | Registro/autorización/DPD pending | Determinar si aplican y proporcionar datos o justificar no aplicabilidad | Titular / asesor por designar |
 | B. Proveedores | Integraciones técnicas identificadas, activación sin comprobar | Inventario operativo y documentación de cuentas | Persona responsable por designar |
 | C. Bases | Precontractual candidato, seguridad/otras consultas pendientes | Ponderación, representantes empresariales, notas/seguimiento, información admins y art. 14 si datos indirectos | Asesor por designar |
-| D. Retención | expiresAt y comando manual, sin política aprobada | Resolver data-retention-review.md y verificar operación | Titular / operador por designar |
+| D. Retención | Leads sin caducidad ni borrado por antigüedad por decisión del propietario | Resolver data-retention-review.md y verificar operación | Titular / operador por designar |
 | E. Transferencias | Regiones y garantías desconocidas | Países, adecuación/SCC y medidas adicionales cuando proceda | Asesor / operador por designar |
 | F. Encargos | No hay DPA aportados | Contratos art. 28 y subencargados efectivos | Titular por identificar |
 | G. Cookies | Inventario y consentimiento existentes; producción auth sin comprobar | Inspeccionar cookies/red/scripts inyectados en entorno real y prueba de elección | Operador por designar |
