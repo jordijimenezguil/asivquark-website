@@ -215,3 +215,18 @@ test("parallel processors cannot both claim the same pending notification", asyn
   assert.equal(sends, 1);
   assert.equal(fixture.get().status, "SENT");
 });
+
+
+test("email delivery is configured by provider credentials without a manual switch", async () => {
+  const { getLeadEmailConfig } = await import("../src/config/contact");
+  const configured = { RESEND_API_KEY: "re_test_only", RESEND_FROM_EMAIL: "sender@example.com", LEADS_NOTIFICATION_EMAIL: "team@example.com" };
+  assert.equal(getLeadEmailConfig(configured).enabled, true);
+  assert.equal(getLeadEmailConfig(configured).recipient, "team@example.com");
+  for (const field of ["RESEND_API_KEY", "RESEND_FROM_EMAIL"]) {
+    assert.equal(getLeadEmailConfig({ ...configured, [field]: "" }).enabled, false);
+    assert.equal(getLeadEmailConfig({ ...configured, [field]: "invalid" }).enabled, false);
+  }
+  const confirmationOnly = getLeadEmailConfig({ RESEND_API_KEY: configured.RESEND_API_KEY, RESEND_FROM_EMAIL: configured.RESEND_FROM_EMAIL });
+  assert.equal(confirmationOnly.enabled, true);
+  assert.equal(confirmationOnly.recipient, null);
+});

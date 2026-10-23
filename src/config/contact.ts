@@ -8,40 +8,18 @@ export function getContactConfig(
   mode: string = site.mode,
 ) {
   const privacy = legalDocuments.find(document => document.id === "privacy");
-  const noticeUrl = z
-    .url()
-    .max(300)
-    .safeParse(environment.LEADS_PRIVACY_NOTICE_URL?.trim() || `${legalEntity.website}/politica-privacidad/`);
-  const noticeVersion = z
-    .string()
-    .trim()
-    .min(1)
-    .max(100)
-    .safeParse(environment.LEADS_PRIVACY_NOTICE_VERSION?.trim() || privacy?.version);
-  const noticeConfigured =
-    noticeUrl.success &&
-    new URL(noticeUrl.data).protocol === "https:" &&
-    !new URL(noticeUrl.data).username &&
-    !new URL(noticeUrl.data).password &&
-    noticeVersion.success &&
-    noticeUrl.data === `${legalEntity.website}/politica-privacidad/` &&
-    noticeVersion.data === privacy?.version;
+  if (!privacy) throw new Error("Falta el documento de privacidad en la configuración legal.");
   const testMode = mode === "development";
   const enabled =
     testMode ||
-    (noticeConfigured &&
-      environment.VERCEL === "1" &&
+    (environment.VERCEL === "1" &&
       Boolean(environment.DATABASE_URL) &&
       (environment.LEADS_SECURITY_SECRET?.length ?? 0) >= 32);
   return {
     enabled,
     testMode,
-    noticeUrl: noticeConfigured ? noticeUrl.data : null,
-    noticeVersion: noticeConfigured
-      ? noticeVersion.data
-      : testMode
-        ? "development-test-only"
-        : null,
+    noticeUrl: `${legalEntity.website}${privacy.path}`,
+    noticeVersion: privacy.version,
   };
 }
 export type PublicContactConfig = Pick<
@@ -68,20 +46,21 @@ export function getLeadRuntimeConfig() {
     secret: secret.data,
   };
 }
-export function getLeadEmailConfig() {
+export function getLeadEmailConfig(
+  environment: Record<string, string | undefined> = process.env,
+) {
   const key = z
     .string()
     .startsWith("re_")
     .min(6)
-    .safeParse(process.env.RESEND_API_KEY);
-  const from = z.email().max(254).safeParse(process.env.RESEND_FROM_EMAIL);
+    .safeParse(environment.RESEND_API_KEY);
+  const from = z.email().max(254).safeParse(environment.RESEND_FROM_EMAIL);
   const recipient = z
     .email()
     .max(254)
-    .safeParse(process.env.LEADS_NOTIFICATION_EMAIL);
+    .safeParse(environment.LEADS_NOTIFICATION_EMAIL);
   return {
-    enabled:
-      process.env.LEADS_EMAIL_ENABLED === "true" && key.success && from.success,
+    enabled: key.success && from.success,
     key: key.success ? key.data : null,
     from: from.success ? from.data : null,
     recipient: recipient.success ? recipient.data : null,

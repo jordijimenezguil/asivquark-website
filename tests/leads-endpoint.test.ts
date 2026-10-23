@@ -43,7 +43,7 @@ function dependencies(): LeadHandlerDependencies {
     config: {
       enabled: true,
       testMode: true,
-      noticeUrl: null,
+      noticeUrl: "https://asivquark.com/politica-privacidad/",
       noticeVersion: "test",
           secret: "s".repeat(32),
     },

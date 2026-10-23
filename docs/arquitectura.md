@@ -26,7 +26,7 @@ Better Auth con adaptador oficial Prisma y provider postgresql. `transaction: fa
 
 `requireAdmin()` comprueba sesión y exige rol admin desde servidor. Cada futuro acceso privado debe invocarlo; preparar provisioning y respuestas HTTP de autorización antes de activar dashboard. No confundir configuración de auth con un área privada terminada.
 
-Resend valida mensajes de texto y configuración al enviar. Leads consume Resend mediante outbox, con opt-in explícito para envíos reales. Remitente verificado, reintentos y flujos de recuperación se definirán cuando haya casos reales.
+Resend valida mensajes de texto y configuración al enviar. Leads consume Resend mediante outbox, con envío automático cuando API key y remitente son válidos. Remitente verificado, reintentos y flujos de recuperación se definirán cuando haya casos reales.
 
 ## Evolución y despliegue
 
@@ -96,4 +96,6 @@ Banner cliente acotado a /contacto, antes del header, desactivado con NEXT_PUBLI
 
 ## Disponibilidad de captación — 23/10/2026
 
-Sin interruptor manual de captación: getContactConfig calcula disponibilidad a partir de aviso configurado, plataforma Vercel, base de datos y secreto de seguridad. La página y ambos endpoints comparten esta configuración; el runtime comprueba de nuevo los requisitos para persistir. Desarrollo conserva modo de prueba. El interruptor de correo es independiente y solo controla entregas mediante Resend.
+Sin interruptor manual de captación: getContactConfig calcula disponibilidad a partir de aviso configurado, plataforma Vercel, base de datos y secreto de seguridad. La página y ambos endpoints comparten esta configuración; el runtime comprueba de nuevo los requisitos para persistir. Desarrollo conserva modo de prueba. La entrega de correo depende de API key y remitente válidos, sin interruptor manual.
+
+URL y versión del aviso de privacidad se obtienen exclusivamente de la configuración legal interna. No hay overrides de entorno ni validación de variables alternativas para estos valores.

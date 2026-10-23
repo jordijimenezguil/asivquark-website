@@ -81,7 +81,7 @@ Rutas solo de la lista pública; referrer conserva exclusivamente el origen, eli
 
 ## Resend y fiabilidad
 
-Configurar `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEADS_NOTIFICATION_EMAIL` con datos reales. Para enviar realmente debe activarse además `LEADS_EMAIL_ENABLED=true`. Mantener false en desarrollo y pruebas salvo una prueba expresamente autorizada con destinatarios controlados. Sin configuración, los leads se guardan y el outbox queda PENDING con EMAIL_NOT_CONFIGURED, sin fingir entrega.
+Configurar `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEADS_NOTIFICATION_EMAIL` con datos reales. El envío se activa automáticamente con API key y remitente válidos; en pruebas se utilizan dobles sin credenciales reales. Sin configuración, los leads se guardan y el outbox queda PENDING con EMAIL_NOT_CONFIGURED, sin fingir entrega.
 
 Verificar el dominio remitente en Resend y copiar sus registros SPF/DKIM exactos al proveedor DNS cuando se autorice; comprobar después el estado de verificación. No copiar valores ficticios ni crear un segundo registro SPF conflictivo. No se modificó DNS. Consultar [dominios verificados de Resend](https://resend.com/docs/dashboard/domains/introduction).
 
@@ -123,16 +123,16 @@ Presupuestos: opción A del plan, claves y rangos existentes íntegros; no se re
 
 ## Activación solicitada — 22/10/2026
 
-Por instrucción expresa del propietario, la captación deja de depender de legalReadiness(). Los documentos conservan su estado editorial real. El aviso utiliza por defecto la URL de privacidad del dominio oficial y la versión actual de legalDocuments; overrides de entorno deben coincidir con ambos. Se registra esa versión con cada lead, sin afirmar aprobación documental.
+Por instrucción expresa del propietario, la captación deja de depender de legalReadiness(). Los documentos conservan su estado editorial real. El aviso utiliza por defecto la URL de privacidad del dominio oficial y la versión actual de legalDocuments; no admite overrides de entorno. Se registra esa versión con cada lead, sin afirmar aprobación documental.
 
 Producción y preview requieren VERCEL=1, DATABASE_URL, LEADS_SECURITY_SECRET de al menos 32 caracteres y configuración del aviso como requisitos. Desarrollo mantiene su modo de prueba y runtime exige base y secreto para persistir. Resend es independiente: su ausencia no impide guardar solicitudes. Reconstruir y desplegar para actualizar la disponibilidad prerenderizada. Esta decisión sustituye el requisito de aprobación legal para captación descrito en las secciones históricas.
 
-### Overrides vacíos — 23/10/2026
-
-LEADS_PRIVACY_NOTICE_URL y LEADS_PRIVACY_NOTICE_VERSION vacíos o compuestos solo por espacios utilizan los valores del documento actual. Esto permite copiar .env.example sin que las variables opcionales vacías bloqueen la captación. Los requisitos operativos obligatorios se mantienen. Cambios en variables de producción requieren reconstrucción/despliegue porque la página de contacto se prerenderiza.
-
 ## Configuración operativa actual — 23/10/2026
 
-Se elimina por completo el interruptor manual de captación por petición del propietario, sin alias ni compatibilidad. La disponibilidad de formulario y endpoints se deriva únicamente de los requisitos operativos. El correo conserva su activación independiente.
+Se elimina por completo el interruptor manual de captación por petición del propietario, sin alias ni compatibilidad. La disponibilidad de formulario y endpoints se deriva únicamente de los requisitos operativos. El correo depende de sus credenciales de proveedor.
 
-En Vercel Production: NEXT_PUBLIC_SITE_URL=https://asivquark.com; BETTER_AUTH_URL=https://asivquark.com; DATABASE_URL pooled de Neon; BETTER_AUTH_SECRET y LEADS_SECURITY_SECRET aleatorios, distintos y de al menos 32 caracteres. Para correo: LEADS_EMAIL_ENABLED=true, RESEND_API_KEY real, RESEND_FROM_EMAIL de dominio verificado y LEADS_NOTIFICATION_EMAIL del buzón comercial. URL y versión del aviso son opcionales: se obtienen del documento actual. Vercel proporciona sus variables de plataforma automáticamente. Reconstruir/desplegar tras cambios. No existe una cuenta admin predeterminada.
+En Vercel Production: NEXT_PUBLIC_SITE_URL=https://asivquark.com; BETTER_AUTH_URL=https://asivquark.com; DATABASE_URL pooled de Neon; BETTER_AUTH_SECRET y LEADS_SECURITY_SECRET aleatorios, distintos y de al menos 32 caracteres. Para correo: RESEND_API_KEY real, RESEND_FROM_EMAIL de dominio verificado y LEADS_NOTIFICATION_EMAIL del buzón comercial. URL y versión del aviso se obtienen exclusivamente del documento actual. Vercel proporciona sus variables de plataforma automáticamente. Reconstruir/desplegar tras cambios. No existe una cuenta admin predeterminada.
+
+## Configuración interna del aviso — 23/10/2026
+
+Eliminados los overrides de entorno de URL y versión del aviso, junto con sus validadores, fallbacks y pruebas de compatibilidad. Ambos valores proceden únicamente de legalDocuments y legalEntity. No hay interruptor manual de captación ni conservación por días. Producción/preview requieren Vercel, base de datos y secreto de seguridad; Resend depende de API key y remitente válidos.

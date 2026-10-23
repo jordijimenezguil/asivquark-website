@@ -50,7 +50,7 @@ prisma/
   migrations/0_init/   # Línea base SQL, sin aplicar
 prisma.config.ts       # CLI, carga .env.local y conexión Neon
 drizzle/               # Archivo histórico inactivo, conservado por seguridad
-scripts/               # Mantenimiento privado de emails y retención
+scripts/               # Procesamiento privado de emails
 tests/                 # Entornos, regresión DB y leads con dobles
 docs/                  # Arquitectura, producto, SEO y validación
 ```
@@ -123,7 +123,7 @@ Instancia diferida mediante `getAuth()`, adaptador oficial `@better-auth/prisma-
 
 ## Resend
 
-Configurar API key y email real de un dominio verificado. `sendTransactionalEmail()` valida destinatario, asunto y texto en servidor; inicializa el cliente solo al enviar. El módulo de leads añade emails HTML/texto y outbox mediante el SDK existente. Se activan solo con `LEADS_EMAIL_ENABLED=true` y configuración real; no se han enviado emails en esta sesión. No hay automatizaciones de seguimiento ni remitentes inventados.
+Configurar API key y email real de un dominio verificado. `sendTransactionalEmail()` valida destinatario, asunto y texto en servidor; inicializa el cliente solo al enviar. El módulo de leads añade emails HTML/texto y outbox mediante el SDK existente. Se activan automáticamente con API key y remitente válidos; no se han enviado emails en esta sesión. No hay automatizaciones de seguimiento ni remitentes inventados.
 
 ## Scripts
 
@@ -192,7 +192,7 @@ Notificaciones mediante Resend después de responder con `after()`. Reservas y c
 
 ```bash
 pnpm test:leads
-pnpm leads:process                 # Intentar hasta 20 emails vencidos; envíos con opt-in
+pnpm leads:process                 # Intentar hasta 20 correos pendientes; requiere Resend configurado
 ```
 
 `tsx` es la única nueva dependencia, exclusivamente de desarrollo para pruebas y comandos privados. La aplicación utiliza Prisma 7.10.0 y mantiene Better Auth sin cambios de tablas existentes. Migración aditiva preparada en `prisma/migrations/20261012070000_leads/`, no aplicada. Antes de migrar una base existente, verificar baseline según [Prisma](docs/prisma.md). No hay conexión Neon ni entrega Resend comprobadas en esta sesión.
@@ -204,12 +204,9 @@ Variables adicionales documentadas en `.env.example`:
 | Variable | Uso |
 | --- | --- |
 | `LEADS_NOTIFICATION_EMAIL` | Buzón comercial real, exclusivamente servidor |
-| `LEADS_EMAIL_ENABLED` | Opt-in para envíos reales; false por defecto |
 | `LEADS_SECURITY_SECRET` | Secreto independiente de al menos 32 caracteres para HMAC de límites |
-| `LEADS_PRIVACY_NOTICE_URL` | HTTPS de información legal real aprobada |
-| `LEADS_PRIVACY_NOTICE_VERSION` | Versión registrada con cada lectura |
 
-Local funciona sin servicios y permite comprobar errores; no simula registro. Sin DATABASE_URL o secreto de seguridad, enviar devuelve 503. Sin Resend activado, los emails quedan pendientes. Producción/preview exige configuración de captación, Vercel, DB, secreto, aviso y retención; en ausencia de requisitos el formulario y endpoint permanecen cerrados. No existe política de privacidad aprobada ni se ha publicado una ficticia. Reconstruir el despliegue al cambiar configuración del formulario.
+Local funciona sin servicios y permite comprobar errores; no simula registro. Sin DATABASE_URL o secreto de seguridad, enviar devuelve 503. Sin Resend activado, los emails quedan pendientes. Producción/preview exige configuración de captación, Vercel, DB y secreto; aviso definido en la configuración legal interna; en ausencia de requisitos el formulario y endpoint permanecen cerrados. No existe política de privacidad aprobada ni se ha publicado una ficticia. Reconstruir el despliegue al cambiar configuración del formulario.
 
 Atribución de entrada, página anterior y UTM en memoria de pestaña; CTA de servicio añade su ruta en `origen`. No hay cookies de seguimiento, almacenamiento de navegador ni trackers externos. Referrer conserva únicamente el origen; datos ausentes quedan null. Los valores nunca se usan para seguridad.
 
@@ -278,7 +275,7 @@ Artículos locales en `content/blog/*.mdx`, autores en `content/authors.json`, d
 
 Cuatro rutas legales con trailing slash: `/aviso-legal/`, `/politica-privacidad/`, `/politica-de-cookies/` y `/condiciones-de-uso/`. Configuración central en `src/config/legal.ts`, con identidad pendiente, aplicabilidad explícita y versión/fechas de aprobación separadas de revisión técnica. Documentos en preparación: advertencia pública sin datos ficticios y `noindex`; canonical únicamente en producción. Sitemap incorpora legales solo tras preparación aprobada, sin fechas artificiales.
 
-Layout servidor compartido, Geist existente acotado a legal, hero compacto, índice HTML plegable móvil/lateral escritorio, lectura limitada y tarjetas de inventario de cookies. Footer enlaza los cuatro documentos y reutiliza el gestor. Contacto incorpora primera capa; casilla conserva reconocimiento de lectura, no consentimiento comercial. Producción/preview exigen preparación legal y URL/versión exactas del aviso aprobado además de requisitos operativos anteriores; desarrollo sigue siendo solo prueba.
+Layout servidor compartido, Geist existente acotado a legal, hero compacto, índice HTML plegable móvil/lateral escritorio, lectura limitada y tarjetas de inventario de cookies. Footer enlaza los cuatro documentos y reutiliza el gestor. Contacto incorpora primera capa; casilla conserva reconocimiento de lectura, no consentimiento comercial. Producción/preview dependen de los requisitos operativos; URL y versión del aviso proceden de la configuración legal interna. Desarrollo conserva modo de prueba.
 
 `pnpm legal:check` informa pendientes y falla intencionadamente mientras no se aprueben datos/documentos. Resolver [checklist jurídico](docs/legal/compliance-checklist.md), [inventario](docs/legal/data-processing-inventory.md), [retención](docs/legal/data-retention-review.md) y [guía contractual interna](docs/legal/contratacion-servicios.md) (en README: rutas bajo docs/legal). No se publica la guía, migra la DB ni despliega producción. No se acredita conformidad legal integral. Las notas anteriores corresponden a iteraciones históricas. Resultados reales y límites en docs/validacion.md.
 
@@ -296,4 +293,4 @@ Intro compacta y hoja blanca con chips, opcionales nativos y footer legal mínim
 
 ### Cambio de activación del formulario — 22/10/2026
 
-Por petición expresa del propietario, la captación ya no depende de la aprobación editorial de los documentos legales. Se habilita automáticamente cuando dispone de plataforma, base de datos, secreto y aviso válidos. La URL de privacidad y su versión se obtienen del documento actual salvo overrides coincidentes. Resend sigue siendo opcional para persistir leads. Los pendientes legales permanecen en legal:check. Véase docs/leads.md; esta decisión sustituye las condiciones históricas de aprobación para activar el formulario.
+Por petición expresa del propietario, la captación ya no depende de la aprobación editorial de los documentos legales. Se habilita automáticamente cuando dispone de plataforma, base de datos, secreto y aviso válidos. La URL de privacidad y su versión se obtienen del documento actual sin configuración adicional. Resend sigue siendo opcional para persistir leads. Los pendientes legales permanecen en legal:check. Véase docs/leads.md; esta decisión sustituye las condiciones históricas de aprobación para activar el formulario.

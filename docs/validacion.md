@@ -148,7 +148,7 @@ Consultadas guías instaladas de Route Handlers, after y fronteras Server/Client
 | `pnpm build` local sin servicios | Correcto; ocho páginas comerciales estáticas y API leads dinámica |
 | Build local con variables de producción | Correcto; SEO conservado y captación pública bloqueada |
 | `pnpm leads:process` sin DATABASE_URL | Fallo controlado esperado, código 1; no accede a datos ni envía |
-| `pnpm leads:cleanup` sin DATABASE_URL | Fallo controlado esperado, código 1; sin eliminación |
+| Comando histórico de limpieza sin DATABASE_URL | Fallo controlado esperado, código 1; sin eliminación |
 | `git diff --check` | Correcto |
 
 Las 24 pruebas cubren normalización preservando parte local del email, campos inválidos/opcionales, HTML, selección de servicios, atribución, bloqueo de captación pública, endpoint 201 tras confirmar repositorio, validación, DB fallida, scheduling fallido sin perder confirmación, 429, origen/formato/clave/configuración, límite de bytes, identidad de cliente, creación atómica con NEW/eventos/outbox, repetición de clave, colisión concurrente P2002, fallo de transacción, UPSERT parametrizado, escape de emails, claves estables de proveedor, ventanas de reintento, configuración ausente, excepciones de envío y reserva por dos procesadores.
@@ -524,8 +524,20 @@ prisma validate, db:generate, lint y typecheck correctos. test:config 6/6, test:
 
 ## 2026-10-23 — Leads sin caducidad ni borrado por antigüedad
 
-Por instrucción del propietario se elimina el requisito de días de conservación, su variable en configuración/entornos/pruebas, Lead.expiresAt, cálculo en persistencia, filtro de edad en outbox y comando leads:cleanup con su implementación de borrado. Se actualizan política visible y documentación. Expiraciones de sesiones, verificaciones y contadores de seguridad permanecen independientes.
+Por instrucción del propietario se elimina el requisito de días de conservación, su variable en configuración/entornos/pruebas, Lead.expiresAt, cálculo en persistencia, filtro de edad en outbox y comando histórico de limpieza con su implementación de borrado. Se actualizan política visible y documentación. Expiraciones de sesiones, verificaciones y contadores de seguridad permanecen independientes.
 
 Migración 20261023080000_remove_lead_expiration generada offline con Prisma migrate diff entre esquemas; SQL revisado: DROP INDEX del índice de expiración y DROP COLUMN lead.expiresAt, sin DELETE ni DROP TABLE. No aplicada a Neon. Es necesaria antes de ejecutar este código contra la base existente, cuya columna anterior era NOT NULL sin default. Las migraciones aplicadas se conservan intactas.
 
 prisma validate, db:generate, lint y typecheck correctos; test:config 6/6, test:db 3/3, test:leads 29/29, test:legal 4/4, test:automation 6/6, test:crm 13/13. Prueba de persistencia verifica ausencia de expiración en la solicitud creada. Build falla por permisos de Turbopack para abrir puertos internos. No se realiza prueba remota, revisión visual (navegador no autorizado anteriormente), eliminación, envío de correo ni despliegue. Cambios aún sin commit/push.
+
+## 2026-10-23 — Limpieza final de configuración retirada
+
+Eliminados los overrides de entorno del aviso en código, entorno local, ejemplo, pruebas y documentación. URL/versión proceden exclusivamente de la configuración legal interna, sin fallback ni compatibilidad con variables retiradas. Búsqueda completa fuera de Git/dependencias/build/generados no encuentra nombres de las cuatro variables ni comando de borrado retirados. Se conservan migraciones aplicadas y la migración pendiente que elimina la columna de expiración: forman el historial necesario para actualizar la base existente.
+
+prisma validate y db:generate correctos; lint y typecheck correctos tras adaptar fixture del endpoint a noticeUrl siempre definido. test:config 6/6, test:db 3/3, test:leads 29/29 (repetido tras adaptar fixture), test:legal 4/4. Build intentado: bloqueo por permisos internos de Turbopack al abrir puerto. Sin migración externa, envío real, revisión visual ni despliegue. Cambios locales sin commit/push.
+
+## 2026-10-23 — Correo automático según configuración del proveedor
+
+Eliminado el interruptor manual de correo de código, entorno local (también asignaciones comentadas), ejemplo y documentación. getLeadEmailConfig deriva enabled de API key y remitente válidos, sin alias ni compatibilidad. Destinatario interno validado por separado: su ausencia mantiene la notificación pendiente y no bloquea la confirmación al visitante. Persistencia del lead y recuperación del outbox mantienen su comportamiento. No se han enviado correos reales.
+
+Nueva prueba de configuración sin flag: credenciales válidas habilitan entrega; API key/remitente vacíos o inválidos la deshabilitan; destinatario interno ausente no bloquea configuración de confirmaciones. prisma validate, db:generate, lint y typecheck correctos; test:config 6/6, test:db 3/3, test:leads 30/30 y test:legal 4/4. Build vuelve a fallar por permisos internos de Turbopack al abrir puertos. Búsqueda sin referencias a variable retirada fuera de Git/dependencias/build/generados. Sin revisión visual, migración externa, envío real ni despliegue. Cambios locales sin commit/push.

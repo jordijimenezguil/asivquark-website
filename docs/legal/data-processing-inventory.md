@@ -10,7 +10,7 @@ Auditoría de repositorio: 12/10/2026. No se consultaron datos privados, credenc
 | Atribución opcional | client-attribution, cookies consent | UTM, landing/origin path, referrer reducido a origen; se adjunta a lead | Consentimiento analítico; eventos locales sin colector externo; no marketing |
 | Seguridad captación | security, rate-limit, log | IP/email usados para HMAC, buckets con vencimiento; logs de evento, ID y código | Interés legítimo candidato: documentar ponderación; logs infraestructura no auditados |
 | Administración | auth/index, User/Session/Account/Verification/RateLimit | Identidad/email/rol, credenciales protegidas, tokens, IP/UA de sesiones, contadores | Sin registro público/OAuth. Bases, información a administradores y retención pendientes |
-| Correo transaccional | lead-emails, outbox | Email/nombre y contenido de solicitud en aviso interno; confirmación al remitente; estado/ID proveedor | Resend opt-in; no envíos realizados. Retención de proveedor pendiente |
+| Correo transaccional | lead-emails, outbox | Email/nombre y contenido de solicitud en aviso interno; confirmación al remitente; estado/ID proveedor | Resend con credenciales configuradas; no envíos realizados. Retención de proveedor pendiente |
 | Contenido público | blog MDX local, projects | Artículos, autor marca, recursos locales; portfolio vacío | Sin CMS ni comentarios, subida de imágenes o proyectos publicados. Derechos/licencias a verificar por contenido |
 
 ## Proveedores externos
@@ -19,7 +19,7 @@ Auditoría de repositorio: 12/10/2026. No se consultaron datos privados, credenc
 | --- | --- | --- | --- | --- |
 | Vercel | Hosting previsto, solicitudes HTTP y logs técnicos | Encargado según servicio contratado | No acreditados; comprobar región de ejecución, logs, soporte, CDN y cadena de subencargados | Contrato no aportado; despliegue real no verificado |
 | Neon | PostgreSQL vía Prisma adapter; leads, CRM y auth si habilitados | Encargado previsto | No acreditados; revisar proyecto/rama, backups, soporte y países | DPA no aportado; base real no consultada |
-| Resend | Email transaccional condicionado a opt-in | Encargado previsto, según contrato | No acreditados; revisar entrega, metadatos y subencargados | DPA no aportado; verificar dominio y remitente reales |
+| Resend | Email transaccional condicionado a credenciales válidas | Encargado previsto, según contrato | No acreditados; revisar entrega, metadatos y subencargados | DPA no aportado; verificar dominio y remitente reales |
 
 Better Auth, Prisma, Zod y SDK Resend son bibliotecas locales, no proveedores externos por su mera instalación. Fuentes next/font e imágenes se sirven localmente. No se detectaron GA/GTM, Vercel Analytics, CAPTCHA externo, monitorización SDK, widgets, almacenamiento externo ni API de IA. Ofertar IA no implica tratar visitantes con modelos. Registrador DNS, buzón comercial, scripts inyectados, logs/CDN y otros servicios de cuenta no se pueden identificar desde este repositorio: solicitar inventario operativo al titular. No se afirma alojamiento exclusivo UE ni DPA firmado.
 

@@ -11,9 +11,10 @@ test("legal readiness reports identity, applicability and approval independently
   assert.equal(legalEntitySchema.safeParse({ ...legalEntity, legalEmail: "invalid" }).success, false);
 });
 test("capture can use the current notice independently of editorial approval", () => {
-  const config = getContactConfig({ LEADS_PRIVACY_NOTICE_URL: "https://asivquark.com/politica-privacidad/", LEADS_PRIVACY_NOTICE_VERSION: legalDocuments[1].version, VERCEL: "1", DATABASE_URL: "test-only", LEADS_SECURITY_SECRET: "x".repeat(32) }, "production");
+  const config = getContactConfig({ VERCEL: "1", DATABASE_URL: "test-only", LEADS_SECURITY_SECRET: "x".repeat(32) }, "production");
   assert.equal(config.enabled, true);
   assert.equal(config.noticeUrl, "https://asivquark.com/politica-privacidad/");
+  assert.equal(config.noticeVersion, legalDocuments[1].version);
   assert.equal(getContactConfig({}, "development").testMode, true);
 });
 test("four canonical routes, shared layout and cookie manager are connected", () => {

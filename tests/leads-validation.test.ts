@@ -88,39 +88,19 @@ test("attribution strips untrusted paths and referrer queries without inventing 
     undefined,
   );
 });
-test("public capture uses the current notice and rejects mismatched notice configuration", () => {
+test("public capture requires operational configuration and uses the internal notice", () => {
   const environment = {
     VERCEL: "1",
     DATABASE_URL: "postgresql://configured-test-only",
     LEADS_SECURITY_SECRET: "s".repeat(32),
   };
   assert.equal(getContactConfig(environment, "production").enabled, true);
-  assert.equal(getContactConfig({ ...environment, LEADS_PRIVACY_NOTICE_URL: "", LEADS_PRIVACY_NOTICE_VERSION: "  " }, "production").enabled, true);
   for (const key of ["DATABASE_URL", "LEADS_SECURITY_SECRET", "VERCEL"]) {
     assert.equal(getContactConfig({ ...environment, [key]: "" }, "production").enabled, false);
   }
-  assert.equal(
-    getContactConfig(
-      {
-        ...environment,
-        LEADS_PRIVACY_NOTICE_URL: "https://asivquark.com/politica-confirmada/",
-        LEADS_PRIVACY_NOTICE_VERSION: "test-version",
-      },
-      "production",
-    ).enabled,
-    false,
-  );
-  assert.equal(
-    getContactConfig(
-      {
-        ...environment,
-        LEADS_PRIVACY_NOTICE_URL: "http://insecure.example/privacy",
-        LEADS_PRIVACY_NOTICE_VERSION: "test",
-      },
-      "production",
-    ).enabled,
-    false,
-  );
+  const config = getContactConfig(environment, "production");
+  assert.equal(config.noticeUrl, "https://asivquark.com/politica-privacidad/");
+  assert.ok(config.noticeVersion);
   assert.equal(getContactConfig({}, "development").testMode, true);
   assert.equal(getContactConfig({}, "preview").enabled, false);
 });
