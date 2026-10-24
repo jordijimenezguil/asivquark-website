@@ -26,7 +26,7 @@ Manrope variable y JetBrains Mono cargadas una vez en `src/app/layout.tsx` con n
 | Eyebrow, Input | ui/eyebrow, input y clases eyebrow/form-input en globals.css |
 | Breadcrumb, HeroCompact, FAQ | Breadcrumbs, PageHero/ServiceHero, FAQAccordion en marketing/commercial |
 | ProjectSelector | marketing/configurator: radios nativos + GET a contacto con tipo |
-| Marquee, ServiceExplorer, ProcessPanels | marketing/foco-interactions |
+| ServiceBanner; ServiceExplorer, ProcessPanels | marketing/service-banner; marketing/foco-interactions |
 | Spotlight, CTASection | marketing/spotlight y cta-section |
 | Badge | ui/badge, etiqueta compartida de categoría |
 | Lectura editorial | marketing/blog y prose-asiv; contrato BLOG-DESIGN.md |
@@ -37,7 +37,7 @@ El layout marketing monta header, main y footer una sola vez para todas sus pág
 
 Base móvil desde 360px, breakpoints 640/768/1024/1280. Selector 2 columnas móvil y 4 desde lg. Explorador con details móvil, tablist vertical/panel escritorio y flechas Arriba/Abajo/Inicio/Fin. Proceso apilado móvil y paneles flex desde lg, clic/foco en ambos, hover solo con puntero fino. FAQ usa details con name para apertura exclusiva; footer usa columnas plegables nativas, inicialmente abiertas para mantener enlaces visibles.
 
-Spotlight: brillo estático en táctil; movimiento mediante requestAnimationFrame únicamente en escritorio con puntero fino y sin reduced motion. IntersectionObserver suspende seguimiento fuera de pantalla. Marquee decorativo con contenido duplicado, aria-hidden, pausa fuera de viewport y animación solo motion-safe. Los servicios reales están presentes en contenido accesible. La expansión flex es funcional y se desactiva su transición en reduced motion.
+Spotlight: brillo estático en táctil; movimiento mediante requestAnimationFrame únicamente en escritorio con puntero fino y sin reduced motion. IntersectionObserver suspende seguimiento fuera de pantalla. Banner de servicios decorativo, recto y estático, aria-hidden, sin contenido duplicado; las etiquetas se distribuyen en varias líneas cuando lo requiere el ancho. Los servicios reales están presentes en contenido accesible. La expansión flex es funcional y se desactiva su transición en reduced motion.
 
 Contacto conserva el flujo existente: selección en home, datos en contacto y confirmación después de persistir. La URL precarga tipo. Se añade progreso visual accesible al paso de datos; no se envían formularios durante verificación.
 
@@ -48,3 +48,7 @@ Consultar docs/validacion.md para resultados ejecutados. No se acredita WCAG AA 
 ## Corrección del titular Home — 24/10/2026
 
 «páginas web» usa brand-400 sólido en lugar del contorno transparente para evitar los trazos interiores superpuestos de Manrope. Se mantienen texto, escala y composición del H1.
+
+## Banner Home — 24/10/2026
+
+Por petición del propietario, la franja morada queda horizontal y sin movimiento ni resplandor. ServiceBanner es un Server Component sin observers ni estado; muestra cada servicio una vez y permite salto de línea en móvil. Se retiran los tokens de animación marquee sin usos restantes.

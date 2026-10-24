@@ -1,17 +1,7 @@
 "use client";
-import { useEffect, useRef, useState, useId } from "react";
+import { useState, useId } from "react";
 import Link from "next/link";
 import type { ContentItem, Service } from "@/content/services";
-export function Marquee({ labels }: { labels: string[] }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-  return <div ref={ref} aria-hidden="true" className="my-6 -rotate-[1.5deg] overflow-hidden bg-brand-600 py-4 text-2xl font-extrabold text-white shadow-glow"><div className={`flex w-max motion-safe:animate-marquee ${visible ? "[animation-play-state:running]" : "[animation-play-state:paused]"}`}>{[0, 1].map(copy => <span key={copy} className="shrink-0">{labels.map(label => <span key={label} className="px-2">{label} ✦</span>)}</span>)}</div></div>;
-}
 export function ServiceExplorer({ services }: { services: Service[] }) {
   const [active, setActive] = useState(0);
   const id = useId();

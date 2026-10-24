@@ -29,9 +29,7 @@
  --text-small: clamp(.875rem, .2vw + .85rem, .9375rem);
  --shadow-glow: 0 0 30px rgba(124,58,237,.6);
  --shadow-card: 0 20px 50px rgba(124,58,237,.25);
- --animate-marquee: marquee 26s linear infinite;
  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
- @keyframes marquee { to { transform: translateX(-50%); } }
  @keyframes pulse-dot { 50% { opacity: .35; } }
 }
 

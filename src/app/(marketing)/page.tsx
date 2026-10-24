@@ -1,4 +1,5 @@
-import { Marquee, ServiceExplorer } from "@/components/marketing/foco-interactions";
+import { ServiceExplorer } from "@/components/marketing/foco-interactions";
+import { ServiceBanner } from "@/components/marketing/service-banner";
 import { HomeHero } from "@/components/marketing/home-hero";
 import { process } from "@/content/marketing";
 import Link from "next/link";
@@ -37,7 +38,7 @@ export default function Home() {
         />
       )}
       <HomeHero />
-      <Marquee labels={services.map(service => service.title)} />
+      <ServiceBanner labels={services.map(service => service.title)} />
       <div className="bg-ink-950 py-16"><Container className="grid gap-4 sm:grid-cols-3">{[
         ["Precio cerrado por fase", "Cada fase se aprueba antes de empezar. Sin sorpresas."],
         ["Entregas cada dos semanas", "Ves el avance real y ajustas prioridades."],

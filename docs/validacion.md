@@ -594,3 +594,9 @@ HTTP incluye home, índice servicios, cuatro detalles, automatización, proyecto
 Comprobaciones ejecutadas: pnpm prisma validate, pnpm db:generate, pnpm lint, pnpm typecheck, pnpm test:config (6/6), pnpm test:db (3/3), pnpm test:home (4/4) y git diff --check correctos. pnpm build falla por permisos de procesos/puertos de Turbopack (también con ejecución ampliada); primer intento además no pudo descargar Manrope. pnpm build --webpack finaliza con salida 0 y 28 páginas generadas. El proceso avisa de una vulnerabilidad conocida de la versión instalada de Next.js; no se actualizan dependencias en esta corrección.
 
 Inventario CUA sin navegadores conectados; comprobación visual escritorio/móvil pendiente. No se despliega producción.
+
+## Banner horizontal y estático Home — 24/10/2026
+
+Se sustituye Marquee por ServiceBanner servidor: sin rotación, animación, observers ni duplicación de etiquetas. Flex-wrap permite mostrar todos los servicios con salto de línea. Eliminados tokens marquee sin usos. Documento de diseño actualizado.
+
+Ejecutados correctamente: pnpm prisma validate, pnpm db:generate, pnpm lint, pnpm typecheck, pnpm test:config (6/6), pnpm test:db (3/3), pnpm test:home (4/4) y pnpm build --webpack (28 páginas, salida 0). pnpm build con Turbopack falla por creación de procesos/puertos no permitida en el entorno. git diff --check correcto. Sin navegador conectado en el inventario de esta sesión: revisión visual escritorio/móvil pendiente. No se despliega.
