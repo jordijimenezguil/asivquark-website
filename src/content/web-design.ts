@@ -5,7 +5,7 @@ export const webDesignService: Service = {
   slug: "diseno-web-barcelona",
   includes: ["Diseño a medida", "Gestor de contenidos", "SEO técnico", "Formulario conectado"],
   idealFor: "Empresas, profesionales y negocios que necesitan una presencia digital clara y adaptada a sus objetivos.",
-  description: "Diseñamos y desarrollamos páginas web profesionales para empresas y negocios.",
+  description: "Diseñamos y desarrollamos páginas web profesionales y corporativas para empresas y negocios.",
   seoTitle: "Diseño Web Profesional en Barcelona | ASIVQUARK",
   seoDescription: "Creamos páginas web profesionales en Barcelona, rápidas, adaptadas a móviles y diseñadas para las necesidades de tu negocio.",
   seoOpenGraphDescription: "Diseñamos y desarrollamos páginas web profesionales para empresas, autónomos y negocios en Barcelona.",

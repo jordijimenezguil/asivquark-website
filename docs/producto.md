@@ -90,3 +90,11 @@ No existen los handoff/PROMPT*.md ni el HTML de direcciones en este checkout. Se
 ## Rediseño global Foco — 23/10/2026
 
 Dirección visual Foco aplicada al sitio público existente: fondo oscuro, Manrope, morado eléctrico, titulares grandes y superficies con bordes sutiles. Home con selector GET, cinta decorativa, valores numerados, explorador de servicios y proceso expandible. Móvil usa acordeones y pasos apilados; escritorio añade lista/panel y expansión horizontal. FAQ nativa de apertura exclusiva y footer compartido. Se mantienen los textos comerciales y el catálogo autorizado; no se crea una ruta nueva para Cómo trabajamos (continúa /#proceso). Contacto conserva selección, datos y confirmación, validación e idempotencia existentes. La revisión visual en los seis anchos y Lighthouse sigue siendo necesaria antes de acreditar objetivos. Véase [sistema visual](diseno-foco.md).
+
+## Copy Home — 24/10/2026
+
+La descripción compartida del servicio web menciona «páginas web profesionales y corporativas», visible en el configurador y explorador de servicios de Home y en los consumidores del catálogo. La FAQ de Home usa la misma formulación.
+
+El hero incorpora «A precios asequibles» en la fila secundaria de ventajas, junto a «Sin compromiso» y «Respuesta en 24 h», con el mismo estilo discreto y salto de línea adaptable.
+
+Las ventajas secundarias del hero aumentan a 14px desde escritorio (lg); móvil conserva 11px. Espaciado vertical de 12px cuando se distribuyen en varias filas.

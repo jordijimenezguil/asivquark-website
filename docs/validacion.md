@@ -600,3 +600,15 @@ Inventario CUA sin navegadores conectados; comprobación visual escritorio/móvi
 Se sustituye Marquee por ServiceBanner servidor: sin rotación, animación, observers ni duplicación de etiquetas. Flex-wrap permite mostrar todos los servicios con salto de línea. Eliminados tokens marquee sin usos. Documento de diseño actualizado.
 
 Ejecutados correctamente: pnpm prisma validate, pnpm db:generate, pnpm lint, pnpm typecheck, pnpm test:config (6/6), pnpm test:db (3/3), pnpm test:home (4/4) y pnpm build --webpack (28 páginas, salida 0). pnpm build con Turbopack falla por creación de procesos/puertos no permitida en el entorno. git diff --check correcto. Sin navegador conectado en el inventario de esta sesión: revisión visual escritorio/móvil pendiente. No se despliega.
+
+## Copy webs profesionales y corporativas — 24/10/2026
+
+Descripción compartida del servicio web y FAQ Home actualizadas por petición del propietario: «páginas web profesionales y corporativas». Documento de producto actualizado. Comprobaciones correctas: pnpm prisma validate, pnpm db:generate, pnpm lint, pnpm typecheck, pnpm test:config (6/6), pnpm test:db (3/3), pnpm test:home (4/4), pnpm build --webpack (28 páginas, salida 0) y git diff --check. pnpm build con Turbopack falla por procesos/puertos no permitidos en este entorno. Sin revisión visual nueva ni despliegue.
+
+## Nota de precio en hero — 24/10/2026
+
+«A precios asequibles» añadido a la fila secundaria de ventajas del hero, con el mismo estilo discreto existente. Prisma validate/generate, lint, typecheck, test:config (6/6), test:db (3/3), test:home (4/4) y build --webpack correctos (28 páginas). Build Turbopack bloqueado por permisos de procesos/puertos del entorno. Sin revisión visual nueva. Sin despliegue.
+
+## Tamaño de ventajas del hero — 24/10/2026
+
+Ventajas a 14px desde lg, con 11px móvil y saltos entre ventajas completas (whitespace-nowrap por etiqueta). Separación vertical 12px. Prisma validate/generate, lint, typecheck, test:config (6/6), test:db (3/3), test:home (4/4) y build --webpack (28 páginas) correctos. Build Turbopack falla por permisos de procesos/puertos. HTTP dev 200 y clase lg:text-sm confirmada en HTML. Sin revisión visual nueva. Sin despliegue.

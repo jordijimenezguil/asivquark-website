@@ -92,7 +92,7 @@ export default function Home() {
           {
             question: "¿Qué tipo de proyectos desarrolla ASIVQUARK?",
             answer:
-              "Páginas web profesionales, software a medida, aplicaciones web, MVP y automatización de procesos e IA. El punto de partida es entender el problema y definir una solución con un alcance claro.",
+              "Páginas web profesionales y corporativas, software a medida, aplicaciones web, MVP y automatización de procesos e IA. El punto de partida es entender el problema y definir una solución con un alcance claro.",
           },
           {
             question: "¿Desarrolláis páginas web para pequeños negocios?",
