@@ -44,3 +44,7 @@ Contacto conserva el flujo existente: selección en home, datos en contacto y co
 ## Verificación y límites
 
 Consultar docs/validacion.md para resultados ejecutados. No se acredita WCAG AA integral, ausencia de overflow en seis anchos ni Lighthouse ≥90 sin navegador y medición. Revisión visual pendiente en 360, 390, 768, 1024, 1280 y 1440px; teclado real, lector de pantalla y contraste de imágenes también requieren QA. No se despliega producción ni se modifica infraestructura.
+
+## Corrección del titular Home — 24/10/2026
+
+«páginas web» usa brand-400 sólido en lugar del contorno transparente para evitar los trazos interiores superpuestos de Manrope. Se mantienen texto, escala y composición del H1.

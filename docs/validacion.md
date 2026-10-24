@@ -586,3 +586,11 @@ HTTP incluye home, índice servicios, cuatro detalles, automatización, proyecto
 ### Build y entorno
 
 `pnpm build` se ejecutó: el primer intento quedó bloqueado y se detuvo después de más de siete minutos. Los reintentos de Turbopack fallaron al crear workers por `binding to a port / Operation not permitted`, incluso con ejecución ampliada. El servidor dev sí compila y sirve las rutas indicadas. `pnpm build --webpack` completó compilación, tipos, generación de 28 páginas y trazas; el primer intento terminó con el recordatorio de seguridad, y el segundo finalizó correctamente con salida 0. No se cambia la configuración del proyecto. Next.js 16.4.0 muestra además un aviso de vulnerabilidad conocida; no se actualizan dependencias dentro del rediseño.
+
+## Corrección de trazos del titular Home — 24/10/2026
+
+«páginas web» pasa de text-outline a text-brand-400 sólido: elimina el stroke transparente que exponía trazos interiores de Manrope. Sin cambios de texto o escala. Dirección visual actualizada en diseno-foco.md.
+
+Comprobaciones ejecutadas: pnpm prisma validate, pnpm db:generate, pnpm lint, pnpm typecheck, pnpm test:config (6/6), pnpm test:db (3/3), pnpm test:home (4/4) y git diff --check correctos. pnpm build falla por permisos de procesos/puertos de Turbopack (también con ejecución ampliada); primer intento además no pudo descargar Manrope. pnpm build --webpack finaliza con salida 0 y 28 páginas generadas. El proceso avisa de una vulnerabilidad conocida de la versión instalada de Next.js; no se actualizan dependencias en esta corrección.
+
+Inventario CUA sin navegadores conectados; comprobación visual escritorio/móvil pendiente. No se despliega producción.
