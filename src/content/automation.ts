@@ -8,7 +8,7 @@ export const automationService: Service = {
   description: "Optimizamos procesos empresariales mediante automatizaciones, integraciones y soluciones de inteligencia artificial.",
   seoTitle: "Automatización de Procesos e IA en Barcelona | ASIVQUARK",
   seoDescription: "Automatizamos procesos, conectamos herramientas e integramos inteligencia artificial para mejorar la eficiencia de empresas en Barcelona y toda España.",
-  h1: "Automatización de procesos e inteligencia artificial para empresas",
+  h1: "Automatización con IA",
   intro: "Eliminamos tareas repetitivas, conectamos tus herramientas y desarrollamos soluciones de automatización e IA adaptadas a los procesos de tu negocio.",
   cta: "Analicemos tu proceso",
   sections: [

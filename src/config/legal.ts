@@ -15,7 +15,7 @@ export const legalEntity: LegalEntity = legalEntitySchema.parse({
   brandName: "ASIVQUARK", website: "https://asivquark.com", location: "Barcelona, España",
   legalName: "ASIVQUARK", taxId: "47163794V", legalAddress: null,
   postalAddress: "Apartado de correos 12453, Sabadell",
-  legalEmail: "hola@asivquark.com", privacyEmail: null,
+  legalEmail: "legal@asivquark.com", privacyEmail: "legal@asivquark.com",
   registry: { status: "pending", information: null },
   authorization: { status: "pending", information: null },
   dpo: { status: "pending", information: null },

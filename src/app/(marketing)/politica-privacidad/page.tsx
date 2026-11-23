@@ -1,6 +1,6 @@
 import { LegalPageLayout, legalMetadata, type LegalSection } from "@/components/legal/legal-page-layout";
 import { LegalIdentity } from "@/components/legal/legal-identity";
-import { legalDocuments } from "@/config/legal";
+import { legalDocuments, legalEntity } from "@/config/legal";
 export const metadata = legalMetadata("privacy");
 const sections: LegalSection[] = [
 { id: "responsable", title: "Responsable del tratamiento", content: <><p>La identidad jurídica del titular de ASIVQUARK y su contacto para derechos están pendientes de confirmación. Barcelona, España, es la ubicación general de actividad, no un domicilio legal. Esta versión técnica no debe utilizarse como información definitiva para activar la captación pública.</p><LegalIdentity /></> },
@@ -15,6 +15,6 @@ const sections: LegalSection[] = [
 { id: "seguridad", title: "Medidas de seguridad", content: <><p>El código incorpora validación de formularios, control de acceso en servidor, limitación de solicitudes y prevención de duplicados. Los contadores de captación utilizan hashes con clave en lugar de almacenar IP o email en claro. La autenticación administrativa trata identificadores, email, credenciales protegidas, sesiones, tokens y metadatos técnicos como IP y agente de usuario. No se almacenan contraseñas en texto plano. Estas medidas no constituyen una garantía absoluta de seguridad; configuración, accesos y operaciones requieren revisión continua.</p></> },
 { id: "cookies", title: "Cookies y tecnologías similares", content: <><p>Consulta el inventario y configura tus preferencias en la política de cookies. Rechazar la atribución opcional permite seguir accediendo a estos documentos.</p><p><a href="/politica-de-cookies/">Consultar cookies</a></p></> },
 { id: "cambios", title: "Cambios en esta política", content: <><p>Los cambios se versionan con la información correspondiente a cada tratamiento. La fecha mostrada refleja una revisión técnica, no una aprobación jurídica ni una fecha de entrada en vigor. Los cambios materiales requerirán actualizar la información y, cuando proceda, el consentimiento.</p></> },
-{ id: "contacto", title: "Contacto en materia de privacidad", content: <><p>El email comercial publicado es proyectos@asivquark.com. Su designación como canal de privacidad y derechos sigue pendiente: no se presenta como un buzón legal ya confirmado.</p></> },
+{ id: "contacto", title: "Contacto en materia de privacidad", content: <><p>Para consultas de privacidad y ejercicio de derechos, escribe a <a href={`mailto:${legalEntity.privacyEmail}`}>{legalEntity.privacyEmail}</a>.</p></> },
 ];
 export default function Page() { return <LegalPageLayout document={legalDocuments.find(item => item.id === "privacy")!} sections={sections} />; }

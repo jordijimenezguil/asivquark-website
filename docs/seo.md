@@ -226,3 +226,12 @@ Alternancia de superficies oscuras/paper en home y páginas públicas. Sin cambi
 ## Presentación de Proyectos — ajuste de descripción
 
 Por petición del propietario, la introducción y meta description de /proyectos/ describen automatización con IA, software, aplicaciones y desarrollo web sin mencionar gamificación. Las fichas de proyectos conservan su contenido.
+
+
+## Títulos breves de automatización — 23/11/2026
+
+Por petición del propietario, el footer usa «Automatización e IA» y el H1 de la landing «Automatización con IA». Se conservan URL, metadata, navegación superior y contenido del servicio.
+
+
+Ajuste del propietario: el footer usa «Automatización con IA», igual que el H1 de la landing.
+La navegación compartida también usa «Automatización con IA»; título SEO conservado.

@@ -174,3 +174,16 @@ Home alterna Servicios y Criterio claros con el resto oscuro, sustituye la franj
 ## Presentación de Proyectos — ajuste de descripción
 
 Por petición del propietario, la introducción y meta description de /proyectos/ describen automatización con IA, software, aplicaciones y desarrollo web sin mencionar gamificación. Las fichas de proyectos conservan su contenido.
+
+## Correo de todas las páginas legales — 23/11/2026
+
+El propietario designa legal@asivquark.com para aviso legal, privacidad, cookies y condiciones de uso. Configuración legal y de privacidad unificada; referencias y enlaces mailto actualizados. Footer y CTA muestran ese buzón en las cuatro rutas legales, conservando el correo comercial en el resto. La primera capa de privacidad del formulario reutiliza el canal de privacidad configurado. Sin cambios en destinatarios de notificaciones ni envío de correos.
+
+
+## Títulos breves de automatización — 23/11/2026
+
+Por petición del propietario, el footer usa «Automatización e IA» y el H1 de la landing «Automatización con IA». Se conservan URL, metadata, navegación superior y contenido del servicio.
+
+
+Ajuste del propietario: el footer usa «Automatización con IA», igual que el H1 de la landing.
+La misma denominación se aplica a la navegación compartida y sus etiquetas derivadas.

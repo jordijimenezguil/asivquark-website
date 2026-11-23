@@ -49,3 +49,7 @@ Se accedió también al [RGPD publicado en DOUE/BOE](https://www.boe.es/doue/201
 ## Cambio de activación — 22/10/2026
 
 El propietario solicita expresamente habilitar el formulario sin esperar a completar este checklist. Se retira la dependencia técnica de legalReadiness para captación; se conservan los pendientes y el estado draft de los documentos. legal:check continúa informando preparación documental por separado. No se registra aprobación ni publicación de los textos como definitivos.
+
+## Canal legal designado — 23/11/2026
+
+El propietario solicita legal@asivquark.com en todas las páginas legales. Configurados legalEmail y privacyEmail con ese buzón; los contactos de los documentos, CTA y pie de estas rutas usan el mismo canal. Esta designación no modifica las aprobaciones ni los restantes pendientes documentales. No se comprueba entrega ni se envía correo.

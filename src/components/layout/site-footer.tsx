@@ -1,3 +1,4 @@
+import { FooterEmailLink } from "./footer-email-link";
 import { legalDocuments } from "@/config/legal";
 import { CookiePreferencesTrigger } from "@/components/cookies/cookie-preferences-trigger";
 import { CTASection } from "@/components/marketing/cta-section";
@@ -57,7 +58,7 @@ export function SiteFooter({ cta = true, ctaHref = "/contacto/", ctaLocation = "
           <nav aria-label="Legal"><details open className="border-b border-white/10 pb-4 lg:border-0"><summary className="flex min-h-11 cursor-pointer items-center font-bold lg:pointer-events-none">Legal</summary>{legalDocuments.map(document => <Link key={document.id} href={document.path} className="block min-h-11 py-3 text-sm text-secondary hover:text-white">{document.title}</Link>)}<CookiePreferencesTrigger /></details></nav>
           <div>
             <details open><summary className="flex min-h-11 cursor-pointer items-center font-bold lg:pointer-events-none">Contacto</summary>
-            <a href="mailto:proyectos@asivquark.com" className="mb-3 block break-all text-sm text-secondary hover:text-white">proyectos@asivquark.com</a>
+            <FooterEmailLink className="mb-3 block break-all text-sm text-secondary hover:text-white" />
             <p className="text-sm leading-7 text-secondary">
               Barcelona, España.
             </p></details>

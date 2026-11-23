@@ -17,7 +17,7 @@ const input = { name: "Prueba", email: "test@example.com", projectType: "automat
 test("single canonical service route and ordered shared navigation", () => {
   assert.equal(services.length, 5);
   assert.equal(publicPaths.filter(path => path === automationService.href).length, 1);
-  assert.deepEqual(serviceNavigation.map(item => item.label), ["Automatización e IA", "Diseño web", "Software a medida", "Aplicaciones web", "Desarrollo MVP"]);
+  assert.deepEqual(serviceNavigation.map(item => item.label), ["Automatización con IA", "Diseño web", "Software a medida", "Aplicaciones web", "Desarrollo MVP"]);
   assert.equal(automationService.href, "/automatizacion-procesos-ia/");
   assert.equal(automationService.sections[1].items.length, 6);
   assert.equal(automationService.process.length, 5);
@@ -51,7 +51,7 @@ test("automation persists through the existing transactional lead/outbox reposit
 });
 test("CRM recognizes label, passes exact service filter and preserves grouped service counts", async () => {
   assert.equal(filtersSchema.parse({ service: "automatizacion" }).service, "automatizacion");
-  assert.equal(serviceLabels.automatizacion, "Automatización e IA");
+  assert.equal(serviceLabels.automatizacion, "Automatización con IA");
   assert.equal(serviceLabels.web, "Página web");
   const tx = { lead: {
     count: async ({ where }: { where: Prisma.LeadWhereInput }) => { assert.equal(where.service, "automatizacion"); return 2; },
@@ -68,8 +68,8 @@ test("CRM recognizes label, passes exact service filter and preserves grouped se
 test("notification uses shared automation label without calling Resend", () => {
   const lead = { name: "Prueba", email: "test@example.com", service: "automatizacion", createdAt: new Date(), message: "Proceso de prueba" } as Lead;
   const email = newLeadEmail(lead);
-  assert.equal(email.subject, "Nuevo lead ASIVQUARK — Automatización e IA");
-  assert.ok(email.text.includes(serviceLabels.automatizacion)); assert.ok(email.html.includes("Automatización e IA"));
+  assert.equal(email.subject, "Nuevo lead ASIVQUARK — Automatización con IA");
+  assert.ok(email.text.includes(serviceLabels.automatizacion)); assert.ok(email.html.includes("Automatización con IA"));
 });
 test("dedicated metadata and deployment domain rules stay intact", () => {
   const metadata = pageMetadata({ title: automationService.seoTitle, description: automationService.seoDescription, path: automationService.href });

@@ -737,3 +737,13 @@ Sin Chrome por preferencia expresa. No se ejecutaron navegador visual, axe ni Li
 ## Descripción de Proyectos sin gamificación
 
 Revisadas introducción y meta description de /proyectos/ por petición del propietario. Sin cambios de fichas, rutas ni diseño. `pnpm lint` y `git diff --check` correctos; comprobación textual confirma ausencia de gamificación en la página. No se repite build para este ajuste de copy; sin comprobación visual ni publicación.
+
+## Email legal unificado — 23/11/2026
+
+Configurados legalEmail y privacyEmail como legal@asivquark.com por petición del propietario. Contactos de las cuatro páginas y mailto de identidad legal actualizados; pie y CTA adaptan el buzón según ruta, conservando proyectos@asivquark.com fuera de legales. Corregidas frases que presentaban el canal como pendiente; sin cambiar aprobaciones, indexación, rutas ni destinatarios operativos.
+
+Correctos: pnpm lint, pnpm typecheck, pnpm test:legal (4) y build Turbopack (29 páginas, salida 0). Se corrigió el tipo de las filas de LegalIdentity tras detectar label posiblemente null en la primera comprobación. Auditoría con HTMLParser de los cuatro HTML generados: único email visible y único destino mailto legal@asivquark.com, incluidos CTA y footer; comprobado correo comercial conservado en Proyectos. Next.js mantiene el aviso de seguridad registrado previamente. Sin Chrome, envío de emails ni verificación de entrega del buzón.
+
+## Denominación «Automatización con IA» — 23/11/2026
+
+H1 de la landing, footer y etiqueta de navegación usan «Automatización con IA» según la preferencia del propietario. Las etiquetas compartidas de CRM/notificaciones heredan la denominación, sin cambios de contrato ni envíos. Metadata y URL conservadas. Lint, test:automation (6) y git diff --check correctos; actualizadas las expectativas del nombre anterior en las pruebas. Sin nuevo build ni revisión visual para este ajuste de copy.
