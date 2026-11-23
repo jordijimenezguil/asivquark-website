@@ -201,3 +201,18 @@ Se añade un párrafo contextual de automatización con IA antes del mosaico del
 ## Orden editorial IA — 23/11/2026
 
 Introducción del índice y su descripción mencionan primero automatización con IA, manteniendo diseño web, software y producto. En cada artículo el párrafo IA se adelanta al inicio de su sección contextual existente, sin cambiar H2, anatomía ni frontmatter; se conserva updatedAt de la revisión del mismo día.
+
+## Listado sin párrafo promocional — 23/11/2026
+
+Retirado por petición del propietario el párrafo promocional de automatización entre la cabecera y el mosaico. Se conservan el hero, las tarjetas y el resto del diseño.
+
+
+## Artículo WordPress vs web a medida — 23/11/2026
+
+Publicación en el catálogo autorizada expresamente por el propietario tras revisar el borrador. MDX en content/blog/wordpress-vs-web-a-medida.mdx, categoría existente diseno-web, autor equipo y fecha real 2026-11-23. Se reutiliza el diseño de artículo y tarjeta sin nuevas clases ni componentes. Doce secciones, tabla editorial HTML semántica con diez criterios y CTA existentes. Imagen aportada por el propietario: cabecera WebP 1440×810 y cover 1200×630 con ajuste contain, conservando la composición original. Se usan headerImage, cover y textos alternativos del contrato existente. Canonical derivado del slug por el motor existente solo en producción; RSS, catálogo y sitemap descubren automáticamente el artículo.
+
+## Etiquetas adicionales en tarjetas — 23/11/2026
+
+Frontmatter admite `tags` opcional (hasta tres textos de 1–40 caracteres). PostCard muestra la categoría principal seguida de estas etiquetas, reutilizando Badge y una fila flex con salto de línea y separación de 8px. No cambia la categoría principal, breadcrumbs ni rutas. El artículo WordPress vs web a medida añade «Software a medida» junto a «Diseño web». Sin nuevos colores, tipografías o componentes.
+
+Artículo WordPress vs web a medida abreviado por petición del propietario: estimación del cargador de 7 minutos. Conserva doce apartados, tabla de diez criterios, cinco ejemplos hipotéticos, seis FAQ y CTA. Sin cambios de UI ni de otros artículos.

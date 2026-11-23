@@ -681,3 +681,37 @@ Retirados controles, hooks, lectura de parámetros cat, evento project_filter y 
 ## Nosotros — Título simplificado — 23/11/2026
 
 «A tu medida» sustituye el título de enfoque y se retira el segundo encabezado. IA/precios populares continúan en el párrafo. Correctos lint, typecheck y git diff --check; verificación de código confirma un único título en la sección. Sin nuevas pruebas de navegador ni nueva compilación para este ajuste de texto.
+
+## Borrador WordPress vs web a medida — 23/11/2026
+
+Único artículo nuevo en content/drafts/wordpress-vs-web-a-medida.mdx, estado editorial DRAFT, sin publicación ni fecha publicada ficticia. No existe CMS con estados: se aplica el mecanismo documentado en BLOG-DESIGN.md, guardando borradores fuera de content/blog. Canonical y slug solicitados preparados en metadata editorial; categoría mapeada a diseno-web con nombre editorial «Diseño y desarrollo web». Sin cambios de motor, UI, rutas ni otros artículos.
+
+Contenido completo (aproximadamente 2.400 palabras), doce H2 compatibles con el índice existente mediante agrupación de temas, tabla semántica de diez criterios, cinco ejemplos explícitamente hipotéticos, seis FAQ y CTA/enlaces solicitados. Se conserva la recomendación de desarrollo a medida y la declaración de que ASIVQUARK no ofrece WordPress; sin rankings, precios o estadísticas inventados. Fuentes oficiales consultadas de WordPress (features, optimization, hardening) y Google Search Essentials, incluidas en frontmatter.
+
+Validación real: parseArticle correcto usando únicamente en memoria una fecha técnica para satisfacer el contrato público; el archivo DRAFT no contiene publishedAt. MDX compilado y renderizado sin navegador: diez filas comparativas más cabecera, ningún H1 duplicado, CTA y enlaces válidos. SEO title exacto, meta description 148 caracteres, canonical editorial exacto, doce secciones, autor existente. getArticles sigue devolviendo dos artículos, ruta ausente de publicPaths y de los artefactos generados blog/RSS/sitemap; sin HTML público del borrador.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), git diff --check y build webpack (28 páginas, salida 0 tras repetir por el aviso de seguridad de Next.js). Se mantiene la recomendación de actualización ya registrada. Sin Chrome, revisión visual, publicación, commit ni push. Al autorizar publicación habrá que asignar fecha real y mover el MDX al catálogo público existente; no se añade infraestructura nueva.
+
+## Blog — Retirada de párrafo promocional — 23/11/2026
+
+Eliminado el párrafo «Compartimos criterios para aplicar automatizaciones con IA…» del índice del blog, incluido su enlace al servicio. Sin cambios de artículos, cabecera o tarjetas. Lint, typecheck y git diff --check correctos. Sin navegador ni nuevo build para este ajuste editorial.
+
+## Publicación editorial WordPress vs web a medida — 23/11/2026
+
+Tras petición explícita del propietario se mueve el artículo de content/drafts a content/blog, con publishedAt real 2026-11-23 y campos del contrato existente. No se modifica el motor ni otros artículos. La categoría es la existente diseno-web, sin nueva taxonomía. El slug determina canonical de producción; local/preview siguen sin canonical y con noindex. Sin imagen nueva: tarjeta usa fallback existente.
+
+getArticles devuelve tres artículos, nuevo artículo primero. HTTP local /blog/ y /blog/wordpress-vs-web-a-medida/: 200; tarjeta, SEO title y tabla con diez criterios presentes. Párrafo promocional retirado del índice continúa ausente. MDX y rutas generadas correctamente.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:web-design (4), git diff --check y build webpack (29 páginas, salida 0 tras repetir por recordatorio de seguridad Next.js). Se mantiene recomendación de actualización ya documentada. Sin Chrome, revisión visual, commit/push ni despliegue remoto; publicado en el catálogo del checkout y visible en el servidor local.
+
+## Imagen WordPress vs web a medida — 23/11/2026
+
+Imagen del propietario incorporada a cabecera y cover del artículo existente, sin modificar componentes o artículos ajenos. PNG original 1672×941 convertido mediante sharp ya incluido por Next a cabecera WebP 1440×810 (61.182 bytes) y cover 1200×630 (46.790 bytes), fit contain para conservar la composición. Alt descriptivos en frontmatter. Imagen social usa el cover automáticamente.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:web-design (4), validación del cargador MDX y git diff --check. HTML generado contiene imagen de cabecera, portada de tarjeta y metadata social. Build webpack: 29 páginas, salida 0 tras repetir por el recordatorio de seguridad Next.js; recomendación de actualización ya documentada. Sin Chrome, revisión visual en navegador, despliegue, commit ni push.
+
+## Artículo abreviado y chip de software — 23/11/2026
+
+Añadido tags opcional al contrato editorial y fila de Badge existentes a PostCard. Solo el artículo WordPress vs web a medida incorpora «Software a medida», manteniendo categoría «Diseño web» e imágenes. Documentado primero en BLOG-DESIGN.md. Texto abreviado por petición posterior: el cargador calcula 7 minutos; conserva doce secciones, tabla de diez criterios, cinco escenarios hipotéticos, seis FAQ y CTA, sin modificar otros artículos.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:web-design (4), git diff --check y build webpack (29 páginas, salida 0 tras repetir por aviso de seguridad Next.js). Verificado catálogo y HTML generado: tarjeta con imagen, dos chips y 7 minutos; artículo con 7 minutos y contenido completo compilado. Se mantiene recomendación de actualizar Next.js ya registrada. Sin Chrome, revisión visual, despliegue, commit ni push.

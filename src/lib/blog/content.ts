@@ -23,6 +23,7 @@ const schema = z.object({
   excerpt: z.string().min(1).max(300).optional(),
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   category: z.enum(["diseno-web", "software-a-medida", "apps", "mvp", "mantenimiento", "automatizacion-ia"]),
+  tags: z.array(z.string().min(1).max(40)).max(3).optional(),
   author: z.string(), publishedAt: date, updatedAt: date.optional(),
   keyPoints: z.array(z.string().min(1)).min(3).max(6).optional(),
   tocLabel: z.record(z.string(), z.string().min(1).max(40)).optional(),
