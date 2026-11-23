@@ -1,3 +1,4 @@
+import { AutomationContext } from "./automation-context";
 import { blogArticles } from "@/config/blog";
 import Link from "next/link";
 import { webDesignService as service, webDesignComparison } from "@/content/web-design";
@@ -11,6 +12,7 @@ export function WebDesignPage() {
   return <>
     {site.isProduction && <JsonLd data={{ "@context": "https://schema.org", "@type": "Service", "@id": `${site.origin}${service.href}#service`, name: "Diseño web profesional", serviceType: "Diseño y desarrollo de páginas web para empresas", description: service.description, url: `${site.origin}${service.href}`, areaServed: "España", provider: { "@id": `${site.origin}/#organization` } }} />}
     <ServiceHero service={service} label="DISEÑO Y DESARROLLO WEB · BARCELONA" contactHref={contactHref} secondaryHref="#servicio-diseno-web" secondaryLabel="Descubre nuestro servicio" showDetails={false} />
+    <AutomationContext context="web" />
     {service.sections.slice(0, 3).map((section, index) => <FeatureGrid key={section.title} id={index === 1 ? "servicio-diseno-web" : undefined} title={section.title} intro={section.intro} items={section.items} tinted={index === 1} />)}
     <Section><Container><h2 className="section-title">¿Qué diferencia una página web profesional de una web básica?</h2><p className="mt-6 max-w-3xl leading-7 text-ink-500">Una solución sencilla puede ser adecuada para una necesidad concreta. El carácter profesional depende de cómo se define, adapta y verifica la web, no solo de usar una plantilla o desarrollar desde cero. Esta comparación ayuda a valorar el alcance y la calidad; ninguna opción garantiza conversiones.</p>
       <div className="mt-8 overflow-x-auto rounded-xl border border-line" role="region" aria-label="Comparación de alcances web, desplazable horizontalmente" tabIndex={0}><table className="w-full min-w-[640px] text-left text-sm"><caption className="p-4 text-left font-semibold">Criterios para comparar propuestas de diseño web</caption><thead><tr>{["Aspecto", "Alcance básico", "Enfoque profesional"].map(label => <th key={label} scope="col" className="border-b border-line bg-paper-soft p-4">{label}</th>)}</tr></thead><tbody>{webDesignComparison.map(row => <tr key={row.factor}><th scope="row" className="border-b border-line p-4 font-semibold">{row.factor}</th><td className="border-b border-line p-4 leading-6 text-ink-500">{row.basic}</td><td className="border-b border-line p-4 leading-6 text-ink-500">{row.professional}</td></tr>)}</tbody></table></div>

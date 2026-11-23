@@ -9,9 +9,9 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata = pageMetadata({
-  title: "Sobre ASIVQUARK | Estudio de Software en Barcelona",
+  title: "Sobre ASIVQUARK | IA y Software en Barcelona",
   description:
-    "Conoce ASIVQUARK, un estudio de desarrollo digital en Barcelona especializado en páginas web, aplicaciones y software a medida.",
+    "Conoce ASIVQUARK, un estudio de desarrollo digital en Barcelona especializado en automatización con IA, páginas web, aplicaciones y software a medida.",
   path: "/nosotros/",
 });
 export default function Page() {
@@ -21,12 +21,14 @@ export default function Page() {
         label="Nosotros"
         path="/nosotros/"
         title="Un estudio de desarrollo digital en Barcelona"
-        description="ASIVQUARK desarrolla páginas web, aplicaciones y software a medida. Nos interesa construir herramientas que encajen con las personas y los procesos que las utilizan."
+        description="ASIVQUARK desarrolla automatizaciones con IA, páginas web, aplicaciones y software a medida. Nos interesa construir herramientas que encajen con las personas y los procesos que las utilizan."
       />
       <Section className="bg-ink-900">
         <Container className="grid gap-10 lg:grid-cols-2">
-          <h2 className="section-title">Entender antes de construir</h2>
+          <h2 className="section-title">A tu medida</h2>
           <div className="space-y-5 text-lg leading-8 text-fg-muted">
+            <p>Trabajamos <Link href="/automatizacion-procesos-ia/" className="text-violet underline underline-offset-4">automatización de procesos e IA</Link> a precios populares, para conectar herramientas y simplificar operaciones existentes.</p>
+            <p>Desarrollamos automatizaciones con IA para empresas que necesitan clasificar solicitudes, preparar información de documentos o consultar conocimiento interno. Partimos de una tarea concreta y acordamos cómo revisar sus resultados, mantener el control de los datos y ampliar la solución cuando aporte utilidad.</p>
             <p>
               La tecnología es una parte de la solución. La otra es comprender
               qué necesita el negocio, quién va a utilizar el producto y qué
@@ -37,7 +39,6 @@ export default function Page() {
               web, con empresas que buscan herramientas propias y con
               emprendedores que quieren dar forma a una primera versión.
             </p>
-            <p>También abordamos <Link href="/automatizacion-procesos-ia/" className="text-violet underline underline-offset-4">automatización de procesos e IA</Link> para conectar herramientas y simplificar operaciones existentes.</p>
             <Button
               href="/servicios/"
               variant="ghost"

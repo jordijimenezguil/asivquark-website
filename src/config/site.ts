@@ -76,9 +76,9 @@ export function resolveSite(environment: Environment) {
 export const site = {
   name: "ASIVQUARK",
   email: "proyectos@asivquark.com",
-  title: "Desarrollo de Software y Diseño Web en Barcelona | ASIVQUARK",
+  title: "Automatización con IA, Software y Web en Barcelona | ASIVQUARK",
   description:
-    "Desarrollamos páginas web, aplicaciones y software a medida para empresas y emprendedores en Barcelona. Descubre ASIVQUARK.",
+    "Desarrollamos automatizaciones con IA, páginas web, aplicaciones y software a medida para empresas y emprendedores en Barcelona. Descubre ASIVQUARK.",
   ...resolveSite({
     VERCEL_ENV: process.env.VERCEL_ENV,
     VERCEL_URL: process.env.VERCEL_URL,

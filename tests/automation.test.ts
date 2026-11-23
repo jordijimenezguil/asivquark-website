@@ -17,7 +17,7 @@ const input = { name: "Prueba", email: "test@example.com", projectType: "automat
 test("single canonical service route and ordered shared navigation", () => {
   assert.equal(services.length, 5);
   assert.equal(publicPaths.filter(path => path === automationService.href).length, 1);
-  assert.deepEqual(serviceNavigation.map(item => item.label), ["Diseño web", "Software a medida", "Aplicaciones web", "Automatización e IA", "Desarrollo MVP"]);
+  assert.deepEqual(serviceNavigation.map(item => item.label), ["Automatización e IA", "Diseño web", "Software a medida", "Aplicaciones web", "Desarrollo MVP"]);
   assert.equal(automationService.href, "/automatizacion-procesos-ia/");
   assert.equal(automationService.sections[1].items.length, 6);
   assert.equal(automationService.process.length, 5);

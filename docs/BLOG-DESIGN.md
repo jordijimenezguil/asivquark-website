@@ -191,3 +191,13 @@ Rutas de enlaces: `/automatizacion-procesos-ia/`, `/servicios/software-a-medida-
 ### Primitivas compartidas Foco
 
 La etiqueta de categoría puede usar `Badge` (`components/ui/badge.tsx`): píldora brand-600/15, texto brand-300 y cuerpo de 12px. `Eyebrow` comparte etiqueta mono global. Estas primitivas no alteran frontmatter ni contenido MDX.
+
+
+## Refuerzo editorial de IA — 23/11/2026
+
+Se añade un párrafo contextual de automatización con IA antes del mosaico del índice, reutilizando párrafo de 17px, fg-muted y enlace brand-300 existentes. En ambos MDX se añade un párrafo dentro de una sección existente, sin nuevos componentes, H2, anatomía ni campos; updatedAt pasa a 2026-11-23 por la revisión real. Textos anteriores conservados.
+
+
+## Orden editorial IA — 23/11/2026
+
+Introducción del índice y su descripción mencionan primero automatización con IA, manteniendo diseño web, software y producto. En cada artículo el párrafo IA se adelanta al inicio de su sección contextual existente, sin cambiar H2, anatomía ni frontmatter; se conserva updatedAt de la revisión del mismo día.

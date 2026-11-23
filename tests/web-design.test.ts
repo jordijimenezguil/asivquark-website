@@ -27,16 +27,18 @@ test("budget CTA query selects the existing web contract", () => {
   assert.equal(projectTypeForContract(parseContactProjectType([], ["web"])), "web");
 });
 
-test("static blog has one educational article and no publication-state mechanism", async () => {
+test("static blog preserves educational articles, service links and editorial dates", async () => {
   const { blogArticles } = await import("../src/config/blog");
   const { professionalWebArticle, articles } = await import("../src/content/articles");
-  assert.equal(articles.length, 1);
-  assert.equal(blogArticles[0].href, "/blog/que-debe-tener-una-pagina-web-profesional/");
+  assert.ok(articles.some(article => article.slug === "digitalizacion-empresas"));
+  assert.ok(articles.includes(professionalWebArticle));
+  assert.ok(blogArticles.some(article => article.href === professionalWebArticle.href));
   assert.equal(professionalWebArticle.toc.length, 7);
   assert.notEqual(professionalWebArticle.title, webDesignService.h1);
   assert.ok(!("status" in professionalWebArticle));
   assert.equal(professionalWebArticle.authorName, "Equipo ASIVQUARK");
-  assert.equal(professionalWebArticle.publishedAt, "2026-10-12");
+  assert.equal(professionalWebArticle.publishedAt, "2026-09-14");
+  assert.equal(professionalWebArticle.updatedAt, "2026-11-23");
   assert.ok(publicPaths.includes(blogArticles[0].href));
   assert.ok(publicPaths.includes("/blog/"));
   assert.ok(professionalWebArticle.serviceLink?.href === webDesignService.href);

@@ -612,3 +612,72 @@ Descripción compartida del servicio web y FAQ Home actualizadas por petición d
 ## Tamaño de ventajas del hero — 24/10/2026
 
 Ventajas a 14px desde lg, con 11px móvil y saltos entre ventajas completas (whitespace-nowrap por etiqueta). Separación vertical 12px. Prisma validate/generate, lint, typecheck, test:config (6/6), test:db (3/3), test:home (4/4) y build --webpack (28 páginas) correctos. Build Turbopack falla por permisos de procesos/puertos. HTTP dev 200 y clase lg:text-sm confirmada en HTML. Sin revisión visual nueva. Sin despliegue.
+
+## Home IA — 23/11/2026
+
+- `pnpm prisma validate` y `pnpm db:generate`: correctos, sin migraciones ni conexiones externas.
+- `pnpm lint`, `pnpm typecheck`, `pnpm test:config` (6), `pnpm test:db` (3) y `pnpm test:home` (4): correctos. Prueba de HTML del hero actualizada para comprobar H1, flujo ilustrativo y enlace a contacto con automatización seleccionada.
+- `git diff --check`: correcto.
+- `pnpm dev`: activo en http://localhost:3000. Home HTTP 200; comprobados hero, ejemplo, casos de uso y CTA en HTML inicial mediante petición HTTP, sin navegador.
+- `pnpm build`: iniciado; todavía sin resultado final al registrar esta comprobación. No se acredita compilación de producción completada.
+- Sin revisión visual en navegador ni métricas responsive/Core Web Vitals. No se ha utilizado Chrome ni se ha publicado producción.
+- Next.js mostró un aviso de vulnerabilidad de la versión instalada al arrancar; se recomienda revisar y actualizar en una tarea específica. No se han cambiado dependencias.
+
+## Portfolio Rutavana y D7 Tattoo — 23/11/2026
+
+Publicación en código autorizada por el propietario. Contexto contrastado por HTTP con las dos webs públicas: Rutavana (vehículos de caravaning) y D7 Tattoo (estudio en Cerdanyola del Vallès). Ambas reconocen ASIVQUARK en su pie. Copy SEO cualitativo basado en el encargo, sin métricas ni resultados de posicionamiento atribuidos.
+
+Correctos: pnpm prisma validate, pnpm db:generate, pnpm lint, pnpm typecheck, test:config (6), test:db (3), test:home (4), test:marketing (2) y git diff --check. /proyectos/ responde HTTP 200, con los dos nombres, enlaces y SEO continuo en HTML. Artefactos de producción home y portfolio contienen ambas tarjetas.
+
+Build Turbopack anterior bloqueado, detenido. Primer intento webpack sin red falló por Google Fonts; con red generó las páginas pero se detuvo por aviso de seguridad de Next.js. Repetición pnpm build --webpack con red: salida 0, 28 páginas generadas. Se mantiene la recomendación de actualizar Next.js por el aviso de vulnerabilidad, sin cambiar dependencias en este encargo. Sin Chrome, revisión visual ni despliegue de producción.
+
+## Refuerzo aditivo de automatización e IA — 23/11/2026
+
+Revisadas las 13 páginas comerciales/editoriales actuales, junto a los documentos legales y accesos privados. Se añaden bloques y párrafos contextuales en servicios, cuatro landings, nosotros, contacto, portfolio, índice del blog y dos artículos; oferta de IA reforzada en CTA/footer. Home y landing IA ya estaban centradas en el servicio. Textos anteriores conservados; únicamente updatedAt de los MDX cambia para reflejar la revisión real. Legales y contenidos privados sin promociones añadidas a sus cuerpos.
+
+Correctos: pnpm prisma validate, pnpm db:generate, pnpm lint, pnpm typecheck, test:config (6), test:db (3), test:home (4), test:marketing (2), test:web-design (4), test:automation (6), pnpm build --webpack (28 páginas, salida 0) y git diff --check. La prueba de web/blog tenía expectativas históricas de un único artículo y fecha antigua: se actualiza para verificar el catálogo MDX real sin eliminar artículos ni alterar fechas de publicación.
+
+Inspección sin navegador de los 13 artefactos HTML comerciales/editoriales: contenido sobre IA y enlaces al servicio presentes. Frontmatter y TOC del blog validados durante el build. No se atribuyen funciones IA a los proyectos del portfolio. No se han medido rankings ni métricas visuales; sin Chrome ni despliegue. Se mantiene el aviso de seguridad de Next.js registrado anteriormente y la recomendación de actualización en tarea específica.
+
+## IA primero y contacto simplificado — 23/11/2026
+
+Automatización primero en catálogo, navegación, opciones de contacto y configurador. Bloques contextuales adelantados tras hero; presentación general y enlaces ordenados con IA primero. La selección de contacto por URL se conserva. Introducción de contacto unificada, por corrección del propietario, en un párrafo común para móvil/escritorio; eliminados los dos textos redundantes y el enlace a la propia página.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:home (4), test:marketing (2), test:web-design (4), test:automation (6), git diff --check y pnpm build --webpack (28 páginas, salida 0). El primer build se detuvo tras generar por el aviso de seguridad de Next.js; la repetición termina correctamente y mantiene la recomendación de actualizar. Verificados artefactos HTML: primer bloque tras hero dedicado a IA en las cuatro landings y portfolio; contacto contiene la nueva introducción y no contiene los párrafos retirados. Sin Chrome, revisión visual ni despliegue.
+
+## Rutavana — Publicación automatizada con IA — 23/11/2026
+
+Función confirmada por el propietario. Consultada https://rutavana.com/publicar/anuncio mediante HTTP, sin interactuar ni publicar anuncios; el HTML público no detalla el flujo. Descripción, etiqueta y enlace añadidos a la tarjeta compartida y contexto actualizado en home, manteniendo el párrafo de posicionamiento continuo. Sin atribuir esta función a D7 Tattoo.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:home (4), git diff --check y pnpm build --webpack (28 páginas, salida 0 tras repetir por aviso de seguridad de Next.js). Artefactos HTML de home y portfolio comprobados: publicación automatizada con IA, enlace directo y SEO continuo presentes. Home incluye también el contexto actualizado sobre Rutavana. Se mantiene la recomendación de actualizar Next.js ya registrada. Sin Chrome, pruebas visuales ni despliegue.
+
+## Precios populares y home generalista — 23/11/2026
+
+Copy comercial «a precios populares» autorizado por el propietario e integrado en titular de servicios y subtítulos/presentaciones de home, cuatro landings, automatización, nosotros, contacto y CTA compartido. Sin inventar importes o descuentos. Home ya no importa catálogo/tarjetas ni menciona proyectos concretos: explica publicación con IA, integraciones, desarrollo y SEO continuo, con enlace al portfolio. Portfolio conserva Rutavana y D7 Tattoo.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:home (4), test:web-design (4), test:automation (6) y git diff --check. Artefactos HTML: frase comercial en las nueve páginas revisadas; home sin nombres ni URLs de los dos proyectos, enlace a /proyectos/ presente, ambos casos conservados en portfolio. Sin Chrome, revisión visual ni despliegue. El primer build generó 28 páginas y se detuvo por el recordatorio de vulnerabilidad de Next.js; se repite para verificar su finalización.
+
+Repetición final `pnpm build --webpack`: salida 0, 28 páginas generadas. Permanece la recomendación de actualizar Next.js por el aviso de seguridad ya documentado.
+
+## Nuevos casos — Garraf Semsa, Startgamego y almacén/pedidos — 23/11/2026
+
+Se incorporan tres referencias confirmadas por el propietario: automatización de facturas con IA para Garraf Semsa, aplicación de gamificación a medida Startgamego y gestión interna de almacén/pedidos en varias empresas del Vallès. Por indicación explícita se muestran sin enlaces. Los campos opcionales y etiquetas por proyecto evitan añadir enlaces o atribuir SEO a los nuevos casos. Garraf Semsa se clasifica como automatización; Startgamego como aplicación; almacén/pedidos como software. Home conserva explicación general y enlace al portfolio sin nombres de proyectos.
+
+Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:home (4), git diff --check y build webpack (28 páginas, salida 0 tras repetir por el aviso de seguridad de Next.js). Se conserva recomendación de actualizar Next.js registrada previamente. HTML de portfolio contiene los nuevos casos; HTML home sin nombres de proyectos. Verificado que los tres nuevos casos carecen de href/automationHref. Sin Chrome, capturas ni despliegue.
+
+## Tarjetas equilibradas y orden final del portfolio — 23/11/2026
+
+Los cinco resúmenes tienen entre 25 y 32 palabras y un único párrafo. Rutavana y D7 Tattoo conservan IA/SEO continuo. Retícula con filas iguales desde md, espacio para etiquetas y títulos, enlaces al pie, sin truncar texto. Inspección HTML comprueba clases, contenido y ausencia de enlaces en Garraf Semsa, Startgamego y almacén/pedidos. Sin navegador: igualdad visual exacta pendiente de inspección.
+
+Correctos para el ajuste de tarjetas: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:home (4), git diff --check y build webpack (28 páginas, salida 0 tras repetir por aviso de seguridad Next.js). Recomendación de actualizar Next.js ya documentada. Sin Chrome ni despliegue.
+
+Petición posterior de orden: Rutavana, D7 Tattoo, Garraf Semsa, Startgamego y Gestión interna de almacén y pedidos. Cambio solo en orden del catálogo; verificado directamente por importación TypeScript y repetidos lint, typecheck y test:home. El build anterior verifica la estructura de las tarjetas antes de esta reordenación.
+
+
+## Portfolio sin filtros — 23/11/2026
+
+Retirados controles, hooks, lectura de parámetros cat, evento project_filter y Suspense duplicado. Las cinco tarjetas se renderizan en servidor en orden Rutavana, D7 Tattoo y el resto. Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:home (4), git diff --check y build webpack (28 páginas, salida 0 tras repetir por aviso de seguridad Next.js). HTML revisado sin «Filtrar proyectos» y con los cinco títulos en orden. Sin Chrome ni despliegue. Aviso de actualización Next.js previamente documentado.
+
+## Nosotros — Título simplificado — 23/11/2026
+
+«A tu medida» sustituye el título de enfoque y se retira el segundo encabezado. IA/precios populares continúan en el párrafo. Correctos lint, typecheck y git diff --check; verificación de código confirma un único título en la sección. Sin nuevas pruebas de navegador ni nueva compilación para este ajuste de texto.

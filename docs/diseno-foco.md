@@ -52,3 +52,13 @@ Consultar docs/validacion.md para resultados ejecutados. No se acredita WCAG AA 
 ## Banner Home — 24/10/2026
 
 Por petición del propietario, la franja morada queda horizontal y sin movimiento ni resplandor. ServiceBanner es un Server Component sin observers ni estado; muestra cada servicio una vez y permite salto de línea en móvil. Se retiran los tokens de animación marquee sin usos restantes.
+
+
+## Home — Automatización con IA como prioridad — 23/11/2026
+
+Hero en dos columnas desde lg: propuesta comercial y flujo ilustrativo estático; apilado en móvil. Tokens, Manrope, marca violeta y superficies oscuras existentes. Iconos Lucide decorativos y lista ordenada accesible. El selector anterior deja de aparecer en la home; permanece disponible para otros usos. No se añaden animaciones.
+
+
+## Prioridad de automatización con IA — 23/11/2026
+
+Automatización pasa a primera posición del catálogo comercial y de navegación compartida, menús, pie, banner y filtros. Configurator conserva las cinco opciones y presenta automatización primero y marcada inicialmente. Contacto muestra siempre automatización como primera opción, conservando la selección por URL y el contrato previo. Bloques IA adelantados al primer contenido tras el hero en landings y portfolio; textos generales de servicios/nosotros/contacto/blog y footer comienzan por IA y conservan la oferta restante. Metadata general, servicios, nosotros, contacto y blog alineada; H1 y metadata específicos de cada landing conservados. Sin atribuir IA a casos no documentados ni modificar rutas.

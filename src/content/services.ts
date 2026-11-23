@@ -25,6 +25,7 @@ export type Service = {
   related: string;
 };
 export const services: Service[] = [
+  automationService,
   webDesignService,
   {
     ...serviceDefinitions.software,
@@ -496,5 +497,4 @@ export const services: Service[] = [
     ],
     related: "aplicaciones-web-barcelona",
   },
-  automationService,
 ];

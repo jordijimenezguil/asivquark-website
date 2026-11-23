@@ -98,3 +98,62 @@ La descripción compartida del servicio web menciona «páginas web profesionale
 El hero incorpora «A precios asequibles» en la fila secundaria de ventajas, junto a «Sin compromiso» y «Respuesta en 24 h», con el mismo estilo discreto y salto de línea adaptable.
 
 Las ventajas secundarias del hero aumentan a 14px desde escritorio (lg); móvil conserva 11px. Espaciado vertical de 12px cuando se distribuyen en varias filas.
+
+
+## Home — Automatización con IA como prioridad — 23/11/2026
+
+Home centrada en automatización con IA para empresas: hero con CTA a contacto preseleccionado, flujo ilustrativo solicitud/clasificación/revisión/CRM y cuatro aplicaciones posibles. Servicios complementarios (web, software, aplicaciones y MVP) conservados. Proceso y FAQ del catálogo de automatización; cierre específico. Sin casos ni métricas inventadas. Sustituye la dirección anterior de selector en el hero.
+
+
+## Portfolio autorizado — 23/11/2026
+
+Incorporados Rutavana (plataforma de vehículos) y D7 Tattoo (estudio en Cerdanyola del Vallès), por petición explícita del propietario. Tarjetas con contexto breve, párrafo SEO y enlace externo accesible; visibles en /proyectos/ y home. Se destaca la continuidad del posicionamiento sin cifras, rankings ni resultados garantizados. Catálogo tipado ampliado con href y seoDescription; fallback del portfolio renderiza los proyectos en HTML inicial. Sin imágenes inventadas ni nuevas rutas de detalle. Metadata de /proyectos/ actualizada.
+
+
+## Refuerzo transversal de IA — 23/11/2026
+
+Por indicación del propietario, se añade contenido sin sustituir los textos existentes. Bloques contextuales de automatización e IA en diseño web, software, aplicaciones, MVP y portfolio; párrafos en servicios, nosotros y contacto. Footer y CTA compartidos refuerzan la oferta. Blog: introducción complementaria del índice y párrafos dentro de secciones existentes de ambos artículos, con updatedAt real. No se atribuye IA a Rutavana o D7 Tattoo. Home y landing de automatización ya tienen protagonismo suficiente. Legales, login y CRM revisados y conservados en su función; sin añadir promociones a sus cuerpos. Metadata específica, H1, rutas y contratos conservados. AutomationContext es un Server Component reutilizable con copy por contexto y enlace a la landing existente.
+
+
+## Prioridad de automatización con IA — 23/11/2026
+
+Automatización pasa a primera posición del catálogo comercial y de navegación compartida, menús, pie, banner y filtros. Configurator conserva las cinco opciones y presenta automatización primero y marcada inicialmente. Contacto muestra siempre automatización como primera opción, conservando la selección por URL y el contrato previo. Bloques IA adelantados al primer contenido tras el hero en landings y portfolio; textos generales de servicios/nosotros/contacto/blog y footer comienzan por IA y conservan la oferta restante. Metadata general, servicios, nosotros, contacto y blog alineada; H1 y metadata específicos de cada landing conservados. Sin atribuir IA a casos no documentados ni modificar rutas.
+
+
+Contacto: introducción unificada en un único párrafo visible en móvil y escritorio, con IA primero y web/software/aplicaciones después. Se elimina el enlace redundante que volvía a la misma página de contacto.
+
+
+## Rutavana — Publicación con IA — 23/11/2026
+
+El propietario confirma que el proceso de publicación de anuncios de Rutavana está automatizado con IA. La tarjeta compartida de home y portfolio presenta esta función en primer lugar, conserva el párrafo SEO continuo y enlaza a https://rutavana.com/publicar/anuncio. Campo opcional automationHref en el catálogo, sin atribuir IA a D7 Tattoo. La página pública se consultó por HTTP pero su HTML no expone el detalle del flujo; no se afirman pasos específicos ni resultados medidos.
+
+
+## Precios populares y home sin casos concretos — 23/11/2026
+
+Por indicación del propietario se integra «a precios populares» en subtítulos comerciales de home y landings, titular de servicios, presentación de nosotros, introducción de contacto y CTA compartido. Sin tarifas, descuentos ni comparaciones inventadas. Home describe publicación con IA, integraciones, plataformas, webs y SEO continuo en términos generales; retira nombres, enlaces externos y tarjetas de proyectos, conservando enlace a /proyectos/. Portfolio mantiene los dos proyectos y sus descripciones. Se conservan H1/metadata específicos y los artículos editoriales.
+
+
+## Portfolio — Garraf Semsa y Startgamego — 23/11/2026
+
+Proyectos incorporados por petición y confirmación del propietario: Garraf Semsa (automatización de facturas con IA) y Startgamego (app de gamificación a medida). Sin URLs, imágenes, métricas ni procesos detallados inventados. Garraf Semsa aparece primero y en filtro automatización; Startgamego en aplicaciones. Tarjetas usan tags explícitos y href/seoDescription opcionales para no atribuir SEO o enlaces a todos los casos. Metadata y presentación de portfolio actualizadas. Home permanece sin proyectos concretos.
+
+
+Ampliación del mismo encargo: «Gestión interna de almacén y pedidos», software a medida para varias empresas del Vallès, confirmado por el propietario. Se presenta como experiencia agrupada, sin nombres, enlaces ni funciones no aportados; categoría software. Home continúa sin casos concretos.
+
+
+## Tarjetas de portfolio equilibradas — 23/11/2026
+
+Resumen único por proyecto, entre 25 y 32 palabras. Rutavana y D7 Tattoo conservan IA/SEO continuo en copy abreviado; eliminado el segundo párrafo específico. Catálogo sin seoDescription. Retícula con filas iguales desde md, espacio homogéneo para etiquetas/títulos y enlaces al pie. Sin alturas rígidas para el texto ni truncamiento. Los tres últimos proyectos siguen sin enlaces.
+
+
+Orden final del portfolio confirmado por el propietario: Rutavana, D7 Tattoo, Garraf Semsa, Startgamego y Gestión interna de almacén y pedidos. El orden de casos es independiente de la prioridad de IA en la navegación de servicios.
+
+
+## Portfolio sin filtros — 23/11/2026
+
+Retirados los filtros por petición del propietario. /proyectos/ muestra las cinco tarjetas en el orden del catálogo y mantiene el CTA final. ProjectList pasa a Server Component sin hooks de navegación, lectura de cat ni eventos project_filter; eliminada Suspense y su fallback duplicado. Los parámetros cat anteriores ya no alteran la lista. Sin cambios de canonical o rutas.
+
+
+## Nosotros — Titular breve — 23/11/2026
+
+La sección de enfoque usa un único título «A tu medida». Se elimina el segundo encabezado largo; IA y precios populares se mantienen en el párrafo descriptivo, por indicación del propietario.

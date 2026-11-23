@@ -16,6 +16,7 @@ export function SiteFooter({ cta = true, ctaHref = "/contacto/", ctaLocation = "
             <Link href="/" aria-label="ASIVQUARK, inicio">
               <BrandLogo size="lg" />
             </Link>
+            <p className="mt-4 max-w-xs text-sm leading-7 text-secondary">Desarrollamos <Link href="/automatizacion-procesos-ia/" className="text-brand-300 underline underline-offset-4">automatizaciones con IA para empresas</Link>, conectando herramientas y procesos.</p>
             <p className="mt-6 max-w-xs text-sm leading-7 text-secondary">
               Estudio de desarrollo de software y productos digitales en
               Barcelona.

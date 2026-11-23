@@ -171,8 +171,9 @@ export function ContactForm({
       <div className="flex items-center justify-between gap-2"><h2 className="text-[17px] font-bold sm:text-xl">Cuéntanos lo que necesitas</h2><span className="shrink-0 font-mono text-[11px] text-ink-500" aria-hidden="true">2 / 3</span><span className="sr-only">Paso 2 de 3</span></div>
       <div role="progressbar" aria-label="Paso 2 de 3" aria-valuemin={1} aria-valuemax={3} aria-valuenow={2} className="h-1 overflow-hidden rounded-full bg-ink-800"><div className="h-full w-2/3 bg-brand-600" /></div>
       <fieldset className="min-w-0" disabled={pending}><legend className="sr-only">Tipo de proyecto</legend><div ref={chips} className="relative -mx-5 flex gap-1.5 overflow-x-auto px-5 pb-1 pt-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">{[
+        { value: "automatizacion", label: "Automatización con IA" },
         { value: "web", label: "Página web" }, { value: "software", label: "Software a medida" }, { value: "app", label: "Aplicación web" }, { value: "mvp", label: "Desarrollo MVP" },
-        ...(selected === "automatizacion" || selected === "otro" ? [{ value: selected, label: selected === "otro" ? "Otro proyecto" : "Automatización" }] : []),
+        ...(selected === "otro" ? [{ value: "otro", label: "Otro proyecto" }] : []),
       ].map(option => <label key={option.value} className="shrink-0"><input type="radio" name="tipo" value={option.value === "software" ? "soft" : option.value} checked={selected === option.value} onChange={() => setSelected(option.value as PublicProjectType)} className="peer sr-only" /><span className="inline-flex h-10 cursor-pointer items-center whitespace-nowrap rounded-xl border border-line-strong bg-ink-900 px-3.5 text-sm font-semibold text-ink peer-checked:border-brand-500 peer-checked:bg-brand-600 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-violet">{option.label}</span></label>)}</div></fieldset>
       <div className="grid gap-3.5 sm:grid-cols-2 sm:gap-3">
         {field("name", "Nombre", <Input {...props("name")} autoComplete="name" required maxLength={100} placeholder="Cómo te llamas" />)}

@@ -16,6 +16,7 @@ export default function AutomationPage() {
       <Breadcrumbs label={service.navigationLabel} path={service.href} />
       <div className="max-w-4xl"><Workflow className="mb-6 text-violet-soft" size={32} aria-hidden="true" /><p className="eyebrow mb-7 text-violet-soft">AUTOMATIZACIÓN EMPRESARIAL · INTELIGENCIA ARTIFICIAL</p>
         <h1 className="text-[36px] font-bold leading-[1.05] tracking-[-.035em] sm:text-5xl lg:text-[64px]">{service.h1}</h1>
+        <p className="mt-5 text-xl font-semibold text-brand-300">Automatizaciones a medida a precios populares.</p>
         <p className="mt-7 max-w-2xl text-lg leading-relaxed text-secondary">{service.intro}</p>
         <div className="mt-8 flex flex-wrap gap-4"><Button href={contactHref} data-location="service">{service.cta} →</Button><Button href="#soluciones" variant="outline">Descubre qué podemos automatizar</Button></div>
       </div>

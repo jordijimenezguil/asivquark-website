@@ -1,7 +1,7 @@
+import { AutomationContext } from "@/components/marketing/automation-context";
 import {
   PageHero,
 } from "@/components/marketing/commercial";
-import { Suspense } from "react";
 import { ProjectList } from "@/components/marketing/project-list";
 import { publishedProjects } from "@/content/projects";
 import { Container } from "@/components/ui/container";
@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata = pageMetadata({
   title: "Proyectos de Desarrollo Web y Software | ASIVQUARK",
   description:
-    "Conoce el enfoque de ASIVQUARK para crear páginas web, aplicaciones y software a medida.",
+    "Proyectos de automatización con IA, gestión de almacén y pedidos, gamificación, desarrollo web y SEO continuo. Conoce ASIVQUARK.",
   path: "/proyectos/",
 });
 export default function Page() {
@@ -20,9 +20,10 @@ export default function Page() {
         label="Proyectos"
         path="/proyectos/"
         title="Proyectos"
-        description="Cada proyecto parte de una necesidad concreta. Este espacio reunirá trabajos reales, con contexto sobre el problema, las decisiones y la solución desarrollada."
+        description="Proyectos reales de automatización con IA, aplicaciones a medida y desarrollo web. Desde procesos de facturación hasta gamificación y plataformas digitales, con trabajo SEO y posicionamiento continuo en los proyectos que lo requieren."
       />
-      <Section><Container><Suspense fallback={<p className="text-ink-500">Aún no hay proyectos publicados. Publicaremos trabajos reales y autorizados.</p>}><ProjectList projects={publishedProjects} /></Suspense></Container></Section>
+      <AutomationContext context="projects" />
+      <Section><Container><ProjectList projects={publishedProjects} /></Container></Section>
 
     </>
   );

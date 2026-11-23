@@ -8,8 +8,8 @@ import { getContactConfig } from "@/config/contact";
 import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata = pageMetadata({
-  title: "Contacto | ASIVQUARK — Desarrollo web y software en Barcelona",
-  description: "Cuéntanos tu proyecto de web, aplicación o software a medida. Respuesta en 24 h laborables, sin compromiso.",
+  title: "Contacto | ASIVQUARK — IA, web y software en Barcelona",
+  description: "Cuéntanos tu proyecto de automatización con IA, web, aplicación o software a medida. Respuesta en 24 h laborables, sin compromiso.",
   path: "/contacto/",
 });
 export default function Page() {
@@ -22,7 +22,7 @@ export default function Page() {
         <nav aria-label="Ruta de navegación" className="flex gap-2 text-xs text-secondary sm:text-sm"><Link href="/">Inicio</Link><span aria-hidden="true">/</span><span aria-current="page" className="text-mist">Contacto</span></nav>
         <h1 className="contact-title text-h1 font-extrabold">Hablemos de tu proyecto</h1>
         <p className="max-w-[520px] text-[15px] leading-normal text-secondary sm:text-lg lg:hidden">Te respondemos en 24 h laborables, sin compromiso.</p>
-        <p className="hidden max-w-[520px] text-lg leading-normal text-secondary lg:block">Una página web, una herramienta para tu empresa o una idea que quieres probar. El primer paso es aclarar qué necesitas y qué debe resolver.</p>
+        <p className="max-w-[520px] text-base leading-relaxed text-secondary sm:text-lg">Automatización con IA, webs, software y aplicaciones a precios populares. Cuéntanos qué necesitas y definimos contigo el primer paso.</p>
         <div className="hidden flex-col lg:flex"><ContactNextSteps /><div className="mt-8 border-t border-white/10 pt-5"><p className="text-sm text-secondary">¿Prefieres escribir?</p><a className="inline-flex min-h-11 items-center font-semibold text-violet-200" href="mailto:hola@asivquark.com">hola@asivquark.com</a></div></div>
       </section>
       <Suspense fallback={<ContactForm config={config} />}><ContactFormWithService config={config} /></Suspense>
