@@ -733,3 +733,7 @@ Correctos: `pnpm prisma validate`, `pnpm db:generate`, `pnpm lint`, `pnpm typech
 Auditoría estática sobre 18 HTML públicos generados: un H1 por página, al menos una superficie clara y todos los destinos aria-controls presentes. Home con exactamente dos secciones claras. HTTP local de home: 200; servidor pnpm dev en localhost:3000. Contraste calculado WCAG con luminancia relativa para pares de tokens: paper-text/paper 17,89:1; paper-muted/paper 7,61:1; brand-700/paper 6,55:1; paper-off/paper 4,60:1; secundario oscuro/ink-900 9,61:1; blanco/brand-600 5,70:1; brand-400/ink-950 7,31:1.
 
 Sin Chrome por preferencia expresa. No se ejecutaron navegador visual, axe ni Lighthouse: quedan pendientes los anchos 320/375/414/768/1024/1280/1440/1920 y rango hasta 2560, la igualdad scrollWidth/innerWidth, navegación real por teclado, contraste computado sobre el renderizado y emulación de movimiento reducido. Se verificaron por código focus, botones nativos, estados ARIA y media queries; no se afirma auditoría visual completa, Accesibilidad ≥95 ni ausencia/aumento de CLS. Sin despliegue ni acceso a DB/email. Commit y push solicitados posteriormente por el propietario.
+
+## Descripción de Proyectos sin gamificación
+
+Revisadas introducción y meta description de /proyectos/ por petición del propietario. Sin cambios de fichas, rutas ni diseño. `pnpm lint` y `git diff --check` correctos; comprobación textual confirma ausencia de gamificación en la página. No se repite build para este ajuste de copy; sin comprobación visual ni publicación.

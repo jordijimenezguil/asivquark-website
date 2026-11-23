@@ -221,3 +221,8 @@ Ajuste posterior del propietario: automatización con IA vuelve a primera posici
 ## Variante visual 6a — 23/11/2026
 
 Alternancia de superficies oscuras/paper en home y páginas públicas. Sin cambios adicionales de metadata, canonicals, enlaces de destino, sitemap, RSS ni JSON-LD. Se conservan los ajustes de contenido/metadata anteriores presentes al iniciar esta tarea. Contenido de servicios y respuestas permanece en HTML inicial; acordeones con botones y paneles ocultos semánticamente. Blog conserva MDX, fechas, frontmatter y anatomía; estilos documentados en BLOG-DESIGN.md. Añadida únicamente la frase de contacto del FAQ solicitada expresamente.
+
+
+## Presentación de Proyectos — ajuste de descripción
+
+Por petición del propietario, la introducción y meta description de /proyectos/ describen automatización con IA, software, aplicaciones y desarrollo web sin mencionar gamificación. Las fichas de proyectos conservan su contenido.

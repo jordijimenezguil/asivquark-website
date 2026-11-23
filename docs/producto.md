@@ -169,3 +169,8 @@ Ajuste posterior del propietario: automatización con IA vuelve a primera posici
 ## Diseño 6a y extensión pública — 23/11/2026
 
 Home alterna Servicios y Criterio claros con el resto oscuro, sustituye la franja por línea de luz y compacta ritmo, tipos fluidos y controles. Selector mantiene cinco opciones y web inicial; servicios, proceso y FAQ se adaptan a móvil. El FAQ incorpora exclusivamente la frase y mailto solicitados. El CTA propio de home sustituye visualmente el CTA compartido repetido del footer. Extensión posterior autorizada a servicios/landings, nosotros, portfolio, contacto, blog y legales con superficies paper; artículos y legales mantienen lectura clara continua. No se modifican contenidos editoriales, rutas ni flujo de captación; administración/login conservan presentación operativa.
+
+
+## Presentación de Proyectos — ajuste de descripción
+
+Por petición del propietario, la introducción y meta description de /proyectos/ describen automatización con IA, software, aplicaciones y desarrollo web sin mencionar gamificación. Las fichas de proyectos conservan su contenido.
