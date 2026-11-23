@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Eyebrow } from "./eyebrow";
 import Link from "next/link";
 export function SectionHeading({
@@ -9,7 +10,7 @@ export function SectionHeading({
   linkLabel,
 }: {
   label?: string;
-  title: string;
+  title: ReactNode;
   description?: string;
   titleId?: string;
   href?: string;

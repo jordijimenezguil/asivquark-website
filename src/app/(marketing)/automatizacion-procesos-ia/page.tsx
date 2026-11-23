@@ -21,9 +21,9 @@ export default function AutomationPage() {
         <div className="mt-8 flex flex-wrap gap-4"><Button href={contactHref} data-location="service">{service.cta} →</Button><Button href="#soluciones" variant="outline">Descubre qué podemos automatizar</Button></div>
       </div>
     </Container></section>
-    {service.sections.slice(0, 5).map((section, index) => <FeatureGrid key={section.title} id={index === 1 ? "soluciones" : undefined} title={section.title} intro={section.intro} items={section.items} tinted={index % 2 === 1} />)}
+    {service.sections.slice(0, 5).map((section, index) => <FeatureGrid key={section.title} id={index === 1 ? "soluciones" : undefined} title={section.title} intro={section.intro} items={section.items} tinted={index % 2 === 0} />)}
     <ProcessSteps items={service.process} title="Así automatizamos tus procesos" />
-    {service.sections.slice(5).map(section => <FeatureGrid key={section.title} title={section.title} intro={section.intro} items={section.items} />)}
+    {service.sections.slice(5).map((section, index) => <FeatureGrid key={section.title} title={section.title} intro={section.intro} items={section.items} tinted={index % 2 === 0} />)}
     <FAQAccordion items={service.faqs} structuredData={false} />
     <Section space="sm"><Container><p className="max-w-2xl leading-7 text-ink-500">Para valorar tu proyecto, cuéntanos qué tarea se repite, qué herramientas utilizas, con qué frecuencia y dónde necesitas revisión humana. No incluyas documentos ni información empresarial confidencial en el formulario.</p></Container></Section>
     <ContactCTA title="¿Qué proceso te gustaría automatizar?" description="Cuéntanos qué tareas consumen tiempo en tu empresa. Analizaremos contigo qué opciones técnicas pueden ayudarte a simplificarlas." label={service.cta} href={contactHref} />

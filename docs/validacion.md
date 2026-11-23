@@ -715,3 +715,21 @@ Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:
 Añadido tags opcional al contrato editorial y fila de Badge existentes a PostCard. Solo el artículo WordPress vs web a medida incorpora «Software a medida», manteniendo categoría «Diseño web» e imágenes. Documentado primero en BLOG-DESIGN.md. Texto abreviado por petición posterior: el cargador calcula 7 minutos; conserva doce secciones, tabla de diez criterios, cinco escenarios hipotéticos, seis FAQ y CTA, sin modificar otros artículos.
 
 Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:web-design (4), git diff --check y build webpack (29 páginas, salida 0 tras repetir por aviso de seguridad Next.js). Verificado catálogo y HTML generado: tarjeta con imagen, dos chips y 7 minutos; artículo con 7 minutos y contenido completo compilado. Se mantiene recomendación de actualizar Next.js ya registrada. Sin Chrome, revisión visual, despliegue, commit ni push.
+
+
+## Home — Servicios en primer plano — 23/11/2026
+
+Restaurada cabecera general con selector de cinco servicios (web predeterminada). Bloque destacado de automatización desplazado tras el catálogo completo. Metadata y CTA de home generales. Correctos: prisma validate, db:generate, lint, typecheck, test:config (6), test:db (3), test:home (4) y git diff --check. Se corrigió una aserción de orden de atributos HTML en test:home. Build Turbopack iniciado, todavía sin resultado al arrancar dev por petición del propietario; no se afirma compilación completada. pnpm dev listo en http://localhost:3000. Sin Chrome, revisión visual ni despliegue.
+
+
+## Home — Tarjeta IA primero — 23/11/2026
+
+Automatización con IA en primera posición del selector y catálogo de home por petición del propietario. Cabecera general y selección inicial de web conservadas. Correctos: lint, typecheck, test:home (4) y git diff --check. Sin Chrome ni nuevo build para este cambio de orden.
+
+## Diseño 6a — home y extensión pública — 23/11/2026
+
+Correctos: `pnpm prisma validate`, `pnpm db:generate`, `pnpm lint`, `pnpm typecheck`, `pnpm test:config` (6), `pnpm test:db` (3), `pnpm test:home` (4), `pnpm test:automation` (6), `pnpm test:web-design` (4), `git diff --check`. Tests de home adaptados a botones con aria-pressed y campo GET oculto; se conserva selección web y contrato de cinco servicios. Build Turbopack completado: 29 páginas, salida 0. Primer intento aislado interrumpido tras permanecer sin progreso; reintento fuera del aislamiento. Corregida la sintaxis de la variante hover tras advertencias CSS; último build sin esas advertencias. Next.js muestra el aviso de vulnerabilidad de la versión instalada ya registrado previamente; no se actualizan dependencias en esta tarea.
+
+Auditoría estática sobre 18 HTML públicos generados: un H1 por página, al menos una superficie clara y todos los destinos aria-controls presentes. Home con exactamente dos secciones claras. HTTP local de home: 200; servidor pnpm dev en localhost:3000. Contraste calculado WCAG con luminancia relativa para pares de tokens: paper-text/paper 17,89:1; paper-muted/paper 7,61:1; brand-700/paper 6,55:1; paper-off/paper 4,60:1; secundario oscuro/ink-900 9,61:1; blanco/brand-600 5,70:1; brand-400/ink-950 7,31:1.
+
+Sin Chrome por preferencia expresa. No se ejecutaron navegador visual, axe ni Lighthouse: quedan pendientes los anchos 320/375/414/768/1024/1280/1440/1920 y rango hasta 2560, la igualdad scrollWidth/innerWidth, navegación real por teclado, contraste computado sobre el renderizado y emulación de movimiento reducido. Se verificaron por código focus, botones nativos, estados ARIA y media queries; no se afirma auditoría visual completa, Accesibilidad ≥95 ni ausencia/aumento de CLS. Sin despliegue ni acceso a DB/email. Commit y push solicitados posteriormente por el propietario.

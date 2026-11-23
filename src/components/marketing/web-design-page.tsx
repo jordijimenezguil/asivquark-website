@@ -18,11 +18,11 @@ export function WebDesignPage() {
       <div className="mt-8 overflow-x-auto rounded-xl border border-line" role="region" aria-label="Comparación de alcances web, desplazable horizontalmente" tabIndex={0}><table className="w-full min-w-[640px] text-left text-sm"><caption className="p-4 text-left font-semibold">Criterios para comparar propuestas de diseño web</caption><thead><tr>{["Aspecto", "Alcance básico", "Enfoque profesional"].map(label => <th key={label} scope="col" className="border-b border-line bg-paper-soft p-4">{label}</th>)}</tr></thead><tbody>{webDesignComparison.map(row => <tr key={row.factor}><th scope="row" className="border-b border-line p-4 font-semibold">{row.factor}</th><td className="border-b border-line p-4 leading-6 text-ink-500">{row.basic}</td><td className="border-b border-line p-4 leading-6 text-ink-500">{row.professional}</td></tr>)}</tbody></table></div>
       <p className="mt-7 leading-7 text-ink-500">Para revisar estos criterios con más detalle, <Link href={blogArticles[0].href} className="font-semibold text-violet underline underline-offset-4">descubre qué debe tener una página web profesional</Link>.</p>
     </Container></Section>
-    <FeatureGrid {...service.sections[3]} />
+    <FeatureGrid {...service.sections[3]} tinted />
     <ProcessSteps items={service.process} title="Cómo desarrollamos tu página web" />
     <FeatureGrid {...service.sections[4]} />
     <Section space="sm"><Container><Button href={contactHref} data-location="service">Solicitar presupuesto personalizado →</Button></Container></Section>
-    <FeatureGrid {...service.sections[5]} />
+    <FeatureGrid {...service.sections[5]} tinted />
     <FAQAccordion items={service.faqs} title="Preguntas frecuentes sobre diseño web profesional" structuredData={false} />
     <ContactCTA title="Hablemos de tu nueva página web" description="Si necesitas una página web profesional para tu negocio, cuéntanos tu proyecto. Podemos ayudarte a definir una solución adaptada a tus necesidades." label={service.cta} href={contactHref} />
     <Section space="sm"><Container><p className="leading-7 text-ink-500">Si necesitas que los usuarios realicen operaciones desde el navegador, explora también nuestro <Link href="/servicios/aplicaciones-web-barcelona/" className="font-semibold text-violet underline underline-offset-4">servicio de desarrollo de aplicaciones web</Link>.</p></Container></Section>

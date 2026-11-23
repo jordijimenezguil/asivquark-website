@@ -209,3 +209,15 @@ Cada tarjeta usa un párrafo breve. Rutavana conserva automatización de publica
 ## Portfolio sin filtros — 23/11/2026
 
 Retirados los filtros por petición del propietario. /proyectos/ muestra las cinco tarjetas en el orden del catálogo y mantiene el CTA final. ProjectList pasa a Server Component sin hooks de navegación, lectura de cat ni eventos project_filter; eliminada Suspense y su fallback duplicado. Los parámetros cat anteriores ya no alteran la lista. Sin cambios de canonical o rutas.
+
+
+## Home — Servicios en primer plano — 23/11/2026
+
+Por petición del propietario se recupera la cabecera general de desarrollo de software y páginas web con selector de los cinco servicios. Web aparece primero y seleccionada inicialmente; automatización sigue disponible como quinta opción. La presentación de servicios incluye el catálogo completo antes del bloque destacado de IA, que conserva flujo ilustrativo, ejemplos y enlace a su landing. Metadata y CTA final de home vuelven al enfoque general. Sin cambios de rutas, dominios ni despliegue.
+
+
+Ajuste posterior del propietario: automatización con IA vuelve a primera posición en las tarjetas del selector y en el catálogo de servicios de home. La selección inicial de web y la cabecera general se conservan.
+
+## Variante visual 6a — 23/11/2026
+
+Alternancia de superficies oscuras/paper en home y páginas públicas. Sin cambios adicionales de metadata, canonicals, enlaces de destino, sitemap, RSS ni JSON-LD. Se conservan los ajustes de contenido/metadata anteriores presentes al iniciar esta tarea. Contenido de servicios y respuestas permanece en HTML inicial; acordeones con botones y paneles ocultos semánticamente. Blog conserva MDX, fechas, frontmatter y anatomía; estilos documentados en BLOG-DESIGN.md. Añadida únicamente la frase de contacto del FAQ solicitada expresamente.

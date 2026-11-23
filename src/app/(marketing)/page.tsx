@@ -1,5 +1,5 @@
 import { ServiceExplorer } from "@/components/marketing/foco-interactions";
-import { ServiceBanner } from "@/components/marketing/service-banner";
+import { HomeAutomation } from "@/components/marketing/home-automation";
 import { HomeHero } from "@/components/marketing/home-hero";
 import { automationService } from "@/content/automation";
 import { Button } from "@/components/ui/button";
@@ -20,12 +20,12 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { site } from "@/config/site";
 export const metadata = pageMetadata({
-  title: "Automatización con IA para Empresas en Barcelona | ASIVQUARK",
-  description: "Automatizamos tareas repetitivas, conectamos herramientas e integramos IA en los procesos de tu empresa. Desarrollo web y software a medida desde Barcelona.",
+  title: "Desarrollo de Software y Páginas Web en Barcelona | ASIVQUARK",
+  description: "Páginas web, software a medida, aplicaciones, MVP y automatización con IA para empresas y emprendedores. Soluciones digitales desde Barcelona.",
 });
 export default function Home() {
   return (
-    <>
+    <div className="home-six">
       {site.isProduction && (
         <JsonLd
           data={{
@@ -44,8 +44,27 @@ export default function Home() {
         />
       )}
       <HomeHero />
-      <FeatureGrid
-        id="automatizacion"
+
+      <div className="home-values bg-ink-950 py-16"><Container className="grid gap-4 md:grid-cols-3">{[
+        ["Precio cerrado por fase", "Cada fase se aprueba antes de empezar. Sin sorpresas."],
+        ["Entregas cada dos semanas", "Ves el avance real y ajustas prioridades."],
+        ["El código es tuyo", "Repositorio y accesos a tu nombre desde el primer día."],
+      ].map(([title, text], index) => <div key={title} className="card"><span className="mb-6 block text-5xl font-extrabold text-brand-500">0{index + 1}</span><h2 className="font-bold">{title}</h2><p className="mt-3 text-sm leading-relaxed text-ink-500">{text}</p></div>)}</Container></div>
+      <Section id="servicios" className="home-paper home-services">
+        <Container>
+          <SectionHeading
+            label="NUESTROS SERVICIOS"
+            title={<>Herramientas para tu negocio <span>a precios populares</span></>}
+            href="/servicios/"
+            linkLabel="Todos los servicios →"
+          />
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-500">Creamos páginas web, software a medida, aplicaciones y MVP, y automatizamos procesos con IA. Definimos cada solución según las necesidades de tu negocio.</p>
+          <ServiceExplorer services={services} />
+
+        </Container>
+      </Section>
+      <HomeAutomation />
+      <FeatureGrid home
         title="¿Qué tarea se repite cada día en tu empresa?"
         intro="Empezamos por un proceso concreto. Estos son ejemplos de lo que podemos ayudarte a automatizar, según tus herramientas y las necesidades de tu equipo."
         items={[
@@ -56,32 +75,13 @@ export default function Home() {
         ]}
       />
       <Container className="pb-16"><Button href="/automatizacion-procesos-ia/" variant="outline">Conoce el servicio de automatización e IA</Button></Container>
-      <ServiceBanner labels={services.map(service => service.title)} />
-      <div className="bg-ink-950 py-16"><Container className="grid gap-4 sm:grid-cols-3">{[
-        ["Precio cerrado por fase", "Cada fase se aprueba antes de empezar. Sin sorpresas."],
-        ["Entregas cada dos semanas", "Ves el avance real y ajustas prioridades."],
-        ["El código es tuyo", "Repositorio y accesos a tu nombre desde el primer día."],
-      ].map(([title, text], index) => <div key={title} className="card"><span className="mb-6 block text-5xl font-extrabold text-brand-500">0{index + 1}</span><h2 className="font-bold">{title}</h2><p className="mt-3 text-sm leading-relaxed text-ink-500">{text}</p></div>)}</Container></div>
-      <Section id="servicios">
-        <Container>
-          <SectionHeading
-            label="NUESTROS SERVICIOS"
-            title="Herramientas para tu negocio a precios populares"
-            href="/servicios/"
-            linkLabel="Todos los servicios →"
-          />
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-500">Completamos tus procesos con páginas web, software a medida, aplicaciones y MVP. Definimos cada solución según las necesidades de tu negocio.</p>
-          <ServiceExplorer services={services.filter(service => service.uiType !== "automatizacion")} />
-
-        </Container>
-      </Section>
       <ProcessSteps items={automationService.process} title="De una tarea repetitiva a un proceso conectado" />
-      <Section>
+      <Section className="home-paper home-criterion">
         <Container>
           <div className="grid gap-10 lg:grid-cols-2">
             <SectionHeading
               label="CRITERIO EN CADA DECISIÓN"
-              title="IA, desarrollo y SEO con continuidad"
+              title={<>IA, desarrollo y SEO con <span>continuidad</span></>}
             />
             <div>
               <p className="text-lg leading-8 text-fg-muted">
@@ -101,13 +101,13 @@ export default function Home() {
           </div>
         </Container>
       </Section>
-      <FAQAccordion
+      <FAQAccordion home
         items={[
           ...automationService.faqs.slice(0, 5),
           { question: "¿También desarrolláis webs y software a medida?", answer: "Sí. Creamos páginas web, software a medida, aplicaciones web y MVP. Podemos abordar un proyecto independiente o valorar su integración con los procesos de tu empresa." },
         ]}
       />
-      <ContactCTA title="¿Qué tarea se repite cada día en tu empresa?" description="Cuéntanos cómo la resolvéis hoy y qué herramientas utilizáis. Valoraremos contigo qué partes conviene automatizar." label="Hablemos de tu proceso" href="/contacto/?tipo=automatizacion&origen=/" />
-    </>
+      <ContactCTA home title="Hablemos de tu proyecto" description="Cuéntanos qué necesita tu negocio: una web, software a medida, una aplicación, un MVP o automatizar un proceso." label="Cuéntanos tu idea" href="/contacto/?origen=/" />
+    </div>
   );
 }

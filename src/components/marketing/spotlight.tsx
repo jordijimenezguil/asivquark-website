@@ -6,7 +6,7 @@ export function Spotlight({ children, className }: { children: ReactNode; classN
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    const media = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+    const media = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
     let frame = 0;
     let visible = false;
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
@@ -20,8 +20,10 @@ export function Spotlight({ children, className }: { children: ReactNode; classN
         frame = 0;
       });
     };
+    const reset = () => { if (!media.matches) { cancelAnimationFrame(frame); frame = 0; node.style.removeProperty("--x"); node.style.removeProperty("--y"); } };
+    media.addEventListener("change", reset);
     node.addEventListener("pointermove", move);
-    return () => { observer.disconnect(); node.removeEventListener("pointermove", move); cancelAnimationFrame(frame); };
+    return () => { media.removeEventListener("change", reset); observer.disconnect(); node.removeEventListener("pointermove", move); cancelAnimationFrame(frame); };
   }, []);
-  return <div ref={ref} className={cn("relative isolate overflow-hidden [--x:70%] [--y:25%] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(520px_circle_at_var(--x)_var(--y),rgba(124,58,237,.38),transparent_70%)]", className)}>{children}</div>;
+  return <div ref={ref} className={cn("relative isolate overflow-hidden [--x:70%] [--y:30%] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(520px_circle_at_var(--x)_var(--y),rgba(124,58,237,.38),transparent_70%)]", className)}>{children}</div>;
 }

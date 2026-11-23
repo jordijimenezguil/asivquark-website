@@ -157,3 +157,15 @@ Retirados los filtros por petición del propietario. /proyectos/ muestra las cin
 ## Nosotros — Titular breve — 23/11/2026
 
 La sección de enfoque usa un único título «A tu medida». Se elimina el segundo encabezado largo; IA y precios populares se mantienen en el párrafo descriptivo, por indicación del propietario.
+
+
+## Home — Servicios en primer plano — 23/11/2026
+
+Por petición del propietario se recupera la cabecera general de desarrollo de software y páginas web con selector de los cinco servicios. Web aparece primero y seleccionada inicialmente; automatización sigue disponible como quinta opción. La presentación de servicios incluye el catálogo completo antes del bloque destacado de IA, que conserva flujo ilustrativo, ejemplos y enlace a su landing. Metadata y CTA final de home vuelven al enfoque general. Sin cambios de rutas, dominios ni despliegue.
+
+
+Ajuste posterior del propietario: automatización con IA vuelve a primera posición en las tarjetas del selector y en el catálogo de servicios de home. La selección inicial de web y la cabecera general se conservan.
+
+## Diseño 6a y extensión pública — 23/11/2026
+
+Home alterna Servicios y Criterio claros con el resto oscuro, sustituye la franja por línea de luz y compacta ritmo, tipos fluidos y controles. Selector mantiene cinco opciones y web inicial; servicios, proceso y FAQ se adaptan a móvil. El FAQ incorpora exclusivamente la frase y mailto solicitados. El CTA propio de home sustituye visualmente el CTA compartido repetido del footer. Extensión posterior autorizada a servicios/landings, nosotros, portfolio, contacto, blog y legales con superficies paper; artículos y legales mantienen lectura clara continua. No se modifican contenidos editoriales, rutas ni flujo de captación; administración/login conservan presentación operativa.

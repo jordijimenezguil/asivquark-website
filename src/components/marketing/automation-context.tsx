@@ -28,7 +28,7 @@ const contexts = {
 export function AutomationContext({ context }: { context: keyof typeof contexts }) {
   const { title, description } = contexts[context];
   return (
-    <Section className="bg-ink-900">
+    <Section className="surface-paper">
       <Container>
         <p className="eyebrow mb-5 text-brand-400">AUTOMATIZACIÓN E INTELIGENCIA ARTIFICIAL</p>
         <h2 className="section-title max-w-4xl">{title}</h2>

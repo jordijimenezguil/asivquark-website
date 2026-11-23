@@ -23,7 +23,7 @@ export default function Page() {
         title="Un estudio de desarrollo digital en Barcelona"
         description="ASIVQUARK desarrolla automatizaciones con IA, páginas web, aplicaciones y software a medida. Nos interesa construir herramientas que encajen con las personas y los procesos que las utilizan."
       />
-      <Section className="bg-ink-900">
+      <Section className="surface-paper">
         <Container className="grid gap-10 lg:grid-cols-2">
           <h2 className="section-title">A tu medida</h2>
           <div className="space-y-5 text-lg leading-8 text-fg-muted">
@@ -49,7 +49,7 @@ export default function Page() {
           </div>
         </Container>
       </Section>
-      <Section className="bg-night text-white"><Container className="grid items-center gap-10 lg:grid-cols-[1fr_2fr]"><BrandLogo variant="compact" size="lg" className="h-24" /><div><h2 className="section-title">Software con propósito. Desde Barcelona.</h2><p className="mt-5 text-secondary">Trabajamos con proyectos de toda España.</p></div></Container></Section><Principles />
+      <Section className="bg-night text-white"><Container className="grid items-center gap-10 lg:grid-cols-[1fr_2fr]"><BrandLogo variant="compact" size="lg" className="h-24" /><div><h2 className="section-title">Software con propósito. Desde Barcelona.</h2><p className="mt-5 text-secondary">Trabajamos con proyectos de toda España.</p></div></Container></Section><div className="surface-paper"><Principles /></div>
 
     </>
   );

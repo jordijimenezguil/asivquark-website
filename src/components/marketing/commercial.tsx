@@ -1,10 +1,12 @@
-import { ProcessPanels } from "./foco-interactions";
+import { HomeFAQItems, ProcessPanels } from "./foco-interactions";
+import { Spotlight } from "./spotlight";
 import { Configurator } from "./configurator";
 import Link from "next/link";
 import {
   ArrowUpRight,
   Check,
   Workflow,
+  Mail, Database, Sparkles, Link2,
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -144,20 +146,22 @@ export function FeatureGrid({
   items,
   tinted = false,
   id,
+  home = false,
 }: {
   title: string;
   intro?: string;
   items: ContentItem[];
+  home?: boolean;
   tinted?: boolean;
   id?: string;
 }) {
   return (
-    <Section id={id} className={tinted ? "bg-ink-900" : undefined}>
+    <Section id={id} className={home ? "home-tasks" : tinted ? "surface-paper" : undefined}>
       <Container>
         <SectionHeading title={title} description={intro} />
         <div className={`mt-10 grid gap-5 md:grid-cols-2 ${items.length === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
-          {items.map((item) => (
-            <BenefitCard key={item.title} item={item} />
+          {items.map((item, index) => (
+            home ? <Card key={item.title}>{(() => { const Icon = [Mail, Database, Link2, Sparkles][index % 4]; return <Icon aria-hidden="true" className="mb-6 size-11 rounded-xl bg-brand-600/20 p-2.5 text-brand-300" />; })()}<h3 className="text-xl font-bold">{item.title}</h3><p className="mt-4 leading-relaxed text-fg-muted">{item.description}</p></Card> : <BenefitCard key={item.title} item={item} />
           ))}
         </div>
       </Container>
@@ -174,17 +178,14 @@ export function ProcessSteps({ items, title = "De la primera llamada al lanzamie
     </Section>
   );
 }
-export function FAQAccordion({ items, structuredData = true, title = "Preguntas frecuentes" }: { items: FAQ[]; structuredData?: boolean; title?: string }) {
+export function FAQAccordion({ items, structuredData = true, title = "Preguntas frecuentes", home = false }: { items: FAQ[]; home?: boolean; structuredData?: boolean; title?: string }) {
   return (
-    <Section className="bg-paper-soft">
+    <Section className={home ? "home-faq bg-ink-950" : "bg-paper-soft"}>
       <Container>
         {site.isProduction && structuredData && <JsonLd data={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map(item => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) }} />}
         <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr]">
-          <SectionHeading
-            label="RESOLVEMOS DUDAS"
-            title={title}
-          />
-          <div>
+          <div><SectionHeading label="RESOLVEMOS DUDAS" title={title} />{home && <p className="mt-6 leading-relaxed text-fg-muted">¿No encuentras tu pregunta? Escríbenos a <a href="mailto:proyectos@asivquark.com" className="inline-flex min-h-11 items-center break-all text-brand-400">proyectos@asivquark.com</a></p>}</div>
+          {home ? <HomeFAQItems items={items} /> : <div>
             {items.map((item, index) => (
               <details
                 key={item.question}
@@ -201,7 +202,7 @@ export function FAQAccordion({ items, structuredData = true, title = "Preguntas 
                 </p>
               </details>
             ))}
-          </div>
+          </div>}
         </div>
       </Container>
     </Section>
@@ -212,15 +213,18 @@ export function ContactCTA({
   description = "Cuéntanos qué necesitas. Podemos ayudarte a definir la solución y valorar cómo llevarla a cabo.",
   label = "Hablemos de tu proyecto",
   href = "/contacto/",
+  home = false,
 }: {
   title?: string;
   description?: string;
   label?: string;
   href?: string;
+  home?: boolean;
 }) {
+  const Frame = home ? Spotlight : Container;
   return (
     <Section className="bg-ink-800">
-      <Container className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
+      <Frame className="mx-auto w-full max-w-[1280px] flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
         <SectionHeading title={title} description={description} />
         <Button
           href={href}
@@ -230,7 +234,7 @@ export function ContactCTA({
           {label}
           <ArrowUpRight size={18} aria-hidden="true" />
         </Button>
-      </Container>
+      </Frame>
     </Section>
   );
 }

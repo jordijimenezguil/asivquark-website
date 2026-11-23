@@ -155,3 +155,15 @@ Orden final del portfolio confirmado por el propietario: Rutavana, D7 Tattoo, Ga
 ## Portfolio sin filtros — 23/11/2026
 
 Retirados los filtros por petición del propietario. /proyectos/ muestra las cinco tarjetas en el orden del catálogo y mantiene el CTA final. ProjectList pasa a Server Component sin hooks de navegación, lectura de cat ni eventos project_filter; eliminada Suspense y su fallback duplicado. Los parámetros cat anteriores ya no alteran la lista. Sin cambios de canonical o rutas.
+
+
+## Home — Servicios en primer plano — 23/11/2026
+
+Por petición del propietario se recupera la cabecera general de desarrollo de software y páginas web con selector de los cinco servicios. Web aparece primero y seleccionada inicialmente; automatización sigue disponible como quinta opción. La presentación de servicios incluye el catálogo completo antes del bloque destacado de IA, que conserva flujo ilustrativo, ejemplos y enlace a su landing. Metadata y CTA final de home vuelven al enfoque general. Sin cambios de rutas, dominios ni despliegue.
+
+
+Ajuste posterior del propietario: automatización con IA vuelve a primera posición en las tarjetas del selector y en el catálogo de servicios de home. La selección inicial de web y la cabecera general se conservan.
+
+## Superficies 6a — 23/11/2026
+
+Home con dos pausas paper y línea de luz en lugar de franja. `surface-paper` adapta los tokens localmente para las páginas públicas: cabeceras/cierres oscuros, secciones claras explícitas y lectura continua clara en blog/legal. Container conserva 1280px y padding 20/32/64px en base/md/xl; Section compacta a 64/80/96px. Servicios y FAQ de home usan botones con estado y relaciones ARIA; proceso vertical en móvil y paneles desde lg. Spotlight escucha ratón fino sin movimiento reducido y restablece posición al cambiar preferencias. No hay nuevas dependencias, migraciones ni cambios de contratos.
